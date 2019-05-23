@@ -1,0 +1,344 @@
+<div class="view-test-definition">
+	<div layout="column" layout-align="center center">
+		<h2 class="md-display-1 no-margin-bottom">{{selectedTestDefinition.standardCode}}</h2>
+		<h3>{{selectedTestDefinition.description}}</h3>
+	</div>
+	<md-tabs md-dynamic-height="true" md-border-bottom="true">
+		<md-tab>
+			<md-tab-label>
+				{{ 'overview' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'secondaryCode' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.secondaryCode"></div>
+
+				<h3>{{ 'section' | translate }}</h3>
+				<div>{{selectedTestDefinition.section.name[locale]}}</div>
+
+				<h3>{{ 'usefulFor' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.usefulFor"></div>
+
+				<h3>{{ 'testingMethod' | translate }}</h3>
+				<div>{{selectedTestDefinition.lkpTestingMethod.description[locale]}}</div>
+
+				<h3>{{ 'reportingDescription' | translate }}</h3>
+				<div>{{selectedTestDefinition.reportingDescription}}</div>
+
+				<h3>{{ 'aliases' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.aliases"></div>
+
+				<h3>{{ 'additionalTestingRequirements' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.additionalTestingRequirements"></div>
+
+				<h3>{{ 'geneticsTestInformation' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.geneticsTestInformation"></div>
+
+				<h3>{{ 'ranking' | translate }}</h3>
+				<div>{{selectedTestDefinition.rank}}</div>
+
+				<h3>{{ 'panel' | translate }}</h3>
+				<div>{{selectedTestDefinition.isPanel ? 'yes' : 'no' | translate}}</div>
+
+				<h3>{{ 'separatePage' | translate }}</h3>
+				<div>{{selectedTestDefinition.isSeparatePage ? 'yes' : 'no' | translate}}</div>
+
+				<h3>{{ 'extraTests' | translate }}</h3>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'standardCode' | translate }}</th>
+							<th>{{ 'reportingDescription' | translate }}</th>
+							<th>{{ 'orderableSeparately' | translate }}</th>
+							<th>{{ 'alwaysPerformed' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="extraTest in selectedTestDefinition.extraTests">
+								<td>{{extraTest.extraTest.standardCode}}</td>
+								<td>{{extraTest.extraTest.reportingDescription}}</td>
+								<td>{{extraTest.extraTest.orderableSeparately ? 'yes' : 'no' | translate}}</td>
+								<td>{{extraTest.alwaysPerformed ? 'yes' : 'no' | translate}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3>{{ 'orderableSeparately' | translate }}</h3>
+				<div>{{selectedTestDefinition.orderableSeparately ? 'yes' : 'no' | translate}}</div>
+
+				<h3>{{ 'tests' | translate }}</h3>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'standardCode' | translate }}</th>
+							<th>{{ 'reportingDescription' | translate }}</th>
+							<th>{{ 'orderableSeparately' | translate }}</th>
+							<th>{{ 'alwaysPerformed' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="test in selectedTestDefinition.tests">
+								<td>{{test.test.standardCode}}</td>
+								<td>{{test.test.reportingDescription}}</td>
+								<td>{{test.test.orderableSeparately ? 'yes' : 'no' | translate}}</td>
+								<td>{{test.alwaysPerformed ? 'yes' : 'no' | translate}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3>{{ 'disclaimer' | translate }}</h3>
+				<div>{{selectedTestDefinition.disclaimer}}</div>
+
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'specimen' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'specimenType' | translate }}</h3>
+				<div>
+					{{selectedTestDefinition.specimenType.name[locale]}}
+				</div>
+				<h3>{{ 'specimens' | translate }}</h3>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'default' | translate }}</th>
+							<th>{{ 'description' | translate }}</th>
+							<th>{{ 'containerType' | translate }}</th>
+							<th>{{ 'stability' | translate }}</th>
+							<th>{{ 'temperature' | translate }}</th>
+							<th>{{ 'containerCount' | translate }}</th>
+							<th>{{ 'minimumVolume' | translate }}</th>
+							<th>{{ 'rejectDueTo' | translate }}</th>
+							<th>{{ 'specimenRequirements' | translate }}</th>
+							<th>{{ 'specimenVolume' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="specimen in selectedTestDefinition.testSpecimens">
+								<td>{{specimen.isDefault ? 'yes' : 'no' | translate}}</td>
+								<td>{{specimen.description}}</td>
+								<td>{{specimen.containerType.name[locale]}}</td>
+								<td>{{specimen.stabilityDigit}} {{specimen.stabilityUnit.name[locale]}}</td>
+								<td>{{specimen.specimenTemperature.name[locale]}}</td>
+								<td>{{specimen.containerCount}}</td>
+								<td>{{specimen.minimumVolume}}</td>
+								<td>{{specimen.rejectDueTo}}</td>
+								<td>{{specimen.specimenRequirements}}</td>
+								<td>{{specimen.specimenVolume}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'results' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'secondaryCode' | translate }}</th>
+							<th>{{ 'description' | translate }}</th>
+							<th>{{ 'conventional' | translate }}</th>
+							<th>{{ 'factor' | translate }}</th>
+							<th>{{ 'si' | translate }}</th>
+							<th>{{ 'loincCode' | translate }}</th>
+							<th>{{ 'standardCode' | translate }}</th>
+							<th>{{ 'unitOfMeasure' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="result in selectedTestDefinition.testResults">
+								<td>{{result.secondaryCode}}</td>
+								<td>{{result.description}}</td>
+								<td>{{result.conventional}}</td>
+								<td>{{result.factor}}</td>
+								<td>{{result.si}}</td>
+								<td>{{result.loincCode}}</td>
+								<td>{{result.standardCode}}</td>
+								<td>{{result.unitOfMeasure.unitOfMeasure}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'clinicalAndInterpretive' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'usefulFor' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.usefulFor"></div>
+
+				<h3>{{ 'clinicalInformation' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.clinicalInformation"></div>
+
+				<h3>{{ 'normalRangeText' | translate }}</h3>
+				<div class="pre-wrap" ng-bind-html="selectedTestDefinition.normalRangeText"></div>
+
+				<h3>{{ 'normalRanges' | translate }}</h3>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'age' | translate }}</th>
+							<th>{{ 'ageUnit' | translate }}</th>
+							<th>{{ 'ageFrom' | translate }}</th>
+							<th>{{ 'ageFromUnit' | translate }}</th>
+							<th>{{ 'ageTo' | translate }}</th>
+							<th>{{ 'ageToUnit' | translate }}</th>
+							<th>{{ 'meanNormalValue' | translate }}</th>
+							<th>{{ 'minNormalValue' | translate }}</th>
+							<th>{{ 'maxNormalValue' | translate }}</th>
+							<th>{{ 'minDetectableValue' | translate }}</th>
+							<th>{{ 'maxDetectableValue' | translate }}</th>
+							<th>{{ 'minPanicValue' | translate }}</th>
+							<th>{{ 'maxPanicValue' | translate }}</th>
+							<th>{{ 'sex' | translate }}</th>
+							<th>{{ 'signum' | translate }}</th>
+							<th>{{ 'unit' | translate }}</th>
+							<th>{{ 'notes' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="normalRange in selectedTestDefinition.normalRanges">
+								<td>{{normalRange.age}}</td>
+								<td>{{normalRange.ageUnit.description[locale]}}</td>
+								<td>{{normalRange.ageFrom}}</td>
+								<td>{{normalRange.ageFromUnit.description[locale]}}</td>
+								<td>{{normalRange.ageTo}}</td>
+								<td>{{normalRange.ageToUnit.description[locale]}}</td>
+								<td>{{normalRange.meanNormalValue}}</td>
+								<td>{{normalRange.minNormalValue}}</td>
+								<td>{{normalRange.maxNormalValue}}</td>
+								<td>{{normalRange.minDetectableValue}}</td>
+								<td>{{normalRange.maxDetectableValue}}</td>
+								<td>{{normalRange.minPanicValue}}</td>
+								<td>{{normalRange.maxPanicValue}}</td>
+								<td>{{normalRange.sex.description[locale]}}</td>
+								<td>{{normalRange.signum.description[locale]}}</td>
+								<td>{{normalRange.unit.description[locale]}}</td>
+								<td>{{normalRange.notes}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h3>{{ 'interpretation' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.interpretation"></div>
+
+				<h3>{{ 'cautions' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.cautions"></div>
+
+				<h3>{{ 'supportiveData' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.supportiveData"></div>
+
+				<h3>{{ 'clinicalReference' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.clinicalReference"></div>
+
+				<h3>{{ 'advisoryInformation' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.advisoryInformation"></div>
+
+				<h3>{{ 'necessaryInformation' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.necessaryInformation"></div>
+
+				<h3>{{ 'urinePreservativeCollectionOptions' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.urinePreservativeCollectionOptions"></div>
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'performance' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'daysTimesPerformed' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.daysTimesPerformed"></div>
+
+				<h3>{{ 'analyticTime' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.analyticTime"></div>
+
+				<h3>{{ 'maximumLabTime' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.maximumLabTime"></div>
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'feesAndCoding' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'cptCode' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.cptCode"></div>
+
+				<h3>{{ 'cptUnits' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.cptUnits"></div>
+
+				<h3>{{ 'loincCode' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.loincCode"></div>
+
+				<h3>{{ 'loincAttributes' | translate }}</h3>
+				<div>
+					<table class="bordered-column">
+						<tbody>
+							<tr ng-repeat="(key, value) in filterItem(selectedTestDefinition.loincAttributes)">
+								<td class="bold">{{ key | translate}}</td>
+								<td>{{value}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</md-tab-body>
+		</md-tab>
+		<md-tab>
+			<md-tab-label>
+				{{ 'questions' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<div>
+					<table class="bordered-column">
+						<thead>
+							<th>{{ 'standardCode' | translate }}</th>
+							<th>{{ 'description' | translate }}</th>
+							<th>{{ 'questionType' | translate }}</th>
+							<th>{{ 'questionOptions' | translate }}</th>
+						</thead>
+						<tbody>
+							<tr ng-repeat="question in selectedTestDefinition.testQuestions">
+								<td>{{question.standardCode}}</td>
+								<td>{{question.description}}</td>
+								<td>{{question.lkpQuestionType.name[locale]}}</td>
+								<td>
+									<li ng-repeat="option in question.testQuestionOptions">
+										{{option.description}}
+									</li>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</md-tab-body>
+		</md-tab>
+
+
+		<md-tab>
+			<md-tab-label>
+				{{ 'other' | translate }}
+			</md-tab-label>
+			<md-tab-body>
+				<h3>{{ 'shippingInstructions' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.shippingInstructions"></div>
+
+				<h3>{{ 'specialInstructions' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.specialInstructions"></div>
+
+				<h3>{{ 'testingAlgorithm' | translate }}</h3>
+				<div ng-bind-html="selectedTestDefinition.testingAlgorithm"></div>
+			</md-tab-body>
+		</md-tab>
+	</md-tabs>
+</div>
+<div layout="row" flex>
+	<md-button class="md-primary md-raised" type="button" ng-click="setView('viewAll')">
+		<md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+	</md-button>
+</div>

@@ -1,0 +1,13 @@
+<md-toast class="application-toast" ng-class="content.color">
+    <md-icon class="toast-type" md-font-icon="{{content.icon}}"></md-icon>
+    <!-- <div class="toast-border"></div> -->
+    <div class="toast-content">
+        <div class="bold">
+            {{content.type | translate}}
+        </div>
+        <div>
+            {{content.message | translate}}
+        </div>
+    </div>
+    <md-icon md-font-icon="fa fa-times" ng-click="closeToast()" class="clickable-item toast-close-icon"></md-icon>
+</md-toast>

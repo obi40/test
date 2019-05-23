@@ -1,0 +1,12 @@
+.scroll-bottom {
+    width: 100%;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    span {
+        background-color: $grey;
+        border-radius: 100%;
+        border-style: inset;
+        display: inline-block;
+        margin: 0 5px;
+    }
+}

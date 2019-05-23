@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="daily_income" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" isFloatColumnFooter="true" uuid="4fcdd084-3ccc-4908-9237-3dd4d3402c76">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<subDataset name="MainDataset" uuid="3294bde5-7ae2-4268-8c37-135996d26ee5">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="VisitsDataset" uuid="666a5e7a-6fcd-48db-9f9c-ee10968f980b"/>
+	<parameter name="userName" class="java.lang.String"/>
+	<parameter name="dateFrom" class="java.util.Date"/>
+	<parameter name="dateTo" class="java.util.Date"/>
+	<parameter name="allCashTotal" class="java.math.BigDecimal"/>
+	<parameter name="allCreditTotal" class="java.math.BigDecimal"/>
+	<parameter name="allDiscountTotal" class="java.math.BigDecimal"/>
+	<parameter name="allNotPaidTotal" class="java.math.BigDecimal"/>
+	<parameter name="grandTotal" class="java.math.BigDecimal"/>
+	<parameter name="discountPerc" class="java.math.BigDecimal"/>
+	<parameter name="branchName" class="java.lang.String"/>
+	<parameter name="namePrimary" class="java.lang.String"/>
+	<field name="emrVisit" class="com.optimiza.ehope.lis.model.EmrVisit"/>
+	<field name="totalDiscount" class="java.math.BigDecimal"/>
+	<field name="totalCash" class="java.math.BigDecimal"/>
+	<field name="totalCredit" class="java.math.BigDecimal"/>
+	<field name="totalNotPaid" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<staticText>
+				<reportElement x="157" y="0" width="240" height="20" uuid="bc181ade-8046-4c6b-a7c0-e349b80b7842"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Daily Income Report
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="25" height="20" uuid="3266683f-68d4-46a6-be36-480f7046e2be"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[User]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="100" width="25" height="20" uuid="1cec51b0-a05c-4ced-9f80-35ea0c30848b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="30" y="80" width="140" height="20" uuid="e712520c-fa03-4cdb-bc09-4386d7631c0a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{userName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="157" y="40" width="240" height="20" uuid="af83e622-8445-4405-9223-17fa58e5523d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["From: " + $P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format($P{dateFrom})  + "   To: " + $P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format($P{dateTo})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="30" y="100" width="140" height="20" uuid="80a08616-994e-4a04-944a-acd0e10683ba"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="25" y="80" width="5" height="20" uuid="3b8efe57-84e8-4b30-9e06-e91c41eee535"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="100" width="5" height="20" uuid="60ac676d-68ff-4f3d-a2de-2de0582b8d63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="20" width="240" height="20" uuid="e8852c6e-65d8-4b4c-b14d-e00e8c8e33cf"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{branchName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="20" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="d4b975e7-4d89-4479-8e09-aba2e9cce542">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="20" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="65bbbd8f-cf4a-4f80-a60e-6fa483df82c1">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Order No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="84" y="0" width="150" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="c431b0c2-3088-4861-995f-c601fa6e27fb">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Patient Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="298" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="61872786-6b59-4820-9961-6514b9839874">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Discount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="362" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="ede4a3e6-b2c2-4682-94a0-658732ad0eee">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cash/Visa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="426" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="9fec319e-601c-4364-9a0b-4d86799faa87">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Credit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="490" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="57cce42e-9287-422b-9da0-6215320e6f7a">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Not Paid]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="234" y="0" width="64" height="20" forecolor="#FFFFFF" backcolor="#24709C" uuid="bfe99557-ac5e-4266-8ef2-349fb871c9ee">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="1"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Order Date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="490" y="0" width="64" height="20" uuid="5fdc05fd-3197-42f2-9672-2dca47449e3f">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalNotPaid}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="84" y="0" width="150" height="20" uuid="a1a7e2d8-91dd-4720-a1a1-a99ed6c1363f">
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emrVisit}.getEmrPatientInfo().getFullName().get($P{namePrimary})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="426" y="0" width="64" height="20" uuid="d713006c-1cb6-49b7-a6eb-36260b749545">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalCredit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="362" y="0" width="64" height="20" uuid="dcf09499-a976-4a20-be7a-1026b52e1878">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalCash}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="20" y="0" width="64" height="20" uuid="bb28d24a-b8b1-4a87-8b60-27b8761560c8"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emrVisit}.getAdmissionNumber()]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="0" y="0" width="20" height="20" uuid="999c19e5-3dec-45ce-8b0d-f53e895ceb35"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="234" y="0" width="64" height="20" uuid="40da6f58-f6fc-4f91-b960-05c1bea98bac"/>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format($F{emrVisit}.getVisitDate())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement stretchType="ContainerHeight" x="298" y="0" width="64" height="20" uuid="e677bd48-f2d8-49aa-a73c-2a26a328c0bf">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalDiscount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement mode="Transparent" x="0" y="10" width="140" height="40" uuid="7f726440-45d8-4233-a62c-571c54cb6527"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<imageExpression><![CDATA["reports/images/Acculab-logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="416" y="34" width="54" height="15" uuid="2e6a023f-d4fa-49ff-8f14-4ed8a91bb4a0"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[www.acculab.me]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="70" width="50" height="20" uuid="dc4b7d46-1675-4c93-a1e9-459ffc41984e"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="70" width="25" height="20" uuid="7695b180-8de8-4c02-ad48-e6b3ae5232f1"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="235" y="35" width="170" height="20" uuid="d774c290-d536-4b17-87fb-765136bc87b8"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[Mecca street Mecca Towers, Complex No.172 -1st Floor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="30" width="70" height="25" uuid="bacf70e4-9529-4a6b-b4ec-603a8dcaef31"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[T+ 962 6 5629999
+  + 962 6 5100100
+F+ 962 6 5629988]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="80">
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="491" y="0" width="64" height="20" uuid="38048405-a0b2-4f3f-a8ba-253a343be17e">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{allNotPaidTotal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="427" y="0" width="64" height="20" uuid="8cfe96e8-1c78-48c2-9634-f146bc1f5815">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{allCreditTotal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="363" y="0" width="64" height="20" uuid="f2eea21c-becc-4b8e-b928-be310b1b0e4c">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{allCashTotal}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="427" y="40" width="64" height="20" uuid="e37ec5a3-b813-4070-a8e0-2f4b9475c676">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{allDiscountTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="299" y="0" width="64" height="20" uuid="4f134d8e-8bbf-44a9-9989-829b79cca30b">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Totals (JOD):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="40" width="122" height="20" uuid="428861b8-4711-4785-bfed-38d44516ab5d">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Total Discount (JOD)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="427" y="60" width="128" height="20" uuid="c75a5ffe-2c11-48a6-a8aa-db298027f443">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineColor="#000000"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{grandTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="60" width="122" height="20" uuid="a6801f39-c5aa-4400-87a1-5cda78b6b411">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Grand Total (JOD)]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.000;(#,##0.000-)" isBlankWhenNull="true">
+				<reportElement x="491" y="40" width="64" height="20" uuid="8e708df9-a3a5-4f33-a790-bba2e121af48">
+					<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="3"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{discountPerc}.floatValue() + "%"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="422" y="40" width="5" height="20" uuid="00141a36-5e76-470e-8d79-18ef88a23de9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="422" y="60" width="5" height="20" uuid="3d83a1fb-7c58-4721-8ca7-d537735ebb05"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

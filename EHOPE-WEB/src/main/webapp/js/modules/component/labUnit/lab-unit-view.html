@@ -1,0 +1,47 @@
+<md-content class="lab-unit-wrapper">
+    <form name="labUnitForm" novalidate flex>
+        <md-toolbar class="short-toolbar">
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="addLabUnit()"
+                        type="button" authority-checker="ADD_LAB_UNIT">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+
+                    <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini" ng-disabled="labUnit==null"
+                        ng-click="editLabUnit(labUnit)" authority-checker="UPD_LAB_UNIT">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+
+                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" type="button"
+                        http-disable-click ng-disabled="!labUnitChanged" ng-click="saveLabUnit()">
+                        <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                    </md-button>
+
+                    <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" type="button" ng-disabled="labUnit==null"
+                        confirm-click="deleteLabUnit" authority-checker="DEL_LAB_UNIT">
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                    </md-button>
+
+                    <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini" ng-disabled="!labUnitChanged"
+                        ng-click="cancelLabUnitChanges()">
+                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrid()" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="labUnitsGrid" id="labUnitsGrid" class="k-widget k-grid" options="labUnitsGridOptions"></div>
+    </form>
+</md-content>

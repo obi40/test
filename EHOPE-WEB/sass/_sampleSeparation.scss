@@ -1,0 +1,65 @@
+.sample-separation-wrapper {
+    .samples-action-buttons {
+        md-icon {
+            font-size: 1.5em;
+        }
+    }
+    .sample-container {
+        md-chips-wrap {
+            box-shadow: none;
+        }
+        md-card-content {
+            padding: 0 !important;
+        }
+        .sample-label {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 1.3em;
+        }
+        .card-actions {
+            button {
+                // margin between action buttons on card
+                margin-bottom: 10px !important;
+            }
+        }
+        .container-type {
+            font-weight: 600;
+            font-style: italic;
+        }
+        .sample-state-container {
+            position: relative;
+            .icon-container {
+                border: 1px solid;
+                border-radius: 50%;
+                md-icon {
+                    text-align: center;
+                    color: white;
+                }
+            }
+            .sample-state,
+            md-progress-circular {
+                position: absolute;
+                top: 5px;
+                #{$opposite-direction}: 15px;
+            }
+            .disabled-state {
+                position: absolute;
+                top: 5px;
+                #{$direction}: 15px;
+            }
+            .valid-state {
+                border-color: $success-color !important;
+                background: $success-color !important;
+            }
+            .invalid-state {
+                border-color: $error-color !important;
+                background: $error-color !important;
+            }
+            .warning-state {
+                border-color: $warning-color !important;
+                background: $warning-color !important;
+            }
+        }
+    }
+}

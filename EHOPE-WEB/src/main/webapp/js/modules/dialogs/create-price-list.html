@@ -1,0 +1,25 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'priceList' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="billingPriceListForm" http-disable-click novalidate ng-submit="createBillPriceList()" layout-margin>
+        <p flex class="md-subhead">{{'billingPriceListDefaultWarning' | translate}}</p>
+        <md-dialog-content layout="column" layout-align="center center" flex>
+            <div layout="row" layout-wrap flex layout-align="center center">
+                <trans-field dynamic-flex="100|100|100|100|100" model="newBillPriceList" form="billingPriceListForm"
+                    languages="transFields.name" />
+                <md-input-container dynamic-flex="100|100|100|100|100">
+                    <md-checkbox name="isDefault" ng-model="newBillPriceList.isDefault">{{'default' | translate}}</md-checkbox>
+                </md-input-container>
+            </div>
+            <md-button class="md-fab md-mini" type="submit">
+                <md-icon md-font-icon="fas fa-save"></md-icon>
+            </md-button>
+        </md-dialog-content>
+    </form>
+</md-dialog>

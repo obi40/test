@@ -1,0 +1,13 @@
+.role-management-wrapper {
+    .users-grid {
+        margin-top: 10px;
+    }
+    .children-list {
+        margin-top: 5px;
+        margin-left: 60px;
+        >div {
+            //direct divs
+            margin-bottom: 10px;
+        }
+    }
+}

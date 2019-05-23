@@ -1,0 +1,97 @@
+<div class="home-wrapper">
+    <div class="header" flex layout="row" layout-wrap layout-align="space-between center">
+        <img class="logo" src="./assets/images/logo/Acculab-logo-white.svg" />
+        <div class="navigations" dynamic-flex layout="row" layout-wrap layout-align="space-around center">
+            <a href="" ng-click="scrollTo('pricings')">
+                {{ 'pricings' | translate }}
+            </a>
+            <a ng-href="subscription">
+                {{ 'getAcculab' | translate }}
+            </a>
+            <a ng-href="login">
+                {{ 'login' | translate }}
+            </a>
+        </div>
+    </div>
+    <div id="1" class="img-container" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test.jpeg");'>
+        <div class="info" layout="column" layout-align="center center">
+            <div>AccuLab</div>
+            <div>Run your lab more efficiently by automating tasks and integrating with instruments and systems. With a
+                flexible
+                system along with an experienced professional services team, you minimize the risk of project delays or
+                failures.
+                Once live, the system can easily adapt to evolving business requirements. AccuLab lets you reduce your
+                total
+                cost of ownership through reduced maintenance and training</div>
+        </div>
+    </div>
+
+    <div flex layout="row" layout-wrap>
+        <div id="2" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test2.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Most Modern LIS</div>
+                <div>Reduce maintenance costs and increase scalability by using the latest, industry standard
+                    technologies</div>
+            </div>
+        </div>
+        <div id="3" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test3.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Range of Services</div>
+                <div>Our implementation, validation and managed services make adoption and maintenance easier</div>
+            </div>
+        </div>
+    </div>
+    <div flex layout="row" layout-wrap>
+        <div id="4" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test4.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Right LIS for You</div>
+                <div>Pick from our prepackaged or pre-validated editions to accelerate implementation and go-live
+                    faster</div>
+            </div>
+        </div>
+        <div id="5" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test5.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Innovating Faster</div>
+                <div>We are innovating faster, adding features that will maximize the value of your LIS over time</div>
+            </div>
+        </div>
+    </div>
+    <div id="6" class="img-container" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test6.jpeg");'>
+        <div class="info" layout="column" layout-align="center center">
+            <div>Get Information Quickly</div>
+            <div>It is important that you can access your information at the touch of a button. As AccuLab LIS
+                centralizes your data, either in your own data center or in the cloud, you can easily retrieve the
+                information you need. You can enter and retrieve data through your web browser</div>
+        </div>
+    </div>
+    <div flex layout="row" layout-wrap>
+        <div id="7" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test7.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Make Better, More Informed Decisions</div>
+                <div>AccuLab LIS can help make better, more informed decisions thanks to its sophisticated real-time
+                    reporting. This helps you analyze data more quickly, allowing laboratory managers to get access to
+                    the right information at each stage of the testing process</div>
+            </div>
+        </div>
+        <div id="8" class="img-container" dynamic-flex="100|100|50|50|50" style='background-image: linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("./assets/images/test8.jpeg");'>
+            <div class="info" layout="column" layout-align="center center">
+                <div>Grow Profitability</div>
+                <div>Our LIS uses automation to improve data handling and help detect irregularities. What's more, they
+                    enhance data integrity, increase your laboratory capacity and improve efficiency all-round, helping
+                    make your laboratory more streamlined, more effective, and more profitable</div>
+            </div>
+        </div>
+    </div>
+    <div class="feature-container" layout="row" flex layout-wrap>
+        <div class="feature-parent" ng-repeat="feature in features" dynamic-flex="100|50|33|20|20">
+            <div class="feature" md-whiteframe="3">
+                <div class="icon">
+                    <md-icon md-font-icon="{{feature.icon}}"></md-icon>
+                </div>
+                <div class="label">{{feature.label}}</div>
+                <div class="info">{{feature.info}}</div>
+            </div>
+        </div>
+    </div>
+    <div id="pricings">{{ 'pricings' | translate }}</div>
+</div>

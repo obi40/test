@@ -1,0 +1,25 @@
+<div class="autocomplete-search">
+    <md-autocomplete md-menu-class="autocomplete-search" md-selected-item="options.selectedItem"
+        ng-disabled="options.disabled" md-delay="delayTime" md-min-length="1" md-no-cache="true"
+        md-floating-label="{{label | translate}}" md-item-text="item.autocompleteCode" md-clear-button="true"
+        md-items="item in autocompleteSearch(options.searchText,false)" md-search-text="options.searchText"
+        md-selected-item-change="selectedItemChange(item)">
+        <md-item-template>
+            <span ng-show="item.rid === -1">
+                <md-icon md-font-icon="fas fa-search"></md-icon>
+                <span>{{item.searchLabel}}</span>
+            </span>
+            <span class="item-viewer" ng-show="item.rid !== -1">
+                <!-- add image here -->
+                <img class="autocomplete-image" ng-class="item.image ? '' : 'hidden'" ng-show="options.skeleton.image"
+                    ng-src="data:image/png;base64,{{item.image}}" />
+                <span ng-class="item.isItemDisabled ? 'line-through' : ''">
+                    <span ng-hide="options.skeleton.description === options.skeleton.code"
+                        class="bold">({{item.autocompleteCode}})
+                    </span>
+                    {{item.autocompleteDescription}}
+                </span>
+            </span>
+        </md-item-template>
+    </md-autocomplete>
+</div>

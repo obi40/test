@@ -1,0 +1,42 @@
+<div class="test-question-setup">
+    <fieldset>
+        <legend>
+            {{'questions' | translate}}
+        </legend>
+        <form novalidate name="questionSetupForm">
+            <div class="question-wrapper" ng-repeat="question in testQuestions" layout="row" flex layout-wrap ng-if="!question.markedForDeletion">
+                <div layout="row" flex layout-wrap>
+                    <md-input-container dynamic-flex="100|100|25|25|25">
+                        <label>
+                            {{'standardCode' | translate}}</label>
+                        <input type="text" name="standardCode" ng-model="question.standardCode" ng-required="metaData.standardCode.notNull"
+                            ng-minlength="metaData.standardCode.sized? metaData.standardCode.min:''" ng-maxlength="metaData.standardCode.sized? metaData.standardCode.max:''" />
+                        <input-messages input-errors="questionSetupForm.standardCode.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex="100|100|50|50|50">
+                        <label>
+                            {{'description' | translate}}</label>
+                        <input type="text" name="description" ng-model="question.description" ng-required="metaData.description.notNull"
+                            ng-minlength="metaData.description.sized? metaData.description.min:''" ng-maxlength="metaData.description.sized? metaData.description.max:''" />
+                        <input-messages input-errors="questionSetupForm.description.$error" />
+                    </md-input-container>
+                    <lov dynamic-flex="100|100|25|25|25" form="questionSetupForm" options="question.questionTypeLov"
+                        select="question.lkpQuestionType"></lov>
+                </div>
+                <div layout="column" layout-align="start center">
+                    <md-button class="md-fab md-mini red-button tiny-button" aria-label="{{'delete' | translate}}"
+                        confirm-click="delete" confirm-click-arg="question">
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </form>
+        <div layout="row" flex layout-align="center center">
+            <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}" ng-click="add()">
+                <md-icon md-font-icon="fas fa-2x fa-plus"></md-icon>
+                <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+            </md-button>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,67 @@
+.success-color {
+    color: $success-color !important;
+}
+
+.error-color {
+    color: $error-color !important;
+}
+
+.info-color {
+    color: $info-color !important;
+}
+
+.warning-color {
+    color: $warning-color !important;
+}
+
+.application-toast {
+    position: fixed !important;
+    .toast-content {
+        max-height: 168px; //same as angular's max height for toasts
+    }
+    .toast-type {
+        padding-#{$opposite-direction}: 10px;
+        font-size: 2em;
+        color: $primary-theme-white-color;
+        margin: 0;
+    }
+    .toast-border {
+        border: 1px solid $primary-theme-white-color;
+        height: 30px;
+        border-radius: 1px;
+        border-width: 1.5px;
+        margin-#{$opposite-direction}: 10px;
+    }
+    .toast-close-icon {
+        position: absolute;
+        top: 0px;
+        #{$opposite-direction}: 0px;
+        text-align: center;
+        outline: none;
+        color: $primary-theme-white-color;
+    }
+}
+
+.success-toast .md-toast-content {
+    background: $success-color !important;
+}
+
+.info-toast .md-toast-content {
+    background: $info-color !important;
+}
+
+.warning-toast .md-toast-content {
+    background: $warning-color !important;
+}
+
+.error-toast .md-toast-content {
+    background: $error-color !important;
+}
+
+.error-fatal-toast .md-toast-content {
+    background: $error-fatal-color !important;
+}
+
+.error-tooltip {
+    background: $error-color !important;
+}

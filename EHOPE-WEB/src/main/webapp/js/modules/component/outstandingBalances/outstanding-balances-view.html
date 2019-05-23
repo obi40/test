@@ -1,0 +1,50 @@
+<div class="outstanding-balances">
+    <form novalidate http-disable-click name="outstandingBalancesForm" ng-submit="search()" flex layout="column">
+        <div layout="row" layout-wrap flex>
+            <autocomplete-search dynamic-flex="100|50|50|25|25" options="patientSearchOptions"></autocomplete-search>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'from' | translate}}</label>
+                <md-datepicker date-mask name="visitDateFrom" ng-model="filters.visitDateFrom" md-max-date="filters.visitDateTo?filters.visitDateTo:''"></md-datepicker>
+                <input-messages input-errors="outstandingBalancesForm.visitDateFrom.$error" />
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'to' | translate}}</label>
+                <md-datepicker date-mask name="visitDateTo" ng-model="filters.visitDateTo" md-min-date="filters.visitDateFrom"></md-datepicker>
+                <input-messages input-errors="outstandingBalancesForm.visitDateTo.$error" />
+            </md-input-container>
+            <div dynamic-flex="100|50|50|25|25">
+                <md-button class="md-primary md-raised" type="submit" ng-disabled="outstandingBalancesForm.$invalid || (filters.visitDateTo !== null && filters.visitDateFrom === null)">
+                    <md-icon md-font-icon="fas fa-search"></md-icon>
+                    <md-tooltip md-direction="top">{{'search' | translate}}</md-tooltip>
+                </md-button>
+            </div>
+        </div>
+    </form>
+    <md-toolbar class="short-toolbar" flex>
+        <div class="md-toolbar-tools">
+            <div layout="row" flex>
+                <md-button class="md-fab md-mini" ng-click="pay()" ng-disabled="selectedVisit === null"
+                    authority-checker="ADD_PAYMENT">
+                    <md-icon md-font-icon="fas fa-dollar-sign"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'pay' | translate }}</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="generatePatientOutstandingBalances()" ng-disabled="selectedVisit === null">
+                    <md-icon md-font-icon="fas fa-print"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'print' | translate }}</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="generateAllOutstandingBalances()" ng-disabled="outstandingBalancesDataSource.data().length === 0">
+                    <md-icon md-font-icon="fas fa-print"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'printAll' | translate }}</md-tooltip>
+                </md-button>
+            </div>
+            <div layout="row">
+                <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click ng-click="refreshGrid()"
+                    type="button">
+                    <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div id="outstandingBalancesGrid" kendo-grid="outstandingBalancesGrid" options="outstandingBalancesGridOptions"></div>
+</div>

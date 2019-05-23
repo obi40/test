@@ -1,0 +1,61 @@
+<div ng-show="viewMode === 'viewAll'">
+	<div layout="row" flex layout-wrap layout-align="start center">
+		<autocomplete-search dynamic-flex="100|50|50|25|25" options="testDefinitionSearchOptions"></autocomplete-search>
+	</div>
+	<md-toolbar class="short-toolbar">
+		<div class="md-toolbar-tools">
+			<md-button aria-label="{{'quickAdd' | translate}}" authority-checker="ADD_TEST_DEFINITION"
+				class="md-fab md-mini" ng-click="quickAdd()" type="button">
+				<md-tooltip md-direction="top">{{'quickAdd' | translate}}</md-tooltip>
+				<md-icon md-font-icon="fas fa-plus"></md-icon>
+			</md-button>
+			<md-button aria-label="{{'quickEdit' | translate}}" authority-checker="UPD_TEST_DEFINITION"
+				class="md-fab md-mini" ng-disabled="selectedCount != 1 || !selectedTestIsActive" ng-click="quickEdit()">
+				<md-icon md-font-icon="fas fa-edit"></md-icon>
+				<md-tooltip md-direction="top">{{ 'quickEdit' | translate }}</md-tooltip>
+			</md-button>
+			<!-- <md-button aria-label="{{'add' | translate}}" authority-checker="ADD_TEST_DEFINITION" class="md-fab md-mini"
+			 ng-click="add()" type="button">
+				<md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+				<md-icon md-font-icon="fas fa-plus"></md-icon>
+			</md-button>
+			<md-button aria-label="{{'edit' | translate}}" authority-checker="UPD_TEST_DEFINITION" class="md-fab md-mini"
+			 ng-disabled="selectedCount != 1 || !selectedTestIsActive" ng-click="edit()">
+				<md-icon md-font-icon="fas fa-edit"></md-icon>
+				<md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+			</md-button> -->
+			<md-button type="button" ng-click="setView('viewSingle')" ng-disabled="selectedCount != 1"
+				aria-label="{{'view' | translate}}" class="md-fab md-mini">
+				<md-tooltip md-direction="top">{{ 'view' | translate }}</md-tooltip>
+				<md-icon md-font-icon="fas fa-eye"></md-icon>
+			</md-button>
+			<md-button aria-label="{{ 'activate' | translate }}" authority-checker="ACTIVATE_TEST_DEFINITION"
+				class="md-fab md-mini" ng-disabled="selectedCount != 1 || selectedTestIsActive" confirm-click="activate"
+				http-disable-click>
+				<md-icon md-font-icon="fas fa-check"></md-icon>
+				<md-tooltip md-direction="top">{{ 'activate' | translate }}</md-tooltip>
+			</md-button>
+			<md-button aria-label="{{ 'deactivate' | translate }}" authority-checker="DEACTIVATE_TEST_DEFINITION"
+				class="md-fab md-mini" ng-disabled="selectedCount != 1 || !selectedTestIsActive"
+				confirm-click="deactivate" http-disable-click>
+				<md-icon md-font-icon="fas fa-times"></md-icon>
+				<md-tooltip md-direction="top">{{ 'deactivate' | translate }}</md-tooltip>
+			</md-button>
+		</div>
+	</md-toolbar>
+	<div kendo-grid="testDefinitionGrid" id="testDefinitionGrid" class="k-widget k-grid"
+		options="testDefinitionGridOptions"></div>
+</div>
+
+<div ng-if="viewMode === 'viewSingle'" ng-include="viewSingleTestDefinitionTemplate" flex></div>
+
+<div ng-if="viewMode === 'edit' || viewMode === 'add'" ng-include="editTestDefinitionTemplate" flex></div>
+
+<div ng-if="viewMode === 'quickAdd' || viewMode === 'quickEdit'">
+	<md-button id="quickBackButton" class="md-primary md-raised" type="button" ng-click="setView('viewAll')">
+		<md-tooltip md-direction="top">{{ 'back' | translate }}</md-tooltip>
+		<md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+	</md-button>
+	<quick-test-definition quick-definition-options="quickDefinitionOptions" ng-if="quickDefinitionOptions">
+	</quick-test-definition>
+</div>

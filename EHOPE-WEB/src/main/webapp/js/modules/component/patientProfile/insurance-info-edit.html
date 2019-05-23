@@ -1,0 +1,54 @@
+<md-content ng-show="insuranceEditMode == 'viewAll'">
+    <md-toolbar class="short-toolbar">
+        <div class="md-toolbar-tools">
+            <div layout="row" flex>
+                <md-button aria-label="{{'create' | translate}}" authority-checker="ADD_PATIENT_INSURANCE"
+                    class="md-fab md-mini" ng-click="addInsurance(insuranceForm)" type="button">
+                    <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-plus"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'edit' | translate}}" authority-checker="UPD_PATIENT_INSURANCE"
+                    class="md-fab md-mini md-accent" ng-disabled="selectedInsurance === null"
+                    ng-click="editInsurance()">
+                    <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                </md-button>
+                <md-button aria-label="{{ 'activate' | translate }}" authority-checker="ACTIVATE_PATIENT_INSURANCE"
+                    class="md-fab md-mini" ng-disabled="selectedInsurance === null || selectedInsurance.isActive"
+                    ng-click="activateInsurance()" http-disable-click>
+                    <md-icon md-font-icon="fas fa-check"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'activate' | translate }}</md-tooltip>
+                </md-button>
+                <md-button aria-label="{{ 'deactivate' | translate }}" authority-checker="DEACTIVATE_PATIENT_INSURANCE"
+                    class="md-fab md-mini" ng-disabled="selectedInsurance === null || !selectedInsurance.isActive"
+                    ng-click="deactivateInsurance()" http-disable-click>
+                    <md-icon md-font-icon="fas fa-times"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'deactivate' | translate }}</md-tooltip>
+                </md-button>
+                <md-button aria-label="{{ 'default' | translate }}" authority-checker="UPD_PATIENT_INSURANCE"
+                    class="md-fab md-mini" ng-disabled="selectedInsurance === null || selectedInsurance.isDefault"
+                    ng-click="triggerDefaultInsurance()" http-disable-click>
+                    <md-icon md-font-icon="fas fa-window-maximize"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'default' | translate }}</md-tooltip>
+                </md-button>
+            </div>
+            <div layout="row">
+                <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                    ng-click="refreshPatientInsuranceGrid()" type="button">
+                    <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div kendo-grid="patientInsuranceGrid" id="patientInsuranceGrid" options="patientInsuranceGridOptions"></div>
+</md-content>
+
+<md-content ng-if="insuranceEditMode == 'edit' || insuranceEditMode == 'add'" class="hidden-overflow-x">
+    <patient-insurance-form selected-insurance="selectedInsurance" form-mode="insuranceEditMode">
+    </patient-insurance-form>
+    <md-button class="md-primary md-raised" type="button" ng-click="viewAllInsurance()">
+        <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+        <md-tooltip md-direction="top">{{ 'back' | translate }}</md-tooltip>
+    </md-button>
+</md-content>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="3976" started-at="2017-05-16T12:07:04Z" finished-at="2017-05-16T12:07:08Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="3976" started-at="2017-05-16T12:07:04Z" finished-at="2017-05-16T12:07:08Z">
+      <class name="com.optimiza.core.admin.test.UserServiceTest">
+        <test-method status="PASS" signature="springTestContextBeforeTestClass()[pri:0, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" test-instance-name="" name="springTestContextBeforeTestClass" is-config="true" duration-ms="15" started-at="2017-05-16T15:07:04Z" finished-at="2017-05-16T15:07:04Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestClass -->
+        <test-method name="springTestContextPrepareTestInstance" test-instance-name="" signature="springTestContextPrepareTestInstance()[pri:0, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" is-config="true" status="PASS" duration-ms="3766" finished-at="2017-05-16T15:07:08Z" started-at="2017-05-16T15:07:04Z" depends-on-methods="org.springframework.test.context.testng.AbstractTestNGSpringContextTests.springTestContextBeforeTestClass">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextPrepareTestInstance -->
+        <test-method status="PASS" signature="springTestContextBeforeTestMethod(java.lang.reflect.Method)[pri:0, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" test-instance-name="" name="springTestContextBeforeTestMethod" is-config="true" duration-ms="0" started-at="2017-05-16T15:07:08Z" finished-at="2017-05-16T15:07:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.optimiza.core.admin.test.UserServiceTest.testFindAll()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextBeforeTestMethod -->
+        <test-method status="PASS" signature="testFindAll()[pri:1, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" test-instance-name="" name="testFindAll" duration-ms="164" started-at="2017-05-16T15:07:08Z" finished-at="2017-05-16T15:07:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testFindAll -->
+        <test-method status="PASS" signature="springTestContextAfterTestClass()[pri:0, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" test-instance-name="" name="springTestContextAfterTestClass" is-config="true" duration-ms="0" started-at="2017-05-16T15:07:08Z" finished-at="2017-05-16T15:07:08Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestClass -->
+        <test-method status="PASS" signature="springTestContextAfterTestMethod(java.lang.reflect.Method)[pri:0, instance:com.optimiza.core.admin.test.UserServiceTest@4562e04d]" test-instance-name="" name="springTestContextAfterTestMethod" is-config="true" duration-ms="0" started-at="2017-05-16T15:07:08Z" finished-at="2017-05-16T15:07:08Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.optimiza.core.admin.test.UserServiceTest.testFindAll()]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- springTestContextAfterTestMethod -->
+      </class> <!-- com.optimiza.core.admin.test.UserServiceTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

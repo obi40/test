@@ -1,0 +1,30 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{ 'mergePatient' | translate }}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+        <patient-info ng-if="fromPatientInfoOptions!=null" options="fromPatientInfoOptions"></patient-info>
+        <div layout="column" layout-align="center center">
+            <md-icon md-font-icon="fas fa-arrow-circle-down fa-3x full-icon"></md-icon>
+        </div>
+        <autocomplete-search options="patientSearchOptions"></autocomplete-search>
+        <patient-info ng-if="toPatientInfoOptions.patientRid!=null" options="toPatientInfoOptions"></patient-info>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" flex>
+        <span layout="row" layout-align="start center">
+            <md-checkbox ng-model="confirmationCheck" class="no-margin-bottom"
+                aria-label="{{'confirmationCheck' | translate}}">
+                {{'confirmationCheck' | translate}}
+            </md-checkbox>
+        </span>
+        <md-button type="button" ng-click="merge()" ng-disabled="to==null || !confirmationCheck"
+            class="md-primary md-raised">
+            {{ 'merge' | translate }}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,34 @@
+<md-dialog id="idCardDialog" aria-label="{{'idCard' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'importUsingIdCard' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="idCardForm" novalidate ng-submit="readIdCard(idCardForm.$valid)">
+        <md-dialog-content>
+            <div class="md-dialog-content" flex>
+                <lov form="idCardForm" ng-if="idCardReaderOptions" options="idCardReaderOptions"
+                    select="idCardReaderOptions.selectedValue"></lov>
+                <md-input-container>
+                    <label>{{'idNo' | translate}}</label>
+                    <input ng-required="true" type="text" name="can" ng-model="can" />
+                    <input-messages input-errors="idCardForm.can.$error" />
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" flex layout-align="end end">
+            <md-button class="md-raised md-primary" type="submit" ng-disabled="idCardReadingStatus === 'waiting'">
+                <md-tooltip md-direction="top">{{'submit' | translate}}</md-tooltip>
+                {{'submit' | translate}}
+                <i class='fas' ng-class="idCardReadingStatus === 'waiting' ? 'fa-spinner fa-spin' : ''"></i>
+            </md-button>
+            <md-button class="md-raised" ng-click="cancel()">
+                <md-tooltip md-direction="top">{{'cancel' | translate}}</md-tooltip>
+                {{'cancel' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

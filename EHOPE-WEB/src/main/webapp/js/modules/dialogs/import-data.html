@@ -1,0 +1,26 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'import' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-margin>
+        <p>Step 1</p>
+        <p>Step 2</p>
+        <p>Step 3</p>
+        <upload-file file-data-wrapper="fileDataWrapper"></upload-file>
+    </md-dialog-content>
+    <!-- <md-dialog-actions layout="row">
+        <md-button ng-click="downloadTemplate()">
+            <md-tooltip md-direction="top">{{'downloadTemplate' | translate}}</md-tooltip>
+            <md-icon md-font-icon="fas fa-download"></md-icon>
+        </md-button>
+        <md-button ng-click="uploadTemplate()">
+            <md-tooltip md-direction="top">{{'uploadTemplate' | translate}}</md-tooltip>
+            <md-icon md-font-icon="fas fa-upload"></md-icon>
+        </md-button>
+    </md-dialog-actions> -->
+</md-dialog>

@@ -1,0 +1,128 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'payment' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="paymentDialogForm" id="paymentDialogForm" http-disable-click novalidate
+        ng-submit="submit(paymentDialogForm.$valid)" flex>
+        <md-dialog-content flex>
+            <div class="md-dialog-content" flex layout="column">
+                <div flex ng-repeat="payment in testPaymentList" layout="row" layout-wrap>
+                    <lov dynamic-flex="100|100|50|40|40" form="paymentDialogForm" options="payment.lkp"
+                        select="payment.lkpPaymentMethod" disable-select="successPayment"></lov>
+                    <md-input-container dynamic-flex="100|100|50|40|40">
+                        <label>{{'amount' | translate}}</label>
+                        <input type="number" name="amount" ng-model="payment.amount" ng-required="true"
+                            ng-change="onTestPaymentChange()" ng-pattern="patternPercent"
+                            ng-disabled="successPayment" />
+                        <input-messages input-errors="paymentDialogForm.amount.$error" />
+                    </md-input-container>
+                    <div dynamic-flex="100|100|100|20|20" layout="row" layout-align="center center">
+                        <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" type="button"
+                            ng-click="deleteTestPayment(payment)" ng-disabled="successPayment">
+                            <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fa fa-trash"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+                <div layout="row" layout-align="center center">
+                    <md-button aria-label="{{'add' | translate}}" class="md-fab md-mini" ng-click="addTestPayment()"
+                        type="button" ng-disabled="successPayment">
+                        <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fa fa-plus"></md-icon>
+                    </md-button>
+                </div>
+                <div flex layout-wrap layout="row" ng-hide="isPartial === true">
+                    <div dynamic-flex="100|50|50|50|50" layout="row">
+                        <md-input-container>
+                            <label>{{'discountPercentage' | translate}}</label>
+                            <input type="number" name="discountPercentage" ng-pattern="patternPercent" ng-min="0"
+                                ng-max="100" ng-model="discountPercentage"
+                                ng-change="discountPercentDeduct(discountPercentage,true)"
+                                ng-disabled="isPercentage==false || successPayment" />
+                            <input-messages input-errors="paymentDialogForm.discountPercentage.$error" />
+                        </md-input-container>
+                        <div class="flex-center">%</div>
+                        <div hide-xs class="left-rule"></div>
+                    </div>
+                    <div dynamic-flex="100|50|50|50|50" layout="row">
+                        <md-input-container>
+                            <label>{{'discountAmount' | translate}}</label>
+                            <input type="number" name="discountAmount" ng-pattern="patternPercent" ng-min="0"
+                                ng-max="originalTotalPrice" ng-model="discountAmount"
+                                ng-change="discountPercentDeduct(discountAmount,false)"
+                                ng-disabled="isAmount==false || successPayment" />
+                            <input-messages input-errors="paymentDialogForm.discountAmount.$error" />
+                        </md-input-container>
+                        <div class="flex-center">{{currency}}</div>
+                    </div>
+                </div>
+                <div ng-if="isEditOrder" class="bold">
+                    {{'paidAmount' | translate}}: {{previousPaidAmount}} {{currency}}</span>
+                </div>
+                <div>{{'feesAfterDiscount' | translate}}: {{feesAfterDiscount}} {{currency}}
+                </div>
+                <div class="bottom-rule">{{'total' | translate}}: {{testPaymentTotal}}</div>
+                <div layout="row" layout-align="space-between center">
+                    <div>{{'feesChange' | translate}}: {{testPaymentChange}}</div>
+                    <div ng-if="(feesAfterDiscount - testPaymentTotal) >= 0">{{'remainingAmount' | translate}}:
+                        {{(feesAfterDiscount - testPaymentTotal) | number:2}}
+                    </div>
+                </div>
+
+                <div ng-hide="successPayment === false || isPartial === true">
+                    <fieldset>
+                        <legend>{{ 'resultDelivery' | translate }}</legend>
+                        <div layout="row" layout-wrap>
+                            <span dynamic-flex="100|100|50|50|50">
+                                <md-checkbox class="no-margin-bottom" ng-model="visit.isSmsNotification"
+                                    aria-label="{{'sms' | translate}}">
+                                    {{'sms' | translate}}
+                                </md-checkbox>
+                            </span>
+                            <!-- <span dynamic-flex="100|100|33|33|33">
+                                <md-checkbox class="no-margin-bottom" ng-model="visit.isWhatsappNotification"
+                                    aria-label="{{'whatsapp' | translate}}">
+                                    {{'whatsapp' | translate}}
+                                </md-checkbox>
+                            </span> -->
+                            <span dynamic-flex="100|100|50|50|50">
+                                <md-checkbox class="no-margin-bottom" ng-model="visit.isEmailNotification"
+                                    aria-label="{{'email' | translate}}">
+                                    {{'email' | translate}}
+                                </md-checkbox>
+                            </span>
+                        </div>
+                    </fieldset>
+                    <br />
+                    <!-- <div>
+                        <md-checkbox aria-label="{{'publishToDoctor' | translate}}">
+                            {{'publishToDoctor' | translate}}
+                        </md-checkbox>
+                    </div> -->
+                    <md-button ng-click="generateInvoiceReport()" class="md-raised">
+                        {{'printInvoice' | translate}}
+                    </md-button>
+                    <md-button ng-click="generateInsuranceInvoiceReport()" ng-show="isInsured" class="md-raised">
+                        {{'printInsuranceInvoice' | translate}}
+                    </md-button>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" flex>
+            <md-button type="submit" class="md-primary md-raised" authority-checker="ADD_PAYMENT"
+                ng-hide="successPayment === true"
+                ng-disabled="paymentDialogForm.$invalid || testPaymentTotal==null || testPaymentTotal==0">
+                {{'submit' | translate}}
+            </md-button>
+            <md-button ng-click="finish()" class="md-primary md-raised"
+                ng-hide="successPayment === false || isPartial === true" ng-disabled="successPayment === false">
+                {{'finish' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

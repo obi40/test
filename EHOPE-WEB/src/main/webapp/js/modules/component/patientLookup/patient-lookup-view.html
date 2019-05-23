@@ -1,0 +1,77 @@
+<div flex class="patient-lookup">
+    <div layout="row" layout-wrap flex>
+        <autocomplete-search dynamic-flex="100|100|50|25|25" options="patientSearchOptions"></autocomplete-search>
+        <div layout="row" layout-wrap flex dynamic-flex="100|100|50|75|75">
+            <div flex="50" layout="row" layout-align="start center">
+                <md-button class="md-raised" ng-click="showAdvancedSearch()">{{ 'advancedSearch' | translate }}
+                </md-button>
+                <span ng-show="showPager">{{patients.length}}/{{totalPatients}}</span>
+                <md-button ng-disabled="fingerprintReadingState === 'waiting'" class="md-raised"
+                    ng-click="findPatientRidByFingerprint()">
+                    {{ 'searchByFingerprint' | translate }}
+                    <i ng-class="fingerprintReadingState === 'waiting' ? 'fas fa-spinner fa-spin' : ''"></i>
+                </md-button>
+                <md-button class="md-raised" type="button" ng-click="clearSearch()">
+                    <md-icon md-font-icon="fas fa-times"></md-icon>
+                    <md-tooltip md-direction="top">{{'clear' | translate}}</md-tooltip>
+                </md-button>
+            </div>
+            <div flex="50" layout="row" layout-align="end center">
+                <md-button class="md-raised" ng-click="addPatient()">{{ 'addNewPatient' | translate }}</md-button>
+            </div>
+        </div>
+    </div>
+    <div ng-show="advancedSearchBool">
+        <form layout="row" flex layout-wrap novalidate ng-submit="advancedSearch()">
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'firstName' | translate}}</label>
+                <input ng-model="advancedSearchQuery.firstName">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'secondName' | translate}}</label>
+                <input ng-model="advancedSearchQuery.secondName">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'thirdName' | translate}}</label>
+                <input ng-model="advancedSearchQuery.thirdName">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'lastName' | translate}}</label>
+                <input ng-model="advancedSearchQuery.lastName">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'nationalNumber' | translate}}</label>
+                <input ng-model="advancedSearchQuery.nationalId">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'mobileNumber' | translate}}</label>
+                <input ng-model="advancedSearchQuery.mobileNo">
+            </md-input-container>
+            <md-input-container dynamic-flex="100|50|50|25|25">
+                <label>{{'fileNumber' | translate}}</label>
+                <input ng-model="advancedSearchQuery.fileNo">
+            </md-input-container>
+            <div layout="row" layout-align="start center" dynamic-flex="100|50|50|25|25">
+                <md-button class="md-primary md-raised" type="submit">
+                    <md-icon md-font-icon="fas fa-search"></md-icon>
+                    <md-tooltip md-direction="top">{{'search' | translate}}</md-tooltip>
+                </md-button>
+                <md-button class="md-raised" type="button" ng-click="clearAdvancedSearch()">
+                    <md-icon md-font-icon="fas fa-times"></md-icon>
+                    <md-tooltip md-direction="top">{{'clear' | translate}}</md-tooltip>
+                </md-button>
+            </div>
+        </form>
+    </div>
+    <md-radio-group class="md-padding no-padding-top" ng-disabled="advancedSearchBool || quickSearchObj.query.length>0"
+        ng-model="customRadioSearch" layout="row" flex layout-wrap ng-change="radioFilterListener()">
+        <md-radio-button value="currentWeek">{{ 'currentWeekOrders' | translate }}</md-radio-button>
+        <md-radio-button value="earliestRegistrations">{{ 'earliestRegistrations' | translate }}</md-radio-button>
+        <md-radio-button value="latestRegistrations">{{ 'latestRegistrations' | translate }}</md-radio-button>
+        <md-radio-button value="all">{{ 'all' | translate }}</md-radio-button>
+    </md-radio-group>
+    <div load-on-scroll="loadOnScrollOptions" layout="row" layout-wrap flex>
+        <lis-card dynamic-flex ng-repeat="patient in patients" ng-model-options="{trackBy: '$value.rid'}"
+            patient="patient"></lis-card>
+    </div>
+</div>

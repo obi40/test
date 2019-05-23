@@ -1,0 +1,7 @@
+<md-input-container flex>
+	<md-select flex ng-model="options.language" ng-change="onChange()" aria-label="language">
+		<md-option ng-repeat="lang in languages" ng-value="lang">
+			{{lang.name}}
+		</md-option>
+	</md-select>
+</md-input-container>

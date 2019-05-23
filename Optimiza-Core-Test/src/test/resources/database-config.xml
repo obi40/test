@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.1.xsd
+    http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.8.xsd">
+  
+
+  <!-- Default datasource -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maximumPoolSize" value="${pool.maxPoolSize}" />
+	</bean>
+
+   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+      <property name="persistenceUnitName" value="LIS-pu"/>
+      <property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>
+      
+      <property name="dataSource" ref="dataSource" />
+      <property name="packagesToScan" value="com.optimiza" />
+      <property name="jpaVendorAdapter">
+         <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+      </property>
+      <property name="jpaProperties">
+         <props>
+              
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+            <prop key="hibernate.show_sql">true</prop>
+            <prop key="hibernate.default_schema">lis_new</prop>
+            <prop key="hibernate.enable_lazy_load_no_trans">false</prop>
+            <prop key="hibernate.max_fetch_depth">0</prop>
+            <prop key="hibernate.cache.use_second_level_cache">true</prop>
+            <prop key="hibernate.cache.use_query_cache">false</prop>
+            <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+            
+            
+                <prop key="org.hibernate.envers.revision_field_name">REV</prop>
+                <prop key="org.hibernate.envers.revision_type_field_name">REVTYPE</prop>
+                <prop key="org.hibernate.envers.default_schema">lis_new</prop>
+              <!--  <prop key="org.hibernate.envers.auditTablePrefix"></prop>-->
+               <!--  <prop key="org.hibernate.envers.auditTableSuffix">_HISTORY</prop>-->
+            <!-- <prop key="hibernate.hbm2ddl.auto">update</prop>  --> 
+ 
+            
+         </props>
+      </property>
+ 
+      
+   </bean>
+
+
+  <!-- Transaction Manager -->
+  <bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+    p:entityManagerFactory-ref="entityManagerFactory" />
+    
+    
+       
+   <jpa:repositories base-package="com.optimiza.*.*.repo, com.optimiza.*.*.*.repo"
+		base-class="com.optimiza.core.base.repo.BaseRepositoryImpl"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="txManager" />
+    
+</beans>
+
+

@@ -1,0 +1,116 @@
+<span class="patient-card-wrapper">
+	<circular-menu icons="icons"></circular-menu>
+	<md-card md-ink-ripple="#24709c" class="patient-card" ng-class="{'inactive':!patient.isActive}" layout-fill
+		md-whiteframe="3">
+		<md-card-title ng-click="viewPatientProfile()">
+			<md-card-title-media>
+				<div class="md-media-sm card-media">
+					<div class="patient-img" flex layout="row" layout-align="center center">
+						<img ng-if="patient.image != null" ng-src="{{'data:image/*;base64,' + patient.image}}" />
+						<md-icon ng-if="patient.gender.code === 'MALE' && patient.image == null"
+							md-font-icon="lis-male-head"></md-icon>
+						<md-icon ng-if="patient.gender.code === 'FEMALE' && patient.image == null"
+							md-font-icon="lis-female-head"></md-icon>
+					</div>
+					<div class="file-number text-center">
+						<div>
+							{{'fileNumber' | translate}}
+						</div>
+						<div class="bold">
+							{{patient.fileNo}}
+						</div>
+					</div>
+				</div>
+			</md-card-title-media>
+			<md-card-title-text>
+				<span class="md-headline">
+					<div ng-repeat="language in languages | orderBy : '-primary'">
+						{{patient.firstName[language.language]}} {{patient.lastName[language.language]}}
+					</div>
+				</span>
+				<span class="md-subhead">
+					<div ng-show="patient.nationalId">
+						<span>{{'nationalNumber' | translate}}: </span>
+						<span class="bold">{{patient.nationalId}}</span>
+					</div>
+					<div>
+						<span>{{'mobileNumber' | translate}}: </span>
+						<span class="bold">{{patient.mobileNo}}</span>
+					</div>
+					<div flex layout="row" layout-wrap>
+						<div dynamic-flex="100|100|20|20|20">
+							<span>{{'age' | translate}}: </span>
+							<span class="bold">{{patient.age}}</span>
+						</div>
+						<div dynamic-flex="100|100|80|80|80">
+							<span ng-show="patient.lastOrderDate !== null">{{'lastVisitDate' | translate}}:</span>
+							<span class="bold">{{patient.lastOrderDate | dateTimeFormat }}</span>
+						</div>
+					</div>
+					<div ng-show="patient.emrPatientInsurance.length !== 0">
+						<span>{{'cardNumber' | translate}}:</span>
+						<span class="bold">{{patient.emrPatientInsurance[0].cardNumber}}</span>
+					</div>
+					<div ng-show="patient.emrPatientInsurance.length !== 0">
+						<span>{{'insProvider' | translate}}:</span>
+						<span class="bold">{{patient.emrPatientInsurance[0].insProvider.name[userLocale]}}</span>
+					</div>
+				</span>
+			</md-card-title-text>
+		</md-card-title>
+		<md-card-actions layout="row" layout-align="space-between end">
+			<div layout="row">
+				<md-icon class="vip-indicator" ng-if="patient.isVip" md-font-icon="fas fa-star">
+					<md-tooltip md-direction="top">{{'vip' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-class="{'normal-balance':patient.balance>0,
+					'out-standing-balance':patient.balance<0}" ng-if="patient.balance!=null && patient.balance!=0"
+					md-font-icon="fas fa-file-invoice-dollar" ng-click="payOutstandingBalance()"
+					authority-checker="VIEW_OUTSTANDING_BALANCES">
+					<md-tooltip md-direction="top" class="bold">
+						<div flex layout="column" layout-align="center center">
+							<div flex layout-align="center start">
+								<div flex ng-if="patient.balance>0">
+									{{('balance' | translate) + ": "+(patient.balance | number:2)}}
+								</div>
+								<div flex ng-if="patient.balance<0">
+									{{('balance' | translate) + ": ("+(patient.balance*-1 | number:2)+")"}}
+								</div>
+							</div>
+						</div>
+					</md-tooltip>
+				</md-icon>
+				<md-icon class="vip-indicator" ng-if="patient.mergedToPatientInfo" md-font-icon="fas fa-dolly">
+					<md-tooltip md-direction="top">{{'to' | translate}} :
+						{{patient.mergedToPatientInfo.fullName[userLocale]}}</md-tooltip>
+				</md-icon>
+			</div>
+			<div flex layout="row" layout-align="end end">
+				<md-icon ng-if="patient.isHypertension" md-font-icon="lis-sphygmomanometer">
+					<md-tooltip md-direction="top">{{'isHypertension' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isDifficultyFindingVeins" md-font-icon="lis-difficulty-finding-veins">
+					<md-tooltip md-direction="top">{{'isDifficultyFindingVeins' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isBloodSamplePhobia" md-font-icon="lis-haemophobia">
+					<md-tooltip md-direction="top">{{'isBloodSamplePhobia' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isAllergies" md-font-icon="lis-allergy">
+					<md-tooltip md-direction="top">{{'isAllergies' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isPregnancy && patient.gender.code === 'FEMALE'" md-font-icon="lis-pregnant">
+					<md-tooltip md-direction="top">{{'isPregnancy' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isHeartDisease" md-font-icon="lis-heart-disease">
+					<md-tooltip md-direction="top">{{'isHeartDisease' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isDiabetes" md-font-icon="lis-diabetes">
+					<md-tooltip md-direction="top">{{'isDiabetes' | translate}}</md-tooltip>
+				</md-icon>
+				<md-icon ng-if="patient.isHardTemperedPatient" md-font-icon="lis-angry">
+					<md-tooltip md-direction="top">{{'isHardTemperedPatient' | translate}}</md-tooltip>
+				</md-icon>
+			</div>
+		</md-card-actions>
+	</md-card>
+</span>

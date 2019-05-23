@@ -1,0 +1,31 @@
+.autocomplete-search {
+    md-autocomplete-parent-scope {
+        height: 100%;
+    }
+    .md-autocomplete-suggestions-container.md-default-theme li .highlight,
+    .md-autocomplete-suggestions-container li .highlight {
+        font-weight: bold;
+        background-color: $text-search-highlight-color;
+        color: inherit;
+    }
+    .item-viewer {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+    .autocomplete-image {
+        width: 40px;
+        height: 40px;
+        margin-#{$opposite-direction}: 10px;
+        border-radius: 50%;
+    }
+}
+
+//this is a general fix
+md-autocomplete[md-floating-label] .md-show-clear-button button {
+    top: 12px;
+}
+
+md-autocomplete md-autocomplete-wrap md-progress-linear.md-inline {
+    bottom: 22px !important;
+}

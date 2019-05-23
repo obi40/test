@@ -1,0 +1,95 @@
+<div class="quick-test-definition">
+    <form name="quickTestDefinitionForm" novalidate>
+        <fieldset>
+            <legend>{{ 'overview' | translate }}</legend>
+            <div layout="row" flex layout-wrap>
+                <md-input-container dynamic-flex>
+                    <label> {{ 'standardCode' | translate }}</label>
+                    <input type="text" name="standardCode" ng-model="quickDefinitionOptions.testDefinition.standardCode"
+                        ng-required="true" />
+                    <input-messages input-errors="quickTestDefinitionForm.standardCode.$error" />
+                </md-input-container>
+                <md-input-container dynamic-flex>
+                    <label> {{ 'description' | translate }}</label>
+                    <textarea md-detect-hidden name="description"
+                        ng-model="quickDefinitionOptions.testDefinition.description" ng-required="true"></textarea>
+                    <input-messages input-errors="quickTestDefinitionForm.description.$error" />
+                </md-input-container>
+                <lov ng-if="sectionLov" dynamic-flex form="quickTestDefinitionForm" options="sectionLov"
+                    select="sectionLov.selectedValue" on-change="changeSection"></lov>
+                <md-input-container dynamic-flex>
+                    <label> {{ 'ranking' | translate }}</label>
+                    <input type="number" name="rank" min="1" ng-model="quickDefinitionOptions.testDefinition.rank"
+                        ng-required="true" ng-pattern="patternNum" />
+                    <input-messages input-errors="quickTestDefinitionForm.rank.$error" />
+                </md-input-container>
+                <lov dynamic-flex form="quickTestDefinitionForm" options="specimenType"
+                    select="specimenType.selectedValue"></lov>
+                <md-input-container dynamic-flex>
+                    <md-switch ng-disabled="isSeparatePageDisabled" class="inline-switch" md-invert
+                        ng-model="quickDefinitionOptions.testDefinition.isSeparatePage"
+                        aria-label="{{ 'separatePage' | translate }}">
+                        {{ 'separatePage' | translate }}: {{ quickDefinitionOptions.testDefinition.isSeparatePage ?
+                        'yes' : 'no' | translate }}
+                    </md-switch>
+                </md-input-container>
+                <md-input-container dynamic-flex>
+                    <md-switch class="inline-switch" md-invert
+                        ng-model="quickDefinitionOptions.testDefinition.isSeparateSample"
+                        aria-label="{{ 'separateSample' | translate }}">
+                        {{ 'separateSample' | translate }}: {{ quickDefinitionOptions.testDefinition.isSeparateSample ?
+                        'yes' : 'no' | translate }}
+                    </md-switch>
+                </md-input-container>
+                <lov dynamic-flex form="quickTestDefinitionForm" options="lkpReportType"
+                    select="lkpReportType.selectedValue" on-change="checkReportType"></lov>
+                <md-input-container dynamic-flex>
+                    <md-switch class="inline-switch" md-invert
+                        ng-model="quickDefinitionOptions.testDefinition.isAllowRepetition"
+                        aria-label="{{ 'allowRepetition' | translate }}">
+                        {{ 'allowRepetition' | translate }}: {{ quickDefinitionOptions.testDefinition.isAllowRepetition
+                        ?
+                        'yes' : 'no' | translate }}
+                    </md-switch>
+                </md-input-container>
+                <md-input-container dynamic-flex ng-show="quickDefinitionOptions.testDefinition.isAllowRepetition">
+                    <md-switch class="inline-switch" md-invert
+                        ng-model="quickDefinitionOptions.testDefinition.isRepetitionSeparateSample"
+                        aria-label="{{ 'repetitionSeparateSample' | translate }}">
+                        {{ 'repetitionSeparateSample' | translate }}: {{ quickDefinitionOptions.testDefinition.isRepetitionSeparateSample
+                        ?
+                        'yes' : 'no' | translate }}
+                    </md-switch>
+                </md-input-container>
+                <md-input-container dynamic-flex ng-show="quickDefinitionOptions.testDefinition.isAllowRepetition">
+                    <md-switch class="inline-switch" md-invert
+                        ng-model="quickDefinitionOptions.testDefinition.isRepetitionChargeable"
+                        aria-label="{{ 'repetitionChargeable' | translate }}">
+                        {{ 'repetitionChargeable' | translate }}: {{ quickDefinitionOptions.testDefinition.isRepetitionChargeable
+                        ?
+                        'yes' : 'no' | translate }}
+                    </md-switch>
+                </md-input-container>
+            </div>
+        </fieldset>
+
+        <test-disclaimer-setup options="disclaimerSetupOptions"></test-disclaimer-setup>
+
+        <test-specimen-setup options="specimenSetupOptions"></test-specimen-setup>
+        <test-interpretation-setup
+            ng-if="sectionLov.selectedValue.type && sectionLov.selectedValue.type.code === 'ALLERGY'"
+            options="interpretationSetupOptions"></test-interpretation-setup>
+        <test-result-setup options="resultSetupOptions"></test-result-setup>
+        <test-question-setup options="questionSetupOptions"></test-question-setup>
+        <!-- <test-component-setup options="componentSetupOptions"></test-component-setup> -->
+        <fees-setup options="feesSetupOptions"></fees-setup>
+        <destination-setup options="destinationSetupOptions"></destination-setup>
+        <div class="button-wrapper">
+            <md-button class="md-raised md-primary" ng-disabled="quickTestDefinitionForm.$invalid"
+                ng-click="submitQuickTestDefinition()">
+                <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                {{ 'save' | translate }}
+            </md-button>
+        </div>
+    </form>
+</div>

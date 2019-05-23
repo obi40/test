@@ -1,0 +1,1372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Results" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="25" rightMargin="15" topMargin="20" bottomMargin="0" uuid="8ccc94d6-99c9-4adf-8746-697a333aaf4b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="net.sf.jasperreports.page.break.no.pagination" value="apply"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<subDataset name="Dataset1" uuid="df60031c-4339-4704-9919-861f0f0c83dc">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="labTestActualResults" class="java.util.Collection"/>
+		<field name="testDefinition" class="com.optimiza.ehope.lis.model.TestDefinition"/>
+	</subDataset>
+	<subDataset name="LabSamplesDataset" uuid="fc95131e-8e39-4efb-9864-6c1c84efeaad">
+		<field name="sampleNo" class="java.lang.String"/>
+		<field name="labTestActualSet" class="java.util.Collection"/>
+	</subDataset>
+	<subDataset name="labTestActualDataset" uuid="6e7b4334-a988-4b45-9848-3e3bd8d7f556">
+		<field name="testDefinition" class="com.optimiza.ehope.lis.model.TestDefinition"/>
+		<field name="labTestActualResultList" class="java.util.List"/>
+	</subDataset>
+	<subDataset name="labActualResultsDataset" uuid="409b3254-1c74-4835-a801-f3115b82bc44">
+		<field name="testDefinitionStandardCode" class="java.lang.String"/>
+		<field name="labResult" class="com.optimiza.ehope.lis.model.TestResult"/>
+		<field name="primaryResultParsed" class="java.math.BigDecimal"/>
+		<field name="secondaryResultParsed" class="java.math.BigDecimal"/>
+		<field name="narrativeText" class="java.lang.String"/>
+		<field name="previousResult" class="java.util.Collection"/>
+		<field name="testCodedResult" class="com.optimiza.ehope.lis.model.TestCodedResult"/>
+		<field name="historicalResult" class="java.util.Collection"/>
+		<field name="comments" class="java.lang.String"/>
+		<field name="interpretationClass" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="labResultDataset" uuid="4b2800dd-93db-4f84-8a7e-426f7b31b2ad">
+		<field name="standardCode" class="java.lang.String"/>
+		<field name="reportingDescription" class="java.lang.String"/>
+		<field name="description" class="java.lang.String"/>
+		<field name="primaryUnitType" class="com.optimiza.ehope.lis.lkp.model.LkpUnitType"/>
+		<field name="primaryUnit" class="com.optimiza.ehope.lis.model.LabUnit"/>
+		<field name="secondaryUnit" class="com.optimiza.ehope.lis.model.LabUnit"/>
+		<field name="testDefinition" class="com.optimiza.ehope.lis.model.TestDefinition"/>
+		<field name="resultValueType" class="com.optimiza.ehope.lis.lkp.model.LkpResultValueType"/>
+	</subDataset>
+	<subDataset name="previousResultsDataset" uuid="bc0ac3be-ad54-4c34-81e0-c0d29ea7ef1e">
+		<field name="labTestActual" class="com.optimiza.ehope.lis.model.LabTestActual"/>
+		<field name="labResult" class="com.optimiza.ehope.lis.model.TestResult"/>
+		<field name="primaryResultParsed" class="java.math.BigDecimal"/>
+		<field name="secondaryResultParsed" class="java.math.BigDecimal"/>
+		<field name="narrativeText" class="java.lang.String"/>
+		<field name="testCodedResult" class="com.optimiza.ehope.lis.model.TestCodedResult"/>
+	</subDataset>
+	<subDataset name="HistoricalResultDataset" uuid="ecac64b4-cfae-4e0b-87d1-7440b7ec491f">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+		<field name="test" class="com.optimiza.ehope.lis.model.HistoricalTest"/>
+		<field name="resultValue" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="namePrimary" class="java.lang.String"/>
+	<field name="emrVisit" class="com.optimiza.ehope.lis.model.EmrVisit"/>
+	<field name="stoolMainTest" class="java.util.Collection"/>
+	<field name="stoolOtherTests" class="java.util.Collection"/>
+	<field name="labSample" class="java.util.Collection"/>
+	<field name="user" class="com.optimiza.core.admin.model.SecUser"/>
+	<field name="reportingType" class="java.lang.String"/>
+	<field name="tenant" class="com.optimiza.core.admin.model.SecTenant"/>
+	<field name="worksheetWrapper" class="com.optimiza.ehope.lis.wrapper.WorksheetWrapper"/>
+	<title>
+		<band height="235" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{tenant}.getPrintHeader()]]></printWhenExpression>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="112" width="554" height="30" isRemoveLineWhenBlank="true" backcolor="#24709C" uuid="68593e1e-3c8b-4d6b-b36a-bc7fdcde92d4">
+					<printWhenExpression><![CDATA[new Boolean($F{tenant}.getCustomHeader()) ? false : true]]></printWhenExpression>
+				</reportElement>
+				<image>
+					<reportElement mode="Transparent" x="239" y="0" width="80" height="30" backcolor="rgba(255, 255, 255, 0.0)" uuid="a51565c1-b32e-4715-b6ca-6920c415860b"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+					<imageExpression><![CDATA["reports/images/Acculab-logo-white.png"]]></imageExpression>
+				</image>
+			</frame>
+			<staticText>
+				<reportElement x="195" y="142" width="164" height="40" isRemoveLineWhenBlank="true" uuid="3cb8f4b1-684e-46b6-80d4-8e933361b15a">
+					<printWhenExpression><![CDATA[new Boolean($F{tenant}.getCustomHeader()) ? false : (new Boolean($F{reportingType}.equals("RESULT")) ? true : false)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lab Results]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="128" y="187" width="416" height="48" isRemoveLineWhenBlank="true" uuid="64bede0e-77ac-4083-aa72-5c7ecd74aa0e">
+					<printWhenExpression><![CDATA[new Boolean($F{reportingType}.equals("WORKSHEET")) ? true : false]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="-1" y="0" width="298" height="12" uuid="e155f257-f97b-4d98-995b-9e2cf4ee575b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<text><![CDATA[Lab Work Sheet]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="-1" y="12" width="298" height="18" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4060b527-9932-4d27-825f-e34e030b4078">
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getSection()!= null) ? true : false]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false" isUnderline="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getSection()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="315" y="30" width="100" height="18" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="0ad7475a-f1a9-4f35-94ea-1b52b74c3fe7"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getBarcode()]]></textFieldExpression>
+				</textField>
+				<componentElement>
+					<reportElement key="" positionType="Float" mode="Transparent" x="321" y="0" width="88" height="30" uuid="6aeab1cb-b685-406b-b55c-082275cfdb1d"/>
+					<jr:barbecue xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" type="Code128" drawText="false" checksumRequired="false" barHeight="75" rotation="None">
+						<jr:codeExpression><![CDATA[$F{worksheetWrapper}.getBarcode()]]></jr:codeExpression>
+					</jr:barbecue>
+				</componentElement>
+			</frame>
+			<image scaleImage="FillFrame">
+				<reportElement x="0" y="0" width="554" height="112" isRemoveLineWhenBlank="true" uuid="75e94da1-0953-4e7b-b36a-6e5220222bdc">
+					<printWhenExpression><![CDATA[new Boolean($F{tenant}.getCustomHeader()) ? true : false]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA[$F{tenant}.getHeaderImage()]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="190">
+			<frame>
+				<reportElement x="0" y="0" width="554" height="80" isRemoveLineWhenBlank="true" uuid="dab14de6-1126-47eb-8de8-ff4b42bc879a">
+					<printWhenExpression><![CDATA[new Boolean($F{reportingType}.equals("RESULT")) ? true : false]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="70" height="20" uuid="fdf09c34-1c91-4a6f-bbd4-10f075ca26b5">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Patient Name]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="76" y="0" width="261" height="20" isPrintWhenDetailOverflows="true" uuid="a3cf0d5d-cb0c-4602-8ac7-737158784a53">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="14" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emrVisit}.getEmrPatientInfo().getFullName().get($P{namePrimary})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="70" height="20" uuid="689ddfd8-64ad-46dc-afc3-743fdadf4a5e"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[File No.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="76" y="20" width="261" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="4d55d727-83a1-4fab-8e5d-382fd1c9309f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emrVisit}.getEmrPatientInfo().getFileNo()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="337" y="20" width="53" height="20" uuid="86e92255-41c6-4f9c-b906-96293b17442f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Age]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="395" y="20" width="159" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9206c05d-ceb4-4ae5-9c9f-50f12dda5742">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emrVisit}.getEmrPatientInfo().getAgeWithUnit().getAge() + " " + $F{emrVisit}.getEmrPatientInfo().getAgeWithUnit().getUnit().toString()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="337" y="0" width="53" height="20" uuid="43de2abe-6c8b-4c77-a0f4-4fc58a4ce03f">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="395" y="0" width="159" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="a150e311-bc2b-4420-b60b-274011c4c633">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emrVisit}.getEmrPatientInfo().getGender().getName().get("en_us")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="337" y="40" width="53" height="20" uuid="51a58f24-3490-45b4-8459-434da44beefb">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Visited At]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="70" height="20" isRemoveLineWhenBlank="true" uuid="1052f5f5-1add-4b8f-bdf4-40783c3f6b69">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="3"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Referred By]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="76" y="60" width="261" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="93598d47-88a3-4039-9756-754672e1dc17">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new Boolean($F{emrVisit}.getDoctor() != null) ? $F{emrVisit}.getDoctor().getName().get("en_us") : "Self Request"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="76" y="40" width="261" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="3eead17e-3ed5-4ad0-9daa-93c0fa7f4881">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{emrVisit}.getAdmissionNumber()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="40" width="70" height="20" uuid="7e10d295-6d21-4da0-9911-1bd9cf34c5c8"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Order No.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="395" y="40" width="159" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="c9e33ba5-de1e-434a-90d9-bbd6d0b5cc74">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy hh:mm a", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format($F{emrVisit}.getVisitDate())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="70" y="0" width="6" height="20" uuid="646d90dd-eba1-4602-8d09-d21cfa928bac">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="70" y="20" width="6" height="20" uuid="4a95ba2a-cdf9-406f-9260-d2bb4b570fac">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="70" y="40" width="6" height="20" uuid="d54a3542-7352-4cf0-94f0-ff381fd4d8d2">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="70" y="60" width="6" height="20" uuid="e2d9a594-d1ac-49c2-a69a-c4845e6d2d6d">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="0" width="5" height="20" uuid="88fc29d3-7be6-4644-a45c-2de4df49facf">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="20" width="5" height="20" uuid="59a6c30c-85e0-474a-a1f4-e571d99c02ce">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="390" y="40" width="5" height="20" uuid="f9366536-0068-4e4b-a798-728ee6753f03">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="0" y="80" width="554" height="100" isRemoveLineWhenBlank="true" uuid="a1130d20-5669-4e61-9eff-41492c7c999d">
+					<printWhenExpression><![CDATA[new Boolean($F{reportingType}.equals("WORKSHEET")) ? true : false]]></printWhenExpression>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="78" height="20" uuid="fa67fce2-1802-48f6-ac86-c66e82f473d5">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="0"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Patient Name]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="83" y="0" width="130" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="36d78ff5-6c12-4079-973c-3f3ebe478459">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="10" isBold="true" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getFullName().get($P{namePrimary})]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="213" y="0" width="69" height="20" uuid="09c412cb-7316-43fc-a155-c545a4ae275f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[File No.]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="287" y="0" width="100" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="79234727-b4b2-465a-a17a-e8d325444812">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getFileNo()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="20" width="78" height="20" uuid="a7433a40-dee1-445f-942f-ca2f97844dd6">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Age]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="83" y="20" width="130" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="0ed5c3d3-55f1-484a-bb58-360cc2ad2847">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getAgeWithUnit().getAge() + " " + $F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getAgeWithUnit().getUnit().toString()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="213" y="20" width="69" height="20" uuid="83e5b2d9-f69b-4e4b-b710-0dd65f3f0c94">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="287" y="20" width="100" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="ed6c4e58-dbb4-4b98-a6a5-194d62ff8c72">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getGender().getName().get("en_us")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="387" y="0" width="69" height="20" uuid="f5fc42b4-9895-498a-8eed-99f62575baf7">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Order No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="78" height="20" isRemoveLineWhenBlank="true" uuid="70b670de-2751-4e11-aa1c-540178ba7861">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getLkpContainerType() == null) ? false : true]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Container Type]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="83" y="40" width="130" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1e889183-e55b-45a0-ad03-339793b06464">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getLkpContainerType() == null) ? false : true]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getLkpContainerType().getName().get("en_us")]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="387" y="20" width="69" height="20" uuid="135c82cb-ee82-48f5-aefa-f4cee0ebf6c9">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Visited At]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="461" y="20" width="93" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="42e57641-c91f-402b-b776-ee900a861ef6">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format($F{worksheetWrapper}.getEmrVisit().getVisitDate())]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="80" width="78" height="20" isRemoveLineWhenBlank="true" uuid="ac34fc15-0deb-46c2-852a-0eac9ec9f493">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="3"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getMedicalInformation() != null)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Med. Info]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="78" height="20" isRemoveLineWhenBlank="true" uuid="5dab132c-f5bd-4825-8e1d-9c5e2c3c4e48">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="3"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Referred By]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="461" y="0" width="93" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="53f8e397-153c-4a61-b614-ecaa426baf22">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getAdmissionNumber()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="83" y="60" width="130" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="281bdb00-f571-4376-97a6-cd2a5814522e">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new Boolean($F{worksheetWrapper}.getEmrVisit().getDoctor() != null) ? $F{worksheetWrapper}.getEmrVisit().getDoctor().getName().get("en_us") : "Self Request"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="83" y="80" width="471" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="5b2318a8-ccaa-4484-b476-9bb9e4e9ebb8">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getMedicalInformation() != null)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getMedicalInformation()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="78" y="0" width="5" height="20" uuid="c79e2757-7d14-4c0e-9d56-10d380bc4dbd">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="20" width="5" height="20" uuid="64afe54f-cd39-48a9-a5be-a9f6dfa82126">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="40" width="5" height="20" isRemoveLineWhenBlank="true" uuid="c819e3c9-3dfc-4db1-b281-ebb537427c57">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getLkpContainerType() == null) ? false : true]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="60" width="5" height="20" uuid="94eb87f2-8bbf-4e30-b5a3-3f07af82073b">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="78" y="80" width="5" height="20" isRemoveLineWhenBlank="true" uuid="139096fd-51ce-45b3-8e77-ff13e8e5ea75">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<printWhenExpression><![CDATA[new Boolean($F{worksheetWrapper}.getEmrVisit().getEmrPatientInfo().getMedicalInformation() != null)]]></printWhenExpression>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="282" y="20" width="5" height="20" uuid="be0f2249-9ce7-4bb6-9187-b5eb2130f823">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="282" y="0" width="5" height="20" uuid="ece727a0-0cf4-4244-aa09-4edb1d00d825">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="456" y="0" width="5" height="20" uuid="0f49de81-e348-4132-8c74-31de3ddd6f29">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="456" y="20" width="5" height="20" uuid="779ad139-bfc5-4612-9050-4663d39139ef">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="387" y="40" width="69" height="20" uuid="b99c78ca-cc19-48d6-8b64-fc0d5e79b021">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Location]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="456" y="40" width="5" height="20" uuid="473b472f-6852-4b74-b717-53fc20eef07d">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="461" y="40" width="93" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1b70cf03-e0d3-4911-b7b1-d6dea2b2478b">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getTestDestination()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="213" y="40" width="69" height="20" uuid="6f8b8bcf-af20-42e5-a644-2b402de0298b">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sample Type]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="282" y="40" width="5" height="20" uuid="40414cc3-0f58-4254-ad77-09bb7ac645ba">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement x="287" y="40" width="100" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="06e37503-cbbe-4c86-a9a0-bf7c288656ad">
+						<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+						<property name="com.jaspersoft.layout.grid.y" value="2"/>
+						<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+						<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+						<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+						<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{worksheetWrapper}.getTestDefinition().getSpecimenType().getDescription().get("en_us")]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band/>
+	</columnHeader>
+	<detail>
+		<band height="140">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="554" height="20" forecolor="#000000" backcolor="#FFFFFF" uuid="14f13e2c-f47f-4ffd-a71a-109184090df4">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="3"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stool Analysis]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="20" width="554" height="20" uuid="cd6b2ee8-0cf5-4026-9581-bc3b1d4fa045">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Test Actual"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="labTestActualDataset" uuid="6702c000-2f19-4138-9f40-580cb4becf51">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{stoolMainTest})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="554">
+						<frame>
+							<reportElement x="0" y="0" width="554" height="20" uuid="56c43163-b64f-4add-a009-2d5b2cc9d4da"/>
+							<componentElement>
+								<reportElement x="0" y="0" width="554" height="20" uuid="3c710199-2a4e-4f7d-87f8-9c1c6cf96adf">
+									<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Actual Results 4"/>
+								</reportElement>
+								<jr:list printOrder="Vertical">
+									<datasetRun subDataset="labActualResultsDataset" uuid="fd4360fe-556a-4b26-8f26-96d6c1315b14">
+										<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{labTestActualResultList})]]></dataSourceExpression>
+									</datasetRun>
+									<jr:listContents height="20" width="554">
+										<frame>
+											<reportElement x="10" y="0" width="544" height="20" isRemoveLineWhenBlank="true" uuid="2759068a-0e78-4fa2-92f3-5d9a812bdb4a">
+												<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT} > 4) ? false : true]]></printWhenExpression>
+											</reportElement>
+											<componentElement>
+												<reportElement x="0" y="0" width="544" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="a300a20a-9de8-4e75-af8e-da995df0a684">
+													<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Lab Result values"/>
+												</reportElement>
+												<jr:list printOrder="Vertical">
+													<datasetRun subDataset="labResultDataset" uuid="cc194ccf-901c-4979-a2eb-643b1830548d">
+														<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(Arrays.asList($F{labResult}))]]></dataSourceExpression>
+													</datasetRun>
+													<jr:listContents height="20" width="544">
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="0" y="0" width="170" height="20" isRemoveLineWhenBlank="true" uuid="245b32a0-7f3a-41c3-b877-d0f45f352153"/>
+															<textElement verticalAlignment="Middle">
+																<font fontName="Arial"/>
+															</textElement>
+															<textFieldExpression><![CDATA[new Boolean($F{reportingDescription} != null) ? $F{reportingDescription} : (new Boolean($F{description} != null) ? $F{description} : (new Boolean($F{standardCode} != null) ? $F{standardCode}  : $F{testDefinition}.getDescription()) )]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="170" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="15ee89c3-046f-49eb-b90f-43677daaa729">
+																<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="5"/>
+															</reportElement>
+															<textElement textAlignment="Center" verticalAlignment="Middle">
+																<font fontName="Arial"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{primaryUnit}.getUnitOfMeasure()]]></textFieldExpression>
+														</textField>
+													</jr:listContents>
+												</jr:list>
+											</componentElement>
+											<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+												<reportElement x="171" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="044ec945-a313-4416-b659-caba31568bdf"/>
+												<textElement textAlignment="Left" verticalAlignment="Middle">
+													<font fontName="Arial"/>
+												</textElement>
+												<textFieldExpression><![CDATA[new Boolean($F{labResult}.getResultValueType().getCode().equals("NAR")) ? $F{narrativeText} : (new Boolean($F{labResult}.getResultValueType().getCode().equals("CE")) ? $F{testCodedResult}.getValue() : $F{primaryResultParsed}.floatValue())]]></textFieldExpression>
+											</textField>
+										</frame>
+									</jr:listContents>
+								</jr:list>
+							</componentElement>
+						</frame>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="80" width="554" height="20" uuid="5b0035c2-e59e-40fd-907b-4ba49f4ffdaa">
+					<printWhenExpression><![CDATA[new Boolean(!$F{stoolOtherTests}.isEmpty()) ? true : false]]></printWhenExpression>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Other Tests]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="100" width="554" height="40" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9617412e-8f4a-4aab-bf30-91bd169ac657">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Test Actual Rest"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="labTestActualDataset" uuid="06ffe80e-0d7d-4663-b010-38e74a52c45d">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{stoolOtherTests})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="40" width="554">
+						<componentElement>
+							<reportElement stretchType="ElementGroupHeight" x="0" y="0" width="554" height="40" isRemoveLineWhenBlank="true" uuid="ad307b9f-295e-4812-92b7-c73944424ba4">
+								<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Actual Results"/>
+							</reportElement>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="labActualResultsDataset" uuid="517e0788-7098-4439-a62d-a188791a23a0">
+									<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{labTestActualResultList})]]></dataSourceExpression>
+								</datasetRun>
+								<jr:listContents height="40" width="554">
+									<componentElement>
+										<reportElement x="10" y="0" width="544" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="82c9bed0-5f52-4c14-9dec-b89fedb768f7">
+											<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Lab Result values"/>
+										</reportElement>
+										<jr:list printOrder="Vertical">
+											<datasetRun subDataset="labResultDataset" uuid="ce65dfdf-5273-4b56-aa58-b74af82ae5c8">
+												<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(Arrays.asList($F{labResult}))]]></dataSourceExpression>
+											</datasetRun>
+											<jr:listContents height="20" width="544">
+												<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+													<reportElement x="0" y="0" width="170" height="20" isRemoveLineWhenBlank="true" uuid="1d3e3c33-c14c-41f3-a057-13e0c9c21aed"/>
+													<textElement verticalAlignment="Middle">
+														<font fontName="Arial"/>
+													</textElement>
+													<textFieldExpression><![CDATA[new Boolean($F{reportingDescription} != null) ? $F{reportingDescription} : (new Boolean($F{description} != null) ? $F{description} : (new Boolean($F{standardCode} != null) ? $F{standardCode}  : $F{testDefinition}.getDescription()) )]]></textFieldExpression>
+												</textField>
+												<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+													<reportElement x="170" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="90d3a9d6-21ac-46c7-85f3-ba4c6cd4d45b">
+														<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="5"/>
+													</reportElement>
+													<textElement textAlignment="Center" verticalAlignment="Middle">
+														<font fontName="Arial"/>
+													</textElement>
+													<textFieldExpression><![CDATA[$F{primaryUnit}.getUnitOfMeasure()]]></textFieldExpression>
+												</textField>
+											</jr:listContents>
+										</jr:list>
+									</componentElement>
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement x="171" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="c0fe2cbf-3bbc-43ae-9899-2d4236a81a23"/>
+										<textElement textAlignment="Left" verticalAlignment="Middle">
+											<font fontName="Arial"/>
+										</textElement>
+										<textFieldExpression><![CDATA[new Boolean($F{labResult}.getResultValueType().getCode().equals("NAR")) ? $F{narrativeText} : (new Boolean($F{labResult}.getResultValueType().getCode().equals("CE")) ? $F{testCodedResult}.getValue() : $F{primaryResultParsed}.floatValue())]]></textFieldExpression>
+									</textField>
+									<staticText>
+										<reportElement x="10" y="20" width="161" height="20" isRemoveLineWhenBlank="true" uuid="c7d73c26-6364-4172-9e6c-bafccdb2151b">
+											<printWhenExpression><![CDATA[new Boolean($F{comments}.isEmpty()) ? false : true]]></printWhenExpression>
+										</reportElement>
+										<textElement textAlignment="Left" verticalAlignment="Middle">
+											<font fontName="Arial"/>
+										</textElement>
+										<text><![CDATA[Comments]]></text>
+									</staticText>
+									<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+										<reportElement x="171" y="20" width="383" height="20" isRemoveLineWhenBlank="true" uuid="01015102-3007-404e-b39d-c5e7532519fb">
+											<printWhenExpression><![CDATA[new Boolean($F{comments}.isEmpty()) ? false : true]]></printWhenExpression>
+										</reportElement>
+										<textElement textAlignment="Left" verticalAlignment="Middle">
+											<font fontName="Arial"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{comments}]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement positionType="Float" x="0" y="60" width="554" height="20" uuid="31e80da8-cc66-45ce-832d-7dd49b6f4acb">
+					<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Test Actual"/>
+				</reportElement>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="labTestActualDataset" uuid="9b98901d-5f4d-4946-92bb-e9303012a9bb">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{stoolMainTest})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="20" width="554">
+						<frame>
+							<reportElement x="0" y="0" width="554" height="20" isRemoveLineWhenBlank="true" uuid="944f4020-001e-4251-820e-071692eee0f0"/>
+							<componentElement>
+								<reportElement positionType="Float" x="0" y="0" width="554" height="20" uuid="867ccd4b-c94a-47db-bf94-b91bc1c1e77f">
+									<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Actual Results Rest"/>
+								</reportElement>
+								<jr:list printOrder="Vertical">
+									<datasetRun subDataset="labActualResultsDataset" uuid="26f371fc-918a-49c3-a693-a5c9772d114a">
+										<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{labTestActualResultList})]]></dataSourceExpression>
+									</datasetRun>
+									<jr:listContents height="20" width="554">
+										<frame>
+											<reportElement x="10" y="0" width="544" height="20" isRemoveLineWhenBlank="true" uuid="35ebb180-0f08-4266-b95f-204eeeb113c8">
+												<printWhenExpression><![CDATA[new Boolean($V{REPORT_COUNT} > 4) ? true : false]]></printWhenExpression>
+											</reportElement>
+											<componentElement>
+												<reportElement x="0" y="0" width="544" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="12135594-21f8-471a-8069-2eba9ed47953">
+													<property name="net.sf.jasperreports.export.headertoolbar.table.name" value="Lab Result values"/>
+												</reportElement>
+												<jr:list printOrder="Vertical">
+													<datasetRun subDataset="labResultDataset" uuid="97f14ca0-d431-4ed5-b8be-8c17040748d3">
+														<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(Arrays.asList($F{labResult}))]]></dataSourceExpression>
+													</datasetRun>
+													<jr:listContents height="20" width="544">
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="0" y="0" width="170" height="20" isRemoveLineWhenBlank="true" uuid="81b193c8-a3ab-4be6-acd9-774efdfc9f9e"/>
+															<textElement verticalAlignment="Middle">
+																<font fontName="Arial"/>
+															</textElement>
+															<textFieldExpression><![CDATA[new Boolean($F{reportingDescription} != null) ? $F{reportingDescription} : (new Boolean($F{description} != null) ? $F{description} : (new Boolean($F{standardCode} != null) ? $F{standardCode}  : $F{testDefinition}.getDescription()) )]]></textFieldExpression>
+														</textField>
+														<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+															<reportElement x="170" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="c0665afa-9806-4d1c-bb35-1e76dffbc7d5">
+																<property name="net.sf.jasperreports.style.paragraph.rightIndent" value="5"/>
+															</reportElement>
+															<textElement textAlignment="Center" verticalAlignment="Middle">
+																<font fontName="Arial"/>
+															</textElement>
+															<textFieldExpression><![CDATA[$F{primaryUnit}.getUnitOfMeasure()]]></textFieldExpression>
+														</textField>
+													</jr:listContents>
+												</jr:list>
+											</componentElement>
+											<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+												<reportElement x="171" y="0" width="185" height="20" isRemoveLineWhenBlank="true" uuid="e6f01a86-25d2-42e7-9175-45590105dfe3"/>
+												<textElement textAlignment="Left" verticalAlignment="Middle">
+													<font fontName="Arial"/>
+												</textElement>
+												<textFieldExpression><![CDATA[new Boolean($F{labResult}.getResultValueType().getCode().equals("NAR")) ? $F{narrativeText} : (new Boolean($F{labResult}.getResultValueType().getCode().equals("CE")) ? $F{testCodedResult}.getValue() : $F{primaryResultParsed}.floatValue())]]></textFieldExpression>
+											</textField>
+										</frame>
+									</jr:listContents>
+								</jr:list>
+							</componentElement>
+						</frame>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement positionType="Float" x="0" y="40" width="554" height="20" uuid="8ed5ec3a-026b-4271-bb08-10eab2b30012"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Microscopy]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="109">
+			<printWhenExpression><![CDATA[$F{tenant}.getPrintFooter()]]></printWhenExpression>
+			<image>
+				<reportElement mode="Transparent" x="0" y="29" width="140" height="40" uuid="2c62a383-804c-4f74-ba07-35f54064d0f0"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<imageExpression><![CDATA["reports/images/Acculab-logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="416" y="53" width="54" height="15" uuid="35e11726-6652-4f46-96d4-997887bd0af8"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[www.acculab.me]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="89" width="50" height="20" uuid="0a2d0ea1-db9a-409e-8a9b-5fac21e0554f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="89" width="25" height="20" uuid="474e27b2-28fc-45d8-a25f-3f0cc802c3b1"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="235" y="54" width="170" height="20" uuid="108c4200-f0a2-4184-859f-508b53b955f3"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[Mecca street Mecca Towers, Complex No.172 -1st Floor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="49" width="70" height="25" uuid="621f2d23-a31f-4d13-9135-95bb14b9caf4"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[T+ 962 6 5629999
+  + 962 6 5100100
+F+ 962 6 5629988]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="0" width="5" height="20" uuid="e2f49e42-89f4-47c2-94f1-d18d4911e440">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="6" height="20" uuid="8b74f207-9c92-49d9-a73b-e5b4b6db93bb">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="0"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="20" uuid="ceb44a7c-7a8e-4eba-acc5-36b9238d67ad">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Printed By]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="76" y="0" width="261" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="9a687b3f-c89f-41cd-aa8f-dd016be3f8c9">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="2"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}.getFirstName().get("en_us") + " " + $F{user}.getLastName().get("en_us")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="337" y="0" width="53" height="20" uuid="6e42899a-8e52-45fb-8347-41a704bc717e">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Printed At]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="395" y="0" width="159" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="0642c2eb-1ae6-4947-8068-2a743ab3b0d6">
+					<property name="com.jaspersoft.layout.grid.x" value="-1"/>
+					<property name="com.jaspersoft.layout.grid.y" value="2"/>
+					<property name="com.jaspersoft.layout.grid.weight.x" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.weight.y" value="1.0"/>
+					<property name="com.jaspersoft.layout.grid.rowspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.colspan" value="1"/>
+					<property name="com.jaspersoft.layout.grid.weight.fixed" value="false"/>
+					<property name="net.sf.jasperreports.style.paragraph.leftIndent" value="3"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{REPORT_FORMAT_FACTORY}.createDateFormat( "dd/MM/yyyy hh:mm a", $P{REPORT_LOCALE}, $P{REPORT_TIME_ZONE} ).format(new Date())]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="-1" width="554" height="1" uuid="9690e061-f697-49c2-874b-e34c55ae10fd"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,49 @@
+.test-interpretation-wrapper {
+    .interpretation-table {
+        .interpretation-table-header {
+            background-color: $soft-grey;
+            >div {
+                padding: 0.5em 1.286em;
+                border-top: 1px solid $table-border-color;
+                border-bottom: 1px solid $table-border-color;
+                border-#{$direction}: 1px solid $table-border-color;
+                &:last-child {
+                    border-#{$opposite-direction}: 1px solid $table-border-color;
+                }
+            }
+        }
+        .interpretation-table-body {
+            .interpretation-table-row {
+                &:nth-child(even) {
+                    background: $row-alt-color;
+                }
+                >div {
+                    padding: 0.2em 1.286em;
+                    border-bottom: 1px solid $table-border-color;
+                    border-#{$direction}: 1px solid $table-border-color;
+                    &:last-child {
+                        border-#{$opposite-direction}: 1px solid $table-border-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#testInterpretation {
+    .test-interpretation-container {
+        .interpretation {
+            border-bottom: 1px solid;
+            margin-top: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            &.ui-sortable-placeholder {
+                background-color: lightgray;
+                visibility: visible !important;
+            }
+            .drag-handle {
+                margin-top: 10px;
+                cursor: move;
+            }
+        }
+    }
+}

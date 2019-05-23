@@ -1,0 +1,44 @@
+<div class="test-disclaimer-setup">
+    <fieldset>
+        <legend>
+            {{ 'disclaimers' | translate}}
+        </legend>
+        <form novalidate name="disclaimerSetupForm">
+            <div class="disclaimer-wrapper" ng-repeat="disclaimer in testDisclaimers" layout="row" flex layout-wrap
+                ng-if="!disclaimer.markedForDeletion">
+                <div layout="row" flex layout-wrap>
+
+                    <md-input-container dynamic-flex="100|100|50|50|50">
+                        <label>
+                            {{'title' | translate}}</label>
+                        <input type="text" name="title" ng-model="disclaimer.title" ng-required="metaData.title.notNull"
+                            ng-minlength="metaData.title.sized? metaData.title.min:''" ng-maxlength="metaData.title.sized? metaData.title.max:''" />
+                        <input-messages input-errors="disclaimerSetupForm.title.$error" />
+                    </md-input-container>
+
+
+                    <md-input-container dynamic-flex="100|100|50|50|50">
+                        <label>
+                            {{'description' | translate}}</label>
+                        <textarea name="description" ng-model="disclaimer.description" ng-required="metaData.description.notNull"
+                            ng-minlength="metaData.description.sized? metaData.description.min:''" ng-maxlength="metaData.description.sized? metaData.description.max:''"></textarea>
+                        <input-messages input-errors="disclaimerSetupForm.description.$error" />
+                    </md-input-container>
+                </div>
+                <div layout="column" layout-align="start center">
+                    <md-button class="md-fab md-mini red-button tiny-button" aria-label="{{'delete' | translate}}"
+                        confirm-click="delete" confirm-click-arg="disclaimer">
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                    </md-button>
+                </div>
+            </div>
+        </form>
+        <div layout="row" flex layout-align="center center">
+            <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}" ng-click="add()">
+                <md-icon md-font-icon="fas fa-2x fa-plus"></md-icon>
+                <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+            </md-button>
+        </div>
+    </fieldset>
+</div>

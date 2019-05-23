@@ -1,0 +1,49 @@
+<div class="test-interpretation-wrapper">
+    <fieldset>
+        <legend>
+            {{ 'interpretation' | translate }}
+            <md-button class="md-fab md-mini tiny-button no-margin" aria-label="{{'interpretation' | translate}}"
+                ng-click="openInterpretationDialog(options.testDefinition)">
+                <md-icon md-font-icon="fas fa-edit"></md-icon>
+                <md-tooltip md-direction="top">{{'interpretation' | translate}}</md-tooltip>
+            </md-button>
+        </legend>
+        <div ng-form="allergyPartialForm" layout="row" flex>
+            <lov dynamic-flex ng-if="unitOptions" form="allergyPartialForm" options="unitOptions"
+                select="unitOptions.selectedValue" on-change="changeUnit"></lov>
+            <md-input-container dynamic-flex>
+                <label>{{ 'unitDecimals' | translate }}</label>
+                <input ng-required="true" type="number" name="allergyDecimals"
+                    ng-model="options.testDefinition.allergyDecimals" min="0" step="1" />
+                <input-messages input-errors="allergyPartialForm.allergyDecimals.$error" />
+            </md-input-container>
+        </div>
+        <div class="interpretation-table">
+            <div layout="row" flex class="bold interpretation-table-header">
+                <div dynamic-flex="20|20|20|20|10">
+                    {{ 'concentration' | translate }}
+                </div>
+                <div dynamic-flex="10|10|10|10|5" class="text-center">
+                    {{ 'class' | translate }}
+                </div>
+                <div dynamic-flex="70|70|70|70|85">
+                    {{ 'explanation' | translate }}
+                </div>
+            </div>
+            <div class="interpretation-table-body">
+                <div class="interpretation-table-row" layout="row" flex ng-if="!interpretation.markedForDeletion"
+                    ng-repeat="interpretation in options.testDefinition.interpretationList | orderBy:'printOrder'">
+                    <div dynamic-flex="20|20|20|20|10">
+                        {{ interpretation.description }}
+                    </div>
+                    <div dynamic-flex="10|10|10|10|5" class="text-center">
+                        {{interpretation.interpretationClass}}
+                    </div>
+                    <div dynamic-flex="70|70|70|70|85">
+                        {{interpretation.explanation}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</div>

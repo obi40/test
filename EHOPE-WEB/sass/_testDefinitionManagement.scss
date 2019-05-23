@@ -1,0 +1,33 @@
+.edit-test-definition {
+    md-card-content {
+        div.ng-isolate-scope {
+            width: 100%;
+        }
+    }
+}
+
+#testDefinitionGrid {
+    .k-grid-content {
+        max-height: calc(100vh - 303px);
+    }
+}
+
+#quickBackButton {
+    position: fixed;
+    top: 69px;
+    z-index: 30;
+}
+
+.quick-test-definition {
+    >form {
+        padding-top: 40px;
+
+        .button-wrapper {
+            position: fixed;
+            top: 69px;
+            opacity: 1;
+            z-index: 30;
+            margin-left: 104px;
+        }
+    }
+}

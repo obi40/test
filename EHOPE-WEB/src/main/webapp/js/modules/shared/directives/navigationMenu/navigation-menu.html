@@ -1,0 +1,48 @@
+<md-sidenav id="navMenu" md-component-id="left" md-whiteframe="3" md-is-locked-open="true" class="nav-menu" ng-class="{'nav-menu-toggled':isMenuToggled}">
+  <md-list class="list">
+    <md-list-item ng-repeat="item in navMenuItems" class="item" ng-if="item.show" authority-checker="{{item.authority}}"
+      ng-class="{'layout-column item-height':item.isSubItemToggled}">
+      <a class="link" ng-if="!isMenuToggled" ng-href="{{item.route!=null?(item.route):''}}">
+        <md-icon class="icon" md-font-icon="{{item.icon}}"></md-icon>
+      </a>
+      <div class="toggled-menu" ng-if="isMenuToggled">
+        <a class="link" ng-if="item.route!=null" ng-href="{{item.route}}">
+          <md-icon class="icon" md-font-icon="{{item.icon}}"></md-icon>
+          <div class="label">{{item.label | translate}}</div>
+        </a>
+        <div class="non-link" ng-if="item.route==null" ng-click="expandSubList(item)">
+          <md-icon class="icon" md-font-icon="{{item.icon}}"></md-icon>
+          <div class="label" ng-show="isMenuToggled">{{item.label | translate}}
+          </div>
+          <div class="collapse-list-icon clickable-item" ng-class="{'collapse-list-icon-top':item.isSubItemToggled}"
+            ng-show="item.route==null && isMenuToggled">
+            <md-icon md-font-icon="fas fa-chevron-down" ng-class="{'toggle-icon':item.isSubItemToggled}"></md-icon>
+          </div>
+        </div>
+      </div>
+      <md-list class="sub-list-toggled" ng-show="item.isSubItemToggled && isMenuToggled">
+        <md-list-item ng-repeat="subItem in item.subItems" class="item sub-item" authority-checker="{{subItem.authority}}">
+          <a class="link" ng-href="{{subItem.route}}">
+            <md-icon class="icon" md-font-icon="{{subItem.icon}}"></md-icon>
+            <div class="label">{{subItem.label | translate}}</div>
+          </a>
+        </md-list-item>
+      </md-list>
+      <md-list class="sub-list" ng-show="!isMenuToggled">
+        <a class="label item-info link" ng-href="{{item.route!=null?(item.route):''}}">{{item.label | translate}}</a>
+        <md-list-item ng-repeat="subItem in item.subItems" class="item sub-item" authority-checker="{{subItem.authority}}">
+          <a class="link" ng-href="{{subItem.route}}">
+            <md-icon class="icon" md-font-icon="{{subItem.icon}}"></md-icon>
+            <div class="label">{{subItem.label | translate}}</div>
+          </a>
+        </md-list-item>
+      </md-list>
+    </md-list-item>
+  </md-list>
+</md-sidenav>
+
+<!-- <div class="expand-nav clickable-item" ng-class="{'shrink-nav' :isMenuExpanded}" ng-click="expandNav()">
+      <md-icon ng-class="expandMenuIcon">
+      </md-icon>
+    </div>
+    <div ng-show="isMenuExpanded == false" class="expand-cover"></div> -->

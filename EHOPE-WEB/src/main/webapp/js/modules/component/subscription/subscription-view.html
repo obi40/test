@@ -1,0 +1,185 @@
+<div class="subscription-container" flex>
+    <md-card flex md-whiteframe="3">
+        <md-card-content layout="column" flex>
+            <wizard class="wizard" indicators-position="top" flex>
+                <wz-step wz-order="1" wz-title="{{'choosePlan' | translate}}" flex canenter="agreement==null">
+                    <div layout="row" layout-wrap layout-align="center center" flex>
+                        <div class="plan-card" md-whiteframe="3" ng-repeat="plan in planList" layout="column" layout-align="center center" dynamic-flex>
+                            <div class="plan-card-title">
+                                <div class="md-headline">{{plan.name}}</div>
+                                <div class="price">{{plan.price?plan.price+'$':'Custom'}}
+                                    <span ng-if="plan.price!=null">/Month</span>
+                                </div>
+                                <md-icon ng-if="plan.name == 'Enterprise'" md-font-icon="fas fa-briefcase">
+                                </md-icon>
+                                <md-icon ng-if="plan.name == 'Standard'" md-font-icon="fas fa-user">
+                                </md-icon>
+                                <md-icon ng-if="plan.name == 'Professional'" md-font-icon="fas fa-users">
+                                </md-icon>
+                            </div>
+                            <md-list flex class="plan-field-list">
+                                <md-list-item ng-repeat="field in plan.planFieldList">
+                                    <div class="md-list-item-text info" layout="column" layout-align="center center">
+                                        <span class="bold">{{ field.price?field.price+'$':field.amount }}</span>
+                                        <span>{{field.price?'/':''}}{{ field.lkpPlanFieldType.name[userLocale] }}</span>
+                                    </div>
+                                </md-list-item>
+                                <md-divider></md-divider>
+                            </md-list>
+
+                            <md-button wz-next class="md-raised md-primary" ng-click="planListener(plan)">{{'choose' | translate}}</md-button>
+                        </div>
+                    </div>
+                </wz-step>
+                <wz-step wz-order="2" wz-title="{{'registrationAndBilling' | translate}}">
+                    <md-button wz-previous type="button" class="md-raised" aria-label="Previous">
+                        {{'previous' | translate}}
+                    </md-button>
+                    <md-button wz-next type="button" http-disable-click ng-click="createTenantSubscription(tenantForm.$invalid)" class="md-raised float-end"
+                        aria-label="Next" ng-disabled="tenantForm.$invalid || tenantLanguages.length==0">
+                        {{'next' | translate}}
+                    </md-button>
+                    <form name="tenantForm" novalidate layout="row" flex layout-wrap>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'name' | translate}}</label>
+                            <input type="text" name="name" ng-model="newTenant.name" ng-required="tenantMetaData.name.notNull" ng-minlength="tenantMetaData.name.sized? tenantMetaData.name.min:''"
+                                ng-maxlength="tenantMetaData.name.sized? tenantMetaData.name.max:''" />
+                            <input-messages input-errors="tenantForm.name.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'email' | translate}}</label>
+                            <input type="email" name="email" ng-model="newTenant.email" ng-required="tenantMetaData.email.notNull" ng-minlength="tenantMetaData.email.sized? tenantMetaData.email.min:''"
+                                ng-maxlength="tenantMetaData.email.sized? tenantMetaData.email.max:''" />
+                            <input-messages input-errors="tenantForm.email.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'address' | translate}}</label>
+                            <input type="text" name="address" ng-model="newTenant.address" ng-required="tenantMetaData.address.notNull" ng-minlength="tenantMetaData.address.sized? tenantMetaData.address.min:''"
+                                ng-maxlength="tenantMetaData.address.sized? tenantMetaData.address.max:''" />
+                            <input-messages input-errors="tenantForm.address.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'phone' | translate}}</label>
+                            <input type="text" name="phoneNo" ng-model="newTenant.phoneNo" ng-required="tenantMetaData.phoneNo.notNull" ng-minlength="tenantMetaData.phoneNo.sized? tenantMetaData.phoneNo.min:''"
+                                ng-maxlength="tenantMetaData.phoneNo.sized? tenantMetaData.phoneNo.max:''" ng-pattern="patternNum"
+                            />
+                            <input-messages input-errors="tenantForm.username.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'website' | translate}}</label>
+                            <input type="text" name="website" ng-model="newTenant.website" ng-required="tenantMetaData.website.notNull" ng-minlength="tenantMetaData.website.sized? tenantMetaData.website.min:''"
+                                ng-maxlength="tenantMetaData.website.sized? tenantMetaData.website.max:''" />
+                            <input-messages input-errors="tenantForm.website.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'code' | translate}}</label>
+                            <input type="text" name="code" ng-model="newTenant.code" ng-required="tenantMetaData.code.notNull" ng-minlength="tenantMetaData.code.sized? tenantMetaData.code.min:''"
+                                ng-maxlength="tenantMetaData.code.sized? tenantMetaData.code.max:''" />
+                            <input-messages input-errors="tenantForm.code.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex>
+                            <label>
+                                {{'noOfBranches' | translate}}</label>
+                            <input type="number" name="noOfBranches" ng-model="newTenant.noOfBranches" ng-required="tenantMetaData.noOfBranches.notNull"
+                                ng-min="tenantMetaData.noOfBranches.sized? tenantMetaData.noOfBranches.min:''" ng-pattern="patternNum"
+                            />
+                            <input-messages input-errors="tenantForm.noOfBranches.$error" />
+                        </md-input-container>
+                        <country-city dynamic-flex form="tenantForm" model="newTenant" options="countryCityOptions"></country-city>
+
+                        <md-content dynamic-flex>
+                            <upload-file file-data-wrapper="fileDataWrapper"></upload-file>
+                        </md-content>
+                        <div flex="100" layout="row">
+                            <div flex>
+                                <div flex class="bold">{{'supportedLanguages' | translate}}</div>
+                                <md-chips flex ng-if="supportedLanguages!=null" ng-model="supportedLanguages" name="languages" readonly="true" md-removable="false">
+                                    <md-chip-template>
+                                        <span class="bold clickable-item" ng-click="transferTenantLanguages($chip)">{{$chip.comLanguage.name}}</span>
+                                    </md-chip-template>
+                                </md-chips>
+                            </div>
+                            <div flex>
+                                <div flex class="bold">{{'selectedLanguages' | translate}}</div>
+                                <md-chips flex ng-if="tenantLanguages!=null" ng-model="tenantLanguages" name="languages" readonly="true" md-removable="true"
+                                    md-on-remove="onTenantLanguagesRemove($chip)">
+                                    <md-chip-template>
+                                        <md-radio-group ng-model="$chip.isPrimary" ng-change="tenantLanguagesListener($chip)">
+                                            <md-radio-button ng-value="true">
+                                                <md-tooltip md-direction="top">{{'primary' | translate}}</md-tooltip>
+                                            </md-radio-button>
+                                        </md-radio-group>
+                                        <span class="bold clickable-item">{{$chip.comLanguage.name}}</span>
+                                    </md-chip-template>
+                                </md-chips>
+                            </div>
+                        </div>
+
+                        <div ng-if="selectedPlan.price == null" layout="column" flex="100">
+                            <div flex>{{selectedPlan.name}} Plan Parameters: {{planTotal + '$ /month'}}</div>
+                            <div layout="row" layout-wrap flex>
+                                <md-input-container ng-repeat="field in selectedPlan.planFieldList" flex="20">
+                                    <label>{{field.lkpPlanFieldType.name[userLocale] +'('+field.price+'$)'}}</label>
+                                    <input type="number" ng-change="customPlanListener()" name="{{field.name}}" ng-min="1" ng-model="field.amount" ng-pattern="patternNum"
+                                        ng-required="true" />
+                                    <input-messages input-errors="tenantForm[field.name].$error" />
+                                </md-input-container>
+                            </div>
+                        </div>
+                    </form>
+                </wz-step>
+                <wz-step wz-order="3" wz-title="{{'branches' | translate}}" canenter="agreement!=null">
+                    <md-button wz-previous type="button" class="md-raised" aria-label="{{'next' | translate}}">
+                        {{'previous' | translate}}
+                    </md-button>
+                    <md-button wz-next type="button" http-disable-click ng-click="submitBranches()" class="md-raised float-end" aria-label="Next">
+                        {{'next' | translate}}
+                    </md-button>
+                    <div ng-repeat="branch in branches" ng-model-options="{trackBy: '$value.rid'}">
+                        <branch-form options="branchFormOptions" branch="branch"></branch-form>
+                        <div layout="row" flex layout-align="center center">
+                            <div ng-if="branch.rid > 0">
+                                <md-button class="md-primary md-fab md-mini" aria-label="Delete" confirm-click="removeBranch" confirm-click-arg="branch">
+                                    <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                    <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                                </md-button>
+                            </div>
+                            <div ng-if="branch.rid < 0">
+                                <md-button class="md-primary md-fab md-mini" aria-label="Delete" ng-click="removeBranch(branch)">
+                                    <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                    <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                                </md-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div layout="row" flex layout-align="center center">
+                        <md-button class="md-primary md-fab add-button" aria-label="Add" ng-click="addDummyBranch()">
+                            <md-icon md-font-icon="fas fa-2x fa-plus"></md-icon>
+                            <md-tooltip md-direction="bottom">{{'add' | translate}}</md-tooltip>
+                        </md-button>
+                    </div>
+                </wz-step>
+                <wz-step wz-order="4" wz-title="{{'serials' | translate}}" canenter="agreement!=null">
+                    <md-button wz-previous type="button" class="md-raised" aria-label="{{'next' | translate}}">
+                        {{'previous' | translate}}
+                    </md-button>
+                    <md-button wz-next type="button" http-disable-click ng-disabled="!serialsFormOptions.valid" ng-click="submitSerials()" class="md-raised float-end"
+                        aria-label="Finish">
+                        {{'finish' | translate}}
+                    </md-button>
+                    <serial-form ng-if="serialsFormOptions.tenantRid!=null" options="serialsFormOptions"></serial-form>
+                </wz-step>
+            </wizard>
+        </md-card-content>
+        <div layout="row" layout-align="start center">
+            <language-switcher options="langSwitcherOptions"></language-switcher>
+        </div>
+    </md-card>
+</div>
+<particles></particles>

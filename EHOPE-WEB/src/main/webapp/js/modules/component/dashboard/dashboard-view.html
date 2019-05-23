@@ -1,0 +1,45 @@
+<md-content class="dashboard-wrapper">
+    <div flex layout="row" layout-wrap class="counter-container">
+        <div ng-repeat="counter in counters" class="counter" dynamic-flex="100|100|50|25|25">
+            <md-card ng-style="{'background-color': counter.color}">
+                <md-card-content layout="row" flex layout-wrap>
+                    <div dynamic-flex="100|100|20|20|20" class="counter-icon">
+                        <md-icon md-font-icon="{{counter.icon}}"></md-icon>
+                    </div>
+                    <div dynamic-flex="100|100|80|80|80">
+                        <div class="progress" ng-show="counter.fetchingData">
+                            <md-progress-circular md-diameter="40" md-mode="indeterminate"></md-progress-circular>
+                        </div>
+                        <div class="data" ng-show="!counter.fetchingData">
+                            <div class="bold amount">{{counter.amount}}</div>
+                            <div class="bold">{{counter.label | translate}}</div>
+                        </div>
+                    </div>
+                    <md-icon class="refresh-icon clickable-item" md-font-icon="fas fa-sync"
+                        ng-click="counter.getData()">
+                        <md-tooltip md-direction="bottom">{{'refresh' | translate}}</md-tooltip>
+                    </md-icon>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+    <div flex layout="row" layout-wrap>
+        <div dynamic-flex="100|50|25|25|25">
+            <md-card class="chart">
+                <md-card-content>
+                    <div class="bold label">{{patientsStatus.label | translate}}</div>
+                    <div class="progress" ng-if="patientsStatus.fetchingData">
+                        <md-progress-circular md-diameter="75" md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <!-- using visible and not display so the rendering can work correctly -->
+                    <div ng-class="{'visible':!patientsStatus.fetchingData,'not-visible':patientsStatus.fetchingData}"
+                        id="{{patientsStatus.id}}"></div>
+                </md-card-content>
+                <md-icon http-disable-click class="refresh-icon clickable-item" md-font-icon="fas fa-sync"
+                    ng-click="refreshChart(patientsStatus)">
+                    <md-tooltip md-direction="bottom">{{'refresh' | translate}}</md-tooltip>
+                </md-icon>
+            </md-card>
+        </div>
+    </div>
+</md-content>

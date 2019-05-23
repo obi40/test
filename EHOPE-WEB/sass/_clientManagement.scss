@@ -1,0 +1,11 @@
+.client-management-wrapper {
+    .positive {
+        color: $green;
+    }
+    .negative {
+        color: $red;
+    }
+    .k-grid-content {
+        max-height: calc(100vh - 289px);
+    }
+}

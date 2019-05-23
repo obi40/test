@@ -1,0 +1,98 @@
+@mixin circularTransform($rotation: 0, $translate: 20) {
+    -webkit-transform: rotate($rotation*1deg) translate($translate*1px) rotate(-1deg*$rotation) !important;
+    -moz-transform: rotate($rotation*1deg) translate($translate*1px) rotate(-1deg*$rotation) !important;
+    -o-transform: rotate($rotation*1deg) translate($translate*1px) rotate(-1deg*$rotation) !important;
+    transform: rotate($rotation*1deg) translate($translate*1px) rotate(-1deg*$rotation) !important;
+}
+
+/* Define the loop limit */
+
+$angle6: (360 / 6);
+$angle8: (360 / 8);
+$angle10: (360 / 10);
+$start: 270;
+$circle-size: 40;
+$mainButtonSize: 40px;
+$childButtonSize: 32px;
+.circular-menu {
+    &.qn-6 {
+        @for $index from 0 through 5 {
+            .md-is-open #btn-#{$index} {
+                position: absolute;
+                @include circularTransform(($index * $angle6) + $start, ($circle-size*1));
+            }
+        }
+    }
+    &.qn-8 {
+        @for $index from 0 through 7 {
+            .md-is-open #btn-#{$index} {
+                position: absolute;
+                @include circularTransform(($index * $angle8) + $start, ($circle-size*1.1875));
+            }
+        }
+    }
+    &.qn-10 {
+        @for $index from 0 through 9 {
+            .md-is-open #btn-#{$index} {
+                position: absolute;
+                @include circularTransform(($index * $angle10) + $start, ($circle-size*1.375));
+            }
+        }
+    }
+    .cm-btn {
+        position: absolute;
+        bottom: - ($mainButtonSize * 0.9);
+        left: - ($mainButtonSize * 0.4);
+        margin: 0;
+        width: $childButtonSize !important;
+        height: $childButtonSize !important;
+        min-width: $childButtonSize !important;
+        min-height: $childButtonSize !important;
+        md-icon {
+            width: $childButtonSize / 2;
+            height: $childButtonSize / 2;
+            min-width: $childButtonSize / 2;
+            min-height: $childButtonSize / 2;
+            font-size: $childButtonSize / 2 * 0.75;
+        }
+        md-icon::before {
+            position: relative;
+            top: $childButtonSize / 16;
+        }
+    }
+    width: $mainButtonSize;
+    height: $mainButtonSize;
+    padding: 0;
+    md-fab-trigger {
+        z-index: 100;
+        button.trigger-button {
+            margin: 0;
+        }
+    }
+    md-fab-actions {
+        z-index: 50;
+    }
+    .menu-icon,
+    .close-icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        transform: scale(1);
+    }
+    .close-icon {
+        opacity: 0;
+        transform: scale(0);
+    }
+    .md-is-open .menu-icon {
+        opacity: 0;
+        transform: scale(0);
+    }
+    .md-is-open .close-icon {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

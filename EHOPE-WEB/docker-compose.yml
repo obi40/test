@@ -1,0 +1,15 @@
+version: '2'
+services:
+      acculabwar:
+        environment:
+          - HOSTNAME=192.168.0.69
+        dns:
+          - optimiza.ads
+          - 8.8.8.8
+        dns_search: optimiza.ads
+        mem_limit: 1g
+        build:
+            context: .
+        ports:
+          - "8080:8080"
+          - "1000:8080"

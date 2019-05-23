@@ -1,0 +1,105 @@
+.dashboard-wrapper {
+    g {
+        text {
+            letter-spacing: 0 !important; //fix arabic letters issue for kendo charts
+        }
+    }
+    md-progress-circular {
+        display: inline-block !important;
+    }
+    md-icon {
+        outline: none;
+    }
+    .refresh-icon {
+        position: absolute;
+        bottom: 0;
+        #{$direction}: 5px;
+    }
+    .chart {
+        background-color: #f4f4f4;
+        position: relative;
+        .label {
+            text-align: center;
+            font-size: 1.25em;
+        }
+        .progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%)
+        }
+        .not-visible {
+            visibility: hidden;
+        }
+        .visible {
+            visibility: visible;
+        }
+    }
+    .counter-container {
+        margin-bottom: 25px;
+        .counter {
+            md-progress-circular {
+                svg {
+                    path {
+                        stroke: $white !important;
+                    }
+                }
+            }
+            md-card {
+                width: 300px;
+                min-height: 85px;
+                margin: 10px auto;
+            }
+            md-card-content {
+                position: relative;
+            }
+            md-icon {
+                color: $white;
+            }
+            .counter-icon {
+                text-align: center;
+                md-icon {
+                    line-height: 1;
+                    font-size: 3em;
+                    height: 100%;
+                }
+            }
+            .progress {
+                text-align: $opposite-direction;
+            }
+            .data {
+                color: $white;
+                text-align: $opposite-direction;
+                font-style: italic;
+                .amount {
+                    font-size: 2.5em;
+                    margin-bottom: 10px;
+                    text-shadow: 1px 0px black;
+                }
+            }
+            .data.ng-hide-remove {
+                opacity: 0;
+                -webkit-transition: opacity 0.5s ease;
+                -moz-transition: opacity 0.5s ease;
+                -ms-transition: opacity 0.5s ease;
+                -o-transition: opacity 0.5s ease;
+                transition: opacity 0.5s ease;
+            }
+            .data.ng-hide-remove-active {
+                opacity: 1;
+            }
+            @media only screen and (max-width: 960px) {
+                .data {
+                    text-align: center !important;
+                    .amount {
+                        margin-top: 10px;
+                    }
+                }
+                .progress {
+                    text-align: center !important;
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+}

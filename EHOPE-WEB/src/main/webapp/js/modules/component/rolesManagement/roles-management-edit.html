@@ -1,0 +1,96 @@
+<form name="secRoleForm" class="role-management-wrapper" novalidate ng-submit="submitForm(secRoleForm.$valid)"
+    http-disable-click layout="column" flex>
+    <md-content flex>
+        <md-card md-whiteframe="3">
+            <md-card-title>
+                <md-card-title-text layout="column" layout-align="center center">
+                    <h2 class="md-display-1">{{selectedSecRole!=null?newSecRole.name[userLocale]:('roleNew' |
+                        translate)}}</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content layout="column" flex>
+                <trans-field flex form="secRoleForm" model="newSecRole" languages="secRoleTransFields.name">
+                </trans-field>
+                <shuttle-box options="groupShuttleBoxOptions"></shuttle-box>
+                <fieldset class="shuttle-box-wrapper">
+                    <legend>
+                        {{'rights' | translate}}
+                    </legend>
+                    <md-input-container dynamic-flex="100|50|50|25|25">
+                        <label>
+                            {{'search' | translate}}</label>
+                        <input type="text" name="quickSearchRight" ng-model="quickSearchRight.right"
+                            ng-keyup="quickSearchRightListener()" />
+                    </md-input-container>
+                    <div class="shuttle-container" flex layout="row" layout-wrap>
+                        <div dynamic-flex="100|100|45|45|45" class="shuttle" layout="column">
+                            <div class="box-label">{{'available' | translate}}</div>
+                            <div class="custom-box" flex>
+                                <div ng-repeat="parent in rightsByParent" flex class="parent">
+                                    <md-icon aria-label="" ng-click="shuttleExpandParent(parent)" class="clickable-item"
+                                        ng-class="parent.expanded?'fas fa-caret-down':direction=='rtl'?'fas fa-caret-left':'fas fa-caret-right'">
+                                    </md-icon>
+                                    <md-checkbox ng-click="shuttleItemListener(parent)" ng-model="parent.checked"
+                                        aria-label="{{'rights' | translate}}"></md-checkbox>
+                                    <div class="label clickable-item" ng-click="shuttleExpandParent(parent)">
+                                        {{parent.label}}</div>
+                                    <div ng-if="parent.children.length > 0" ng-show="parent.expanded" flex
+                                        class="children-list">
+                                        <div ng-repeat="right in parent.children" flex>
+                                            <md-checkbox ng-model="right.checked" aria-label="{{'rights' | translate}}"
+                                                ng-click="shuttleItemListener(right,false)"></md-checkbox>
+                                            <div class="label">{{right.label}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div dynamic-flex="100|100|10|10|10" layout="column" layout-align="center center">
+                            <md-button aria-label="{{'addAll' | translate}}" class="md-fab md-mini"
+                                ng-click="moveAllRights(true)" ng-disabled="selectedRights.length == allRights.length"
+                                type="button">
+                                <md-tooltip md-direction="top">{{'addAll' | translate}}</md-tooltip>
+                                <md-icon
+                                    ng-class="direction=='rtl'?'fas fa-angle-double-left':'fas fa-angle-double-right'">
+                                </md-icon>
+                            </md-button>
+                            <md-button aria-label="{{'removeAll' | translate}}" class="md-fab md-mini"
+                                ng-click="moveAllRights(false)" ng-disabled="selectedRights.length == 0" type="button">
+                                <md-tooltip md-direction="top">{{'removeAll' | translate}}</md-tooltip>
+                                <md-icon
+                                    ng-class="direction=='rtl'?'fas fa-angle-double-right':'fas fa-angle-double-left'">
+                                </md-icon>
+                            </md-button>
+                        </div>
+                        <div dynamic-flex="100|100|45|45|45" class="shuttle" layout="column">
+                            <div class="box-label">{{'selected' | translate}}</div>
+                            <div class="custom-box" flex>
+                                <md-list flex class="dense-shuttle">
+                                    <md-list-item ng-model-options="{trackBy: '$value.rid'}"
+                                        ng-repeat="item in selectedRights" ng-click="shuttleItemListener(item,true)"
+                                        flex>
+                                        <div>{{item.selectedLabel}}</div>
+                                    </md-list-item>
+                                </md-list>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <chips-wrapper options="userChipsOptions" />
+                <div kendo-grid="userViewGrid" id="userViewGrid" class="k-widget k-grid users-grid"
+                    options="userViewGridOptions"></div>
+            </md-card-content>
+        </md-card>
+    </md-content>
+    <div layout="row" flex>
+        <md-button class="md-primary md-raised" type="button" ng-click="toggleView()">
+            <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+        </md-button>
+        <md-button class="md-primary md-raised" type="submit" ng-disabled="secRoleForm.$invalid">
+            {{'save' | translate}}
+        </md-button>
+        <md-button class="md-primary md-raised" type="button" ng-click="clearForm(secRoleForm)">
+            {{'clear' | translate}}
+        </md-button>
+    </div>
+</form>

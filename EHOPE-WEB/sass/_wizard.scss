@@ -1,0 +1,13 @@
+.steps-indicator {
+    padding-bottom: 20px;
+    li {
+        &.editing a:before,
+        &.current a:before {
+            background-color: $primary-theme-color;
+        }
+        a {
+            text-transform: none;
+        }
+        pointer-events: none !important; //This is temporary until the wizard is fixed
+    }
+}

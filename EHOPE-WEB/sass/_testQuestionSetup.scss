@@ -1,0 +1,13 @@
+.test-question-setup {
+    fieldset {
+        padding-bottom: 0;
+        .question-wrapper {
+            &:not(:last-child) {
+                border-bottom: 2px solid $black;
+            }
+            &:not(:first-child) {
+                padding-top: 15px;
+            }
+        }
+    }
+}

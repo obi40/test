@@ -1,0 +1,23 @@
+.patient-profile {
+    .info-field {
+        margin-bottom: 20px;
+
+        .info-body {
+            font-weight: bold;
+        }
+    }
+
+    .historical-grid {
+        .k-grid-content {
+            tbody {
+                tr {
+                    td {
+                        span {
+                            white-space: pre-line;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

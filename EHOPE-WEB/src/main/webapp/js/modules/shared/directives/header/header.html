@@ -1,0 +1,45 @@
+<div ng-cloak id="header">
+  <md-toolbar layout="row" layout-fill layout-align="space-between center">
+    <div layout-align="start center" layout="row" class="navi-logo-container">
+      <md-button id="navButton" ng-click="toggleLeftMenu()" aria-label="button">
+        <md-icon md-font-icon="fas fa-bars fa-2x"></md-icon>
+      </md-button>
+      <a href="{{internalHomepage}}">
+        <img src="assets/images/logo/Acculab-logo-white.svg" />
+      </a>
+      <div ng-if="branch" class="branch-label">&nbsp;{{'/' + branch.name[userLocale]}}</div>
+    </div>
+    <div layout-align="center center" layout="row" hide-xs>
+      {{pageTitle}}
+    </div>
+    <div layout-align="end center" layout="row">
+      <md-menu class="small-margin" md-offset="0 50">
+        <div class="user-badge md-button md-fab md-mini" letter-badge="{{fullName.substr(0,1).toUpperCase()}}" ng-click="userSettings($mdMenu,$event)">
+          <md-tooltip md-direction="{{tooltipDirection}}">
+            <div layout="column" layout-align="center center">
+              <div>{{fullName}}</div>
+              <div ng-if="userGroups.length > 0">{{'('+userGroups+')'}}</div>
+            </div>
+          </md-tooltip>
+        </div>
+        <md-menu-content>
+          <md-menu-item>
+            <md-button ng-href="user-profile">
+              <md-icon md-font-icon="fas fa-sliders-h"></md-icon>
+              {{ 'userProfile' | translate }}
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="logout()">
+              <md-icon md-font-icon="fas fa-sign-out-alt"></md-icon>
+              {{ 'logout' | translate }}
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+      <!-- <md-icon class="small-margin position-relative" md-font-icon="fas fa-envelope" class="clickable-item">
+        <span class="icon-notification">7</span>
+      </md-icon> -->
+    </div>
+  </md-toolbar>
+</div>

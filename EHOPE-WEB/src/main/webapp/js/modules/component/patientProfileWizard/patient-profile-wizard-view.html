@@ -1,0 +1,45 @@
+<patient-info ng-if="patientInfoOptions!=null" options="patientInfoOptions"></patient-info>
+<md-card md-whiteframe="3" flex class="edit-test-definition">
+    <md-card-content layout="column" flex>
+        <wizard indicators-position="top" on-finish="finishedWizard()">
+            <wz-step wz-disabled="{{!patient.isInsurer}}" wz-order="1" wz-title="{{'patientInsurance' | translate}}">
+                <br>
+                <patient-insurance-form wiz="true" selected-insurance="newPatientInsurance" form-mode="'add'">
+                </patient-insurance-form>
+            </wz-step>
+            <wz-step wz-order="2" wz-title="{{'createOrder' | translate}}">
+                <div layout="row" layout-align="space-between center" layout-wrap>
+                    <md-button class="md-raised" ng-class="{'hidden':!patient.isInsurer}" wz-previous>{{'previous' |
+                        translate}}</md-button>
+                    <md-button wz-next type="button" ng-click="submitOrder()" class="md-raised"
+                        ng-disabled="orderFormOptions.form.$invalid || !orderFormOptions.initiated"
+                        aria-label="{{'next' | translate}}">
+                        {{'next' | translate}}
+                    </md-button>
+                </div>
+                <order-form order="newVisit" options="orderFormOptions"></order-form>
+            </wz-step>
+            <wz-step wz-order="3" wz-title="{{'testSelection' | translate}}">
+                <br>
+                <md-button class="md-raised float-start" wz-previous>{{'previous' | translate}}</md-button>
+                <test-selection wiz="true" order="newVisit" test-actual-list="testActualList"></test-selection>
+            </wz-step>
+            <wz-step wz-order="4" wz-title="{{'destination' | translate}}">
+                <br>
+                <md-button class="md-raised float-start" wz-previous>{{'previous' | translate}}</md-button>
+                <destination-entry></destination-entry>
+            </wz-step>
+            <wz-step wz-order="5" wz-title="{{'questions' | translate}}">
+                <br>
+                <md-button class="md-raised float-start" wz-previous>{{'previous' | translate}}</md-button>
+                <test-question-entry></test-question-entry>
+            </wz-step>
+            <wz-step wz-order="6" wz-title="{{'payment' | translate}}">
+                <br>
+                <md-button class="md-raised float-start" wz-previous ng-disabled="didPay">{{'previous' | translate}}
+                </md-button>
+                <payment-form wiz="true" did-pay="didPay"></payment-form>
+            </wz-step>
+        </wizard>
+    </md-card-content>
+</md-card>

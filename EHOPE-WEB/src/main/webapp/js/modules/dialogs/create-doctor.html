@@ -1,0 +1,39 @@
+<md-dialog aria-label="{{'addDoctor' | translate}}" class="create-doctor">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'addDoctor' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" flex>
+            <form ng-submit="submit()" http-disable-click novalidate name="doctorForm">
+                <div flex layout="row" layout-wrap>
+                    <trans-field dynamic-flex="100|100|100|100|100" model="doctor" form="doctorForm" languages="transFields.name"></trans-field>
+                    <trans-field dynamic-flex="100|100|100|100|100" model="doctor" form="doctorForm" languages="transFields.description"></trans-field>
+                    <md-input-container dynamic-flex="100|100|100|100|100">
+                        <label>{{'email' | translate}}</label>
+                        <input type="email" name="email" ng-model="doctor.email" />
+                        <input-messages input-errors="doctorForm.email.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex="100|100|100|100|100">
+                        <label>{{ 'mobileNumber' | translate }}</label>
+                        <input type="text" name="mobileNo" ng-model="doctor.mobileNo" ng-pattern="patternNum" />
+                        <input-messages input-errors="doctorForm.mobileNo.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex="100|100|100|100|100">
+                        <label>{{ 'phone' | translate }}</label>
+                        <input type="text" name="phoneNo" ng-model="doctor.phoneNo" ng-pattern="patternNum" />
+                        <input-messages input-errors="doctorForm.phoneNo.$error" />
+                    </md-input-container>
+                </div>
+                <md-button type="submit" aria-label="{{ 'submit' | translate }}" class="md-raised md-primary"
+                    ng-disabled="doctorForm.$invalid">
+                    {{ 'submit' | translate }}
+                </md-button>
+            </form>
+        </div>
+    </md-dialog-content>
+</md-dialog>

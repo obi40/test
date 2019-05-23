@@ -1,0 +1,68 @@
+.breadcrumb-wrapper {
+    margin: 10px 1px;
+    padding: 0 10px;
+    background: #27956a;
+    border-radius: 5px;
+    display: inline-block;
+    .crumb {
+        outline: none;
+        position: relative;
+        padding-#{$direction}: 25px;
+        .label {
+            padding: 5px;
+            font-weight: bold;
+            line-height: 24px;
+            color: white !important;
+        }
+        .arrow {
+            font-size: 2em;
+        }
+        .base-crumb {
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+        .default-base-crumb {
+            cursor: default !important;
+        }
+        md-icon {
+            text-align: center;
+            padding: 5px;
+            margin: 0;
+            outline: none;
+            color: white !important;
+        }
+        .default-cursor {
+            text-decoration: none !important;
+            cursor: default !important;
+        }
+        &:first-child {
+            padding-#{$direction}: 0 !important;
+        }
+        &:first-child:not(:only-child):before,
+        &~.crumb:not(:last-child):before {
+            position: absolute;
+            #{$opposite-direction}: -25px;
+            border-#{$direction}: 20px solid white;
+            border-top: 17px solid transparent;
+            border-bottom: 17px solid transparent;
+            width: 0;
+            height: 0;
+            content: " ";
+        }
+        &:first-child:not(:only-child):after,
+        &~.crumb:after {
+            z-index: 1;
+            position: absolute;
+            #{$opposite-direction}: -22px;
+            border-#{$direction}: 20px solid #27956a;
+            border-top: 17px solid transparent;
+            border-bottom: 17px solid transparent;
+            width: 0;
+            height: 0;
+            content: " ";
+        }
+        &:last-child:after {
+            #{$opposite-direction}: -27px !important;
+        }
+    }
+}

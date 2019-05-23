@@ -1,0 +1,49 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'gulp',
+1 verbose cli   'stabe-release' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.0
+4 verbose run-script [ 'pregulp', 'gulp', 'postgulp' ]
+5 info lifecycle sockjs-client@1.1.4~pregulp: sockjs-client@1.1.4
+6 silly lifecycle sockjs-client@1.1.4~pregulp: no script for pregulp, continuing
+7 info lifecycle sockjs-client@1.1.4~gulp: sockjs-client@1.1.4
+8 verbose lifecycle sockjs-client@1.1.4~gulp: unsafe-perm in lifecycle true
+9 verbose lifecycle sockjs-client@1.1.4~gulp: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\mpoladian\eclipse-workspace\EHOPE-LIS\trunk\EHOPE-WEB\src\main\webapp\libs\sockjs-client\node_modules\.bin;C:\ProgramData\Oracle\Java\javapath;D:\app\mpoladian\product\11.2.0\client_1;c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Java\jdk1.8.0_111\bin;C:\Users\mpoladian\AppData\Local\Android\sdk\tools;C:\Users\mpoladian\AppData\Local\Android\sdk\platform-tools;C:\Users\mpoladian\AppData\Local\Android\sdk\build-tools\23.0.1;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Program Files\nodejs\;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Skype\Phone\;C:\Python27\;C:\Python27\\Scripts;D:\app\mpoladian\product\11.2.0\client_1;C:\ProgramData\Oracle\Java\javapath;c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SDKs\TypeScript\1.0\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Program Files\Java\jdk1.8.0_111\bin;C:\Program Files\TortoiseSVN\bin;C:\Users\mpoladian\AppData\Roaming\npm;C:\Users\mpoladian\AppData\Roaming\npm;C:\Users\mpoladian\AppData\Local\Programs\Fiddler;C:\Program Files\Microsoft VS Code\bin
+10 verbose lifecycle sockjs-client@1.1.4~gulp: CWD: C:\Users\mpoladian\eclipse-workspace\EHOPE-LIS\trunk\EHOPE-WEB\src\main\webapp\libs\sockjs-client
+11 silly lifecycle sockjs-client@1.1.4~gulp: Args: [ '/d /s /c', 'gulp "stabe-release"' ]
+12 silly lifecycle sockjs-client@1.1.4~gulp: Returned: code: 1  signal: null
+13 info lifecycle sockjs-client@1.1.4~gulp: Failed to exec gulp script
+14 verbose stack Error: sockjs-client@1.1.4 gulp: `gulp "stabe-release"`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (C:\Program Files\nodejs\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:891:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid sockjs-client@1.1.4
+16 verbose cwd C:\Users\mpoladian\eclipse-workspace\EHOPE-LIS\trunk\EHOPE-WEB\src\main\webapp\libs\sockjs-client
+17 error Windows_NT 6.1.7601
+18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "gulp" "stabe-release"
+19 error node v6.11.0
+20 error npm  v3.10.10
+21 error code ELIFECYCLE
+22 error sockjs-client@1.1.4 gulp: `gulp "stabe-release"`
+22 error Exit status 1
+23 error Failed at the sockjs-client@1.1.4 gulp script 'gulp "stabe-release"'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the sockjs-client package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     gulp "stabe-release"
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs sockjs-client
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls sockjs-client
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

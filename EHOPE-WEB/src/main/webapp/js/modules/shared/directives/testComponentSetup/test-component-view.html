@@ -1,0 +1,19 @@
+<div class="test-component-wrapper">
+    <fieldset>
+        <legend>
+            {{ 'components' | translate }}
+        </legend>
+        <div>
+            <autocomplete-search dynamic-flex="100|50|50|25|25" options="componentSearchOptions"></autocomplete-search>
+            <md-chips ng-model="options.tempComponents" class="auto-height-chips" readonly="true" md-removable="true"
+                md-on-remove="removeChip($chip, 'componentGrid')">
+                <md-chip-template>
+                    <md-tooltip md-direction="top">{{$chip.description}}</md-tooltip>
+                    <span class="bold">{{$chip.standardCode}}</span>
+                </md-chip-template>
+            </md-chips>
+            <div kendo-grid="componentGrid" id="componentGrid" class="k-widget k-grid" options="componentGridOptions"></div>
+
+        </div>
+    </fieldset>
+</div>

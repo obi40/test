@@ -1,0 +1,100 @@
+<div ng-if="activateDirective">
+    <div layout="row" layout-align="end center" flex>
+        <md-button class="float-end md-raised" ng-click="skipPayment()" authority-checker="SKIP_PAYMENT"
+            http-disable-click ng-if="didPay==false"
+            ng-disabled="insProviderPlan != null && forms.approvalNumForm.$invalid">
+            {{'skip' | translate}}
+        </md-button>
+        <md-button class="float-end md-primary md-raised" ng-click="paymentDialog($event)"
+            authority-checker="ADD_PAYMENT"
+            ng-disabled="masterItemsNoPriceList.length > 0 || paymentWrapperList.length < 1 || (insProviderPlan != null && forms.approvalNumForm.$invalid)"
+            ng-if="didPay==false">
+            {{'pay' | translate}}
+        </md-button>
+        <md-button class="float-end md-primary md-raised" ng-click="exitEmit()" ng-if="didPay==true">
+            {{'sampleSeparation' | translate}}
+        </md-button>
+    </div>
+    <form ng-show="insProviderPlan != null" name="forms.approvalNumForm" novalidate layout="row" layout-wrap flex>
+        <md-input-container dynamic-flex>
+            <label>{{'approvalNumber' | translate}}</label>
+            <input type="text" name="approvalNumber" ng-model="newVisit.approvalNumber" ng-required="true"
+                ng-minlength="7" />
+            <input-messages input-errors="forms.approvalNumForm.approvalNumber.$error" />
+        </md-input-container>
+    </form>
+    <md-toolbar class="short-toolbar" flex>
+        <div class="md-toolbar-tools">
+            <div layout="row" flex>
+                <md-button ng-if="insProviderPlan != null" aria-label="{{'approveAll' | translate}}"
+                    class="md-fab md-mini" ng-click="authorizeAllListener(true)">
+                    <md-icon md-font-icon="fas fa-thumbs-up"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'approveAll' | translate }}</md-tooltip>
+                </md-button>
+                <md-button ng-if="insProviderPlan != null" aria-label="{{'disapproveAll' | translate}}"
+                    class="md-fab md-mini" ng-click="authorizeAllListener(false)">
+                    <md-icon md-font-icon="fas fa-thumbs-down"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'disapproveAll' | translate }}</md-tooltip>
+                </md-button>
+                <md-button aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                    ng-disabled="selectedPayment==null || selectedPayment.parentTest == null"
+                    ng-click="editPaymentWrapper(selectedPayment)" ng-if="insProviderPlan != null">
+                    <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                </md-button>
+                <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini"
+                    ng-disabled="!paymentWrapperChanged" ng-click="savePaymentWrapperChanges()"
+                    ng-if="insProviderPlan != null">
+                    <md-icon md-font-icon="fas fa-save"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                </md-button>
+                <!-- <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" type="button"
+                    ng-disabled="disableDeleteTest()" ng-click="deletePaymentWrapper(selectedPayment)">
+                    <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-trash"></md-icon>
+                </md-button> -->
+            </div>
+            <div layout="row">
+                <md-button aria-label="{{ 'calculatePrice' | translate }}" class="md-fab md-mini"
+                    ng-click="calculatePrice()" http-disable-click>
+                    <md-tooltip md-direction="top">{{'calculatePrice' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-dollar-sign"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div kendo-tree-list="paymentWrapperTreeList" id="paymentWrapperTreeList" class="k-widget k-tree-list"
+        options="paymentWrapperTreeListOptions"></div>
+    <form layout-margin layout-padding ng-if="masterItemsNoPriceList.length > 0" name="forms.billPricingForm" novalidate
+        http-disable-click ng-submit="createBillPricings(forms.billPricingForm.$valid)" flex>
+        <div ng-repeat="masterItem in masterItemsNoPriceList" layout="row" flex layout-wrap class="bottom-rule">
+            <md-input-container dynamic-flex>
+                <label>
+                    {{'cptCode' | translate}}</label>
+                <input type="text" name="cptCode" ng-model="masterItem.cptCode" ng-disabled="true">
+            </md-input-container>
+            <md-input-container dynamic-flex>
+                <label>
+                    {{'price' | translate}}</label>
+                <input type="number" name="price" ng-model="masterItem.price" ng-required="true"
+                    ng-pattern="patternNum" />
+                <input-messages input-errors="forms.billPricingForm.price.$error" />
+            </md-input-container>
+            <md-input-container dynamic-flex>
+                <label>{{'startDate' | translate}}</label>
+                <md-datepicker date-mask md-min-date="currentDate" name="startDate" ng-required="true"
+                    ng-model="masterItem.startDate" ng-change="startEndDateListener(masterItem)"></md-datepicker>
+                <input-messages input-errors="forms.billPricingForm.startDate.$error" />
+            </md-input-container>
+            <md-input-container dynamic-flex>
+                <label>{{'endDate' | translate}}</label>
+                <md-datepicker date-mask md-min-date="masterItem.startDate" name="endDate"
+                    ng-model="masterItem.endDate"></md-datepicker>
+                <input-messages input-errors="forms.billPricingForm.endDate.$error" />
+            </md-input-container>
+        </div>
+        <md-button class="md-primary md-raised" type="submit" ng-disabled="forms.billPricingForm.$invalid">
+            {{'save' | translate}}
+        </md-button>
+    </form>
+</div>
