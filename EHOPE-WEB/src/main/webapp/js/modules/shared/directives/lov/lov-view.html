@@ -1,0 +1,27 @@
+<div flex>
+	<md-input-container flex>
+		<label>{{options.labelText | translate}}</label>
+		<md-select name="{{options.className}}" ng-change="change(select)" ng-model="select"
+			ng-required="options.required" md-on-close="onClose()" md-on-open="onOpen()"
+			md-container-class="lov-select-header" ng-model-options="{trackBy: '$value.rid'}"
+			aria-label="{{options.className}}" ng-disabled="disableSelect"
+			placeholder="{{options.labelText | translate}}">
+			<md-select-header flex class="lov-search-header">
+				<md-input-container flex>
+					<label>{{'search' | translate}}</label>
+					<input type="text" ng-model="options.searchValue" ng-change="searchValues($event)" />
+					<span ng-if="options.searchValue" tabindex="-1" class="inline-icon" ng-click="clear()">
+						<md-icon md-font-icon="fas fa-times"></md-icon>
+					</span>
+				</md-input-container>
+			</md-select-header>
+			<md-option ng-if="!options.required" ng-value={{null}}>
+				<span>{{noneLabel}}</span>
+			</md-option>
+			<md-option ng-value="value" ng-class="value.color ? 'lov-color-code' : ''"
+				style="--color-var: {{value.color}};" ng-repeat="value in options.data"
+				ng-bind-html="highlightSearched(value)"></md-option>
+		</md-select>
+		<input-messages input-errors="form[options.className].$error" />
+	</md-input-container>
+</div>

@@ -1,0 +1,26 @@
+<div ng-if="activateDirective">
+    <div layout="row" layout-align="end center" flex>
+        <md-button class="md-raised float-end" type="submit" ng-click="submit()"
+            ng-disabled="destinationEntryForm.$invalid || testDestinations==null" canexit="destinationEntryForm.$valid"
+            wz-next>{{'next'| translate}}</md-button>
+    </div>
+    <form name="destinationEntryForm" novalidate flex class="clear-float">
+        <span ng-show="!multipleDestinations" class="md-title" layout="column" layout-align="center center">{{'noData'
+                    | translate}}</span>
+        <div layout="row" layout-wrap flex>
+            <div ng-repeat="td in testDestinations" dynamic-flex>
+                <div class="bold">{{td.testActual.testDefinition.standardCode}}</div>
+                <md-radio-group ng-model="td.selectedDestinationRid" class="md-primary">
+                    <md-radio-button aria-label="{{dest.rid}}" ng-value="dest.rid" ng-repeat="dest in td.destinations">
+                        <div ng-if="dest.workbench">
+                            {{dest.workbench.name[userLocale]}}
+                        </div>
+                        <div ng-if="dest.destinationBranch">
+                            {{dest.destinationBranch.name[userLocale]}}
+                        </div>
+                    </md-radio-button>
+                </md-radio-group>
+            </div>
+        </div>
+    </form>
+</div>

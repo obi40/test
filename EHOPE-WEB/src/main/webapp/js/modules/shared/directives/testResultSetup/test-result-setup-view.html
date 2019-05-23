@@ -1,0 +1,257 @@
+<div class="test-result-setup">
+    <fieldset>
+        <legend>
+            {{'results' | translate}}
+        </legend>
+        <div>
+            <form name="masterResultForm" id="masterResultForm" novalidate>
+                <div ng-repeat="result in options.results" data-index="{{$index}}" class="test-result-item"
+                    ng-if="!result.markedForDeletion">
+                    <md-subheader ng-click="headerClick($index)" class="md-no-sticky">
+                        <span class="header-content">
+                            <span class="title bold">{{result.standardCode}}</span>
+                            {{!result.standardCode || !result.description ? '' : ' - '}} {{result.description}}
+                            <i class="fas"
+                                ng-class="$index === selectedResultIndex ? 'selected fa-chevron-up' : 'fa-chevron-down'"></i>
+                        </span>
+                        <span class="result-drag-handle">
+                            <i class="fas fa-grip-vertical"></i>
+                            <md-tooltip md-direction="top">{{'dragToReorder' | translate}}</md-tooltip>
+                        </span>
+                    </md-subheader>
+                    <div layout="row" layout-wrap flex layout-align="center stretch"
+                        ng-class="$index !== selectedResultIndex ? '' : 'not-hidden'" class="item">
+                        <div ng-form="resultForm" layout="row" layout-wrap flex>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'standardCode' | translate }}</label>
+                                <input type="text" name="standardCode" ng-model="result.standardCode"
+                                    ng-required="result.metaData.standardCode.notNull" />
+                                <input-messages input-errors="resultForm.standardCode.$error" />
+                            </md-input-container>
+
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'description' | translate }}</label>
+                                <input type="text" name="description" ng-model="result.description"
+                                    ng-required="result.metaData.description.notNull" />
+                                <input-messages input-errors="resultForm.description.$error" />
+                            </md-input-container>
+
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'reportingDescription' | translate }}</label>
+                                <input type="text" name="reportingDescription" ng-model="result.reportingDescription"
+                                    ng-required="result.metaData.reportingDescription.notNull" />
+                                <input-messages input-errors="resultForm.reportingDescription.$error" />
+                            </md-input-container>
+
+                            <md-input-container dynamic-flex>
+                                <md-switch class="inline-switch" md-invert ng-model="result.isRequired"
+                                    aria-label="{{ 'required' | translate }}">
+                                    {{ 'required' | translate }}: {{ result.isRequired ?'yes' : 'no' | translate }}
+                                </md-switch>
+                            </md-input-container>
+
+                            <lov dynamic-flex form="resultForm" options="resultValueTypes[$index]"
+                                select="resultValueTypes[$index].selectedValue" on-change="changeType"
+                                on-change-params="[result, $index]"></lov>
+
+                            <lov ng-show="result.resultValueType.code === 'QN' || result.resultValueType.code === 'QN_SC'"
+                                dynamic-flex form="resultForm" options="primaryUnitTypeOptions[$index]"
+                                select="primaryUnitTypeOptions[$index].selectedValue" on-change="changePrimaryUnitType"
+                                on-change-params="[result, $index]"></lov>
+
+                            <lov ng-show="result.resultValueType.code === 'QN' || result.resultValueType.code === 'QN_SC'"
+                                dynamic-flex form="resultForm" options="primaryUnitOptions[$index]"
+                                select="primaryUnitOptions[$index].selectedValue" on-change="changePrimaryUnit"
+                                on-change-params="result"></lov>
+
+                            <md-input-container
+                                ng-if="result.resultValueType.code === 'QN' || result.resultValueType.code === 'QN_SC'"
+                                dynamic-flex>
+                                <label>{{ result.primaryUnitType.code === 'SI' ? 'siUnitDecimals' :
+                                    'convUnitDecimals'
+                                    | translate }}
+                                </label>
+                                <input ng-required="result.metaData.primaryDecimals.notNull" type="number"
+                                    name="primaryDecimals" ng-model="result.primaryDecimals" min="0" step="1" />
+                                <input-messages input-errors="resultForm.primaryDecimals.$error" />
+                            </md-input-container>
+
+                            <md-input-container ng-if="result.resultValueType.code === 'QN_SC'" dynamic-flex>
+                                <label>{{ 'factor' | translate }}</label>
+                                <input ng-required="result.metaData.factor.notNull" type="number" name="factor"
+                                    ng-model="result.factor" />
+                                <input-messages input-errors="resultForm.factor.$error" />
+                            </md-input-container>
+
+                            <lov ng-show="result.resultValueType.code === 'QN_SC'" dynamic-flex form="resultForm"
+                                options="secondaryUnitOptions[$index]"
+                                select="secondaryUnitOptions[$index].selectedValue" on-change="changeSecondaryUnit"
+                                on-change-params="result"></lov>
+
+                            <md-input-container ng-if="result.resultValueType.code === 'QN_SC'" dynamic-flex>
+                                <label>{{ result.primaryUnitType.code === 'CONV' ? 'siUnitDecimals' :
+                                    'convUnitDecimals' | translate }}</label>
+                                <input ng-required="result.metaData.secondaryDecimals.notNull" type="number"
+                                    name="secondaryDecimals" ng-model="result.secondaryDecimals" min="0" step="1" />
+                                <input-messages input-errors="resultForm.secondaryDecimals.$error" />
+                            </md-input-container>
+
+                            <md-input-container dynamic-flex
+                                ng-if="!result.isDifferential && result.resultValueType.code === 'QN'">
+                                <md-switch class="inline-switch" md-invert ng-model="result.isComprehensive"
+                                    aria-label="{{ 'comprehensive' | translate }}"
+                                    ng-change="isComprehensiveChange(result)">
+                                    {{ 'comprehensive' | translate }}:
+                                    {{ result.isComprehensive ?'yes' : 'no' | translate }}
+                                </md-switch>
+                            </md-input-container>
+
+                            <md-input-container dynamic-flex
+                                ng-if="!result.isComprehensive && result.resultValueType.code === 'QN'">
+                                <md-switch class="inline-switch" md-invert ng-model="result.isDifferential"
+                                    aria-label="{{ 'differential' | translate }}">
+                                    {{ 'differential' | translate }}:
+                                    {{ result.isDifferential ?'yes' : 'no' | translate }}
+                                </md-switch>
+                            </md-input-container>
+
+                            <lov ng-if="!result.isComprehensive && result.isDifferential" dynamic-flex form="resultForm"
+                                options="comprehensiveResultOptions[$index]"
+                                select="comprehensiveResultOptions[$index].selectedValue"
+                                on-change="changeComprehensiveResult" on-change-params="[result]">
+                            </lov>
+
+                            <div flex="100" ng-if="result.resultValueType.code === 'NAR'">
+                                <fieldset>
+                                    <legend>
+                                        {{ 'narrativeTemplates' | translate }}
+                                    </legend>
+                                    <div class="narrative-template-list">
+                                        <div ng-form="narrativeTemplateForm"
+                                            ng-repeat="narrativeTemplate in result.narrativeTemplateList"
+                                            ng-if="!narrativeTemplate.markedForDeletion" layout="row" flex
+                                            layout-align="center stretch" class="narrative-template">
+                                            <md-input-container flex>
+                                                <label>{{ 'text' | translate }}</label>
+                                                <textarea ng-required="true" md-detect-hidden name="text"
+                                                    ng-model="narrativeTemplate.text"></textarea>
+                                                <input-messages input-errors="narrativeTemplateForm.text.$error" />
+                                            </md-input-container>
+                                            <div layout="column" layout-align="center center">
+                                                <md-button class="md-fab md-mini red-button tiny-button"
+                                                    aria-label="{{'delete' | translate}}"
+                                                    confirm-click="deleteNarrativeTemplate"
+                                                    confirm-click-arg="[result, $index]">
+                                                    <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                                    <md-tooltip md-direction="top">{{'deleteNarrativeTemplate' |
+                                                        translate}}</md-tooltip>
+                                                </md-button>
+                                            </div>
+                                        </div>
+                                        <div layout="row" flex layout-align="center center">
+                                            <md-button class="md-raised md-fab md-mini green-button"
+                                                aria-label="{{'add' | translate}}"
+                                                ng-click="addNarrativeTemplate(result)">
+                                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                                                <md-tooltip md-direction="top">{{'addNarrativeTemplate' | translate}}
+                                                </md-tooltip>
+                                            </md-button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div flex="100" ng-if="result.resultValueType.code === 'CE'">
+                                <fieldset ng-class="result.testCodedResultList.length > 0 ? '' : 'no-border'">
+                                    <legend>
+                                        {{ 'codedResults' | translate }}
+                                        <md-button class="md-fab md-mini tiny-button"
+                                            aria-label="{{'codedResults' | translate}}"
+                                            ng-click="openCodedResultsDialog(result, resultForm)">
+                                            <md-icon md-font-icon="fas fa-code"></md-icon>
+                                            <md-tooltip md-direction="top">{{'codedResults' | translate}}</md-tooltip>
+                                        </md-button>
+                                    </legend>
+                                    <div
+                                        ng-show="result.resultValueType.code === 'CE' && result.testCodedResultList.length > 0">
+                                        <md-chips class="chips-no-shadow" ng-model="result.testCodedResultList"
+                                            readonly="true" md-removable="true"
+                                            md-on-remove="checkCodedNormalRange(result, resultForm)"
+                                            ng-model-options="{trackBy: '$value.rid'}">
+                                            <md-chip-template>
+                                                <md-tooltip md-direction="top">{{$chip.value}}</md-tooltip>
+                                                <span class="bold">{{$chip.code}}</span>
+                                            </md-chip-template>
+                                        </md-chips>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div flex="100"
+                                ng-if="result.resultValueType.code === 'QN' || result.resultValueType.code === 'QN_SC' || result.resultValueType.code === 'CE' || result.resultValueType.code === 'RATIO'">
+                                <md-tabs md-border-bottom md-dynamic-height>
+                                    <md-tab ng-repeat="(key, tab) in result.normalRangeTabs" label="{{tab.title}}">
+                                        <fieldset ng-class="tab.normalRanges.length > 0 ? '' : 'no-border'">
+                                            <legend>
+                                                {{ 'normalRanges' | translate }}
+                                                <md-button ng-if="result.resultValueType.code !== 'NAR'"
+                                                    class="md-fab md-mini tiny-button"
+                                                    aria-label="{{'normalRanges' | translate}}"
+                                                    ng-disabled="resultForm.$invalid && result.resultValueType.code !== 'CE'"
+                                                    ng-click="openNormalRangesDialog(result, resultForm, $parent.$index, key)">
+                                                    <md-icon md-font-icon="far fa-list-alt"></md-icon>
+                                                    <md-tooltip md-direction="top">{{'normalRanges' | translate}}
+                                                    </md-tooltip>
+                                                </md-button>
+                                            </legend>
+                                            <div ng-show="tab.normalRanges.length > 0" class="normal-range-chips">
+                                                <div class="lis-chip-container"
+                                                    result-index="{{$parent.$parent.$index}}" destination-key="{{key}}">
+                                                    <div data-index="{{$index}}"
+                                                        ng-repeat="normalRange in tab.normalRanges"
+                                                        class="lis-chip draggable-element"
+                                                        ng-show="!normalRange.markedForDeletion">
+                                                        <md-tooltip md-direction="top">{{'dragToReorder' | translate}}
+                                                        </md-tooltip>
+                                                        <div class="bold label" ng-bind-html="normalRange.description">
+                                                        </div>
+                                                        <md-button
+                                                            class="md-icon-button delete-normal-range tiny-button"
+                                                            confirm-click="deleteNormalRange"
+                                                            confirm-click-arg="normalRange">
+                                                            <md-icon md-font-icon="fas fa-times"></md-icon>
+                                                        </md-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span flex="100" layout="row" layout-align="start end"
+                                                class="hidden-field-error">
+                                                <input type="hidden" name="normalRangeValidator"
+                                                    ng-model="result.normalRangeValidator" />
+                                                <input-messages input-errors="resultForm.normalRangeValidator.$error"
+                                                    messages="normalRangeValidationMessages" />
+                                            </span>
+                                        </fieldset>
+                                    </md-tab>
+                                </md-tabs>
+                            </div>
+                        </div>
+                        <div layout="column" layout-align="start center">
+                            <md-button class="md-fab md-mini red-button tiny-button"
+                                aria-label="{{'delete' | translate}}" ng-disabled="totalVisibleResults <= 1"
+                                confirm-click="deleteResult" confirm-click-arg="$index">
+                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                <md-tooltip md-direction="top">{{'deleteResult' | translate}}</md-tooltip>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div layout="row" flex layout-align="center center">
+                <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}"
+                    ng-click="addResult()" ng-disabled="masterResultForm.$invalid">
+                    <md-icon md-font-icon="fas fa-2x fa-plus"></md-icon>
+                    <md-tooltip md-direction="top">{{'addResult' | translate}}</md-tooltip>
+                </md-button>
+            </div>
+        </div>
+    </fieldset>
+</div>

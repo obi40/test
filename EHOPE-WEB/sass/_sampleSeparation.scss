@@ -1,0 +1,86 @@
+.sample-separation-wrapper {
+    .samples-action-buttons {
+        md-icon {
+            font-size: 1.5em;
+        }
+    }
+
+    .sample-container {
+        md-chips-wrap {
+            box-shadow: none;
+        }
+
+        md-card {
+            position: relative;
+            padding: 8px;
+        }
+
+        md-card-content {
+            padding: 0 !important;
+        }
+
+        .card-actions {
+            padding-top: 10px
+        }
+
+        .container-image {
+            width: 100%;
+
+            svg {
+                height: 200px;
+                width: 100%;
+            }
+        }
+
+        .sample-label {
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 1.3em;
+        }
+
+        .container-type {
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        .sample-state-container {
+            .icon-container {
+                border: 1px solid;
+                border-radius: 50%;
+
+                md-icon {
+                    text-align: center;
+                    color: white;
+                }
+            }
+
+            .sample-state,
+            md-progress-circular {
+                position: absolute;
+                top: 5px;
+                #{$opposite-direction}: 15px;
+            }
+
+            .disabled-state {
+                position: absolute;
+                top: 5px;
+                #{$direction}: 5px;
+            }
+
+            .valid-state {
+                border-color: $success-color !important;
+                background: $success-color !important;
+            }
+
+            .invalid-state {
+                border-color: $error-color !important;
+                background: $error-color !important;
+            }
+
+            .warning-state {
+                border-color: $warning-color !important;
+                background: $warning-color !important;
+            }
+        }
+    }
+}

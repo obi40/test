@@ -1,0 +1,120 @@
+<md-content class="patient-info-container" flex>
+  <md-card md-whiteframe="3" flex>
+    <md-card-content class="patient-info-card" flex>
+      <div layout="row" layout-align="center center" layout-xs="column">
+        <div class="patient-image">
+          <img ng-if="patient.image != null" ng-src="{{'data:image/*;base64,' + patient.image}}" />
+          <md-icon ng-if="patient.gender.code == 'MALE' && patient.image == null" md-font-icon="lis-male-head">
+          </md-icon>
+          <md-icon ng-if="patient.gender.code == 'FEMALE' && patient.image == null" md-font-icon="lis-female-head">
+          </md-icon>
+        </div>
+        <div class="patient-info" flex layout="row" layout-wrap>
+          <div dynamic-flex="100|50|33|20|20" layout="row" layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'name' | translate}}: </span>
+              <span class="bold">{{patient.fullName[nameLanguage]}}</span>
+            </span>
+          </div>
+          <div ng-if="patient.age !== null" dynamic-flex="100|50|33|20|20" layout="row" layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'age' | translate}}: </span>
+              <span class="bold">{{patient.ageWithUnit.age}} {{patient.ageWithUnit.unit | translate}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.fileNo)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'fileNumber' | translate}}: </span>
+              <span class="bold">{{patient.fileNo}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.phoneNo)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'phone' | translate}}: </span>
+              <span class="bold">{{patient.phoneNo}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.mobileNo)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'mobileNumber' | translate}}: </span>
+              <span class="bold">{{patient.mobileNo}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.nationalId)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'nationalNumber' | translate}}: </span>
+              <span class="bold">{{patient.nationalId}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.gender)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'sex' | translate}}: </span>
+              <span class="bold">{{patient.gender.name[userLocale]}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.address)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'address' | translate}}: </span>
+              <span class="bold">{{patient.address[userLocale]}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.remarks)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'remarks' | translate}}: </span>
+              <span class="bold">{{patient.remarks[userLocale]}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.email)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'email' | translate}}: </span>
+              <span class="bold">{{patient.email}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.maritalStatus)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'maritalStatus' | translate}}: </span>
+              <span class="bold">{{patient.maritalStatus.name[userLocale]}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.country)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'country' | translate}}: </span>
+              <span class="bold">{{patient.country.name[userLocale]}}</span>
+            </span>
+          </div>
+          <div ng-if="!isObjectEmpty(patient.bloodType)" dynamic-flex="100|50|33|20|20" layout="row"
+            layout-align="center center">
+            <span class="info" layout-fill>
+              <span>{{'bloodType' | translate}}: </span>
+              <span class="bold">{{patient.bloodType.name[userLocale]}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div layout="row" layout-wrap flex class="icons">
+        <div ng-if="patient.isVip">
+          <md-icon class="vip full-icon" md-font-icon="fas fa-star fa-2x">
+            <md-tooltip md-direction="bottom">{{'vip' | translate}}</md-tooltip>
+          </md-icon>
+        </div>
+        <div ng-if="patient.mergedToPatientInfo">
+          <md-icon class="full-icon" md-font-icon="fas fa-dolly fa-2x">
+            <md-tooltip md-direction="bottom">{{'to' | translate}} :
+              {{patient.mergedToPatientInfo.fullName[userLocale]}}
+            </md-tooltip>
+          </md-icon>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+</md-content>

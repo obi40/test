@@ -1,0 +1,51 @@
+<md-content>
+    <form name="tenantMessagesForm" http-disable-click novalidate ng-submit="submitTenantMessage(tenantMessagesForm.$valid)"
+        flex>
+        <div layout="row" layout-wrap flex>
+            <md-input-container dynamic-flex="100|100|50|33|33">
+                <label>
+                    {{'code' | translate}}</label>
+                <input type="text" name="code" ng-model="tenantMessageCode" ng-required="metaData.code.notNull"
+                    ng-minlength="metaData.code.sized? metaData.code.min:''" ng-maxlength="metaData.code.sized? metaData.code.max:''"
+                    ng-disabled="isAppAdmin == false" ng-change="tenantMessageCodeListener()" />
+                <input-messages input-errors="tenantMessagesForm.code.$error" />
+            </md-input-container>
+            <lov ng-if="messageTypeLkp!=null" dynamic-flex="100|100|50|33|33" form="tenantMessagesForm" options="messageTypeLkp"
+                select="messageTypeLkp.selectedValue" disable-select="isAppAdmin == false"></lov>
+            <trans-field dynamic-flex="100|100|100|33|33" model="tenantMessage" form="tenantMessagesForm" languages="transFields.description"></trans-field>
+        </div>
+        <div layout="row" flex>
+            <md-button class="md-primary md-raised" type="submit" authority-checker="APPLICATION_ADMIN" ng-disabled="tenantMessagesForm.$invalid || tenantMessage.rid!=null">
+                {{'save' | translate}}
+            </md-button>
+            <md-button class="md-primary md-raised" http-disable-click type="button" ng-click="updateTenantMessage(tenantMessagesForm.$valid)"
+                ng-disabled="tenantMessagesForm.$invalid || tenantMessage.rid==null" authority-checker="UPD_TENANT_MESSAGE">
+                {{'edit' | translate}}
+            </md-button>
+            <md-button class="md-primary md-raised" type="button" ng-click="clearFields()" ng-disabled="tenantMessage.rid==null">
+                {{'clear' | translate}}
+            </md-button>
+        </div>
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button class="md-fab md-mini" http-disable-click type="button" confirm-click="deleteTenantMessage"
+                        ng-disabled="tenantMessage.rid==null" authority-checker="APPLICATION_ADMIN">
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrid()" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+
+        </md-toolbar>
+
+        <div kendo-grid="tenantMessagesGrid" id="tenantMessagesGrid" class="k-widget k-grid" options="tenantMessagesGridOptions"></div>
+    </form>
+</md-content>

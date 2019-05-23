@@ -1,0 +1,29 @@
+<div class="name-wrapper">
+	<md-content layout="row" flex="100" class="hidden-overflow-x" layout-wrap ng-repeat="language in languages | orderBy : '-namePrimary'"
+	 dir="{{language.direction}}">
+		<div ng-repeat="name in language.names" dynamic-flex="100|100|50|25|25">
+			<md-input-container ng-if="$last==false" flex>
+				<label>{{ name.type | translator:language.language }}</label>
+				<input name="{{name.type+'_'+language.language}}" ng-required="metaData[name.type].notNull && language.namePrimary"
+				 ng-model="nameOption[name.type][language.language]" />
+				<input-messages input-errors="form[name.type+'_'+language.language].$error" />
+			</md-input-container>
+			<div layout="row" flex ng-if="$last==true">
+				<div flex>
+					<md-input-container flex>
+						<label>{{ name.type | translator:language.language }}</label>
+						<input name="{{name.type+'_'+language.language}}" ng-required="metaData[name.type].notNull && language.namePrimary"
+						 ng-model="nameOption[name.type][language.language]" />
+						<input-messages input-errors="form[name.type+'_'+language.language].$error" />
+					</md-input-container>
+				</div>
+				<div flex="nogrow" ng-class="[languages.length === 1 ? 'no-display' : '']" layout="row" layout-align="center center">
+					<md-button class="sml-btn" ng-click="nameTransliteration(nameOption,language)" ng-disabled="disableTranslate(nameOption,language)">
+						<md-icon md-font-icon="fas fa-language fa-lg"></md-icon>
+						<md-tooltip md-direction="top">{{'transliterate' | translate}}</md-tooltip>
+					</md-button>
+				</div>
+			</div>
+		</div>
+	</md-content>
+</div>

@@ -1,0 +1,86 @@
+<div>
+    <div layout="row" layout-align="end center" flex>
+        <md-button ng-if="wiz" wz-next type="button" ng-click="submitPatientInsurance(insuranceForm.$valid)" class="md-raised float-end"
+            authority-checker="ADD_PATIENT_INSURANCE || UPD_PATIENT_INSURANCE" ng-disabled="insuranceForm.$invalid"
+            aria-label="{{'next' | translate}}">
+            {{'next' | translate}}
+        </md-button>
+    </div>
+    <form http-disable-click ng-submit="submitPatientInsurance(insuranceForm.$valid)" novalidate name="insuranceForm"
+        flex layout-wrap layout="row">
+        <lov dynamic-flex ng-if="insuranceDependencyType != null" form="insuranceForm" options="insuranceDependencyType"
+            select="insuranceDependencyType.selectedValue"></lov>
+        <lov dynamic-flex ng-if="providerLkp != null" on-change="providerListener" form="insuranceForm" options="providerLkp"
+            select="providerLkp.selectedValue"></lov>
+        <lov dynamic-flex ng-hide="providerLkp.selectedValue.isSimple == true" ng-if="providerPlanLkp != null" form="insuranceForm"
+            on-change="providerPlanListener" flex options="providerPlanLkp" select="providerPlanLkp.selectedValue"
+            parent="providerLkp.selectedValue"></lov>
+        <div dynamic-flex layout="row">
+            <md-input-container flex>
+                <label>{{'subscriberName' | translate}}</label>
+                <input type="text" name="subscriber" ng-required="insuranceMetaData.subscriber.notNull" ng-model="selectedInsurance.subscriber"
+                    ng-minlength="insuranceMetaData.subscriber.sized? insuranceMetaData.subscriber.min:''" ng-maxlength="insuranceMetaData.subscriber.sized? insuranceMetaData.subscriber.max:''" />
+                <input-messages input-errors="insuranceForm.subscriber.$error" />
+            </md-input-container>
+            <md-button aria-label="{{'copy' | translate}}" class="md-fab md-mini" ng-click="copyPatientName()" type="button">
+                <md-tooltip md-direction="top">{{'copy' | translate}}</md-tooltip>
+                <md-icon md-font-icon="fas fa-copy"></md-icon>
+            </md-button>
+        </div>
+
+        <md-input-container dynamic-flex>
+            <label>{{'cardNumber' | translate}}</label>
+            <input type="text" name="cardNumber" ng-required="insuranceMetaData.cardNumber.notNull" ng-model="selectedInsurance.cardNumber"
+                ng-minlength="insuranceMetaData.cardNumber.sized? insuranceMetaData.cardNumber.min:''" ng-maxlength="insuranceMetaData.cardNumber.sized? insuranceMetaData.cardNumber.max:''" />
+            <input-messages input-errors="insuranceForm.cardNumber.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'policyNumber' | translate}}</label>
+            <input type="text" name="policyNumber" ng-required="insuranceMetaData.policyNo.notNull" ng-model="selectedInsurance.policyNo"
+                ng-minlength="insuranceMetaData.policyNo.sized? insuranceMetaData.policyNo.min:''" ng-maxlength="insuranceMetaData.policyNo.sized? insuranceMetaData.policyNo.max:''" />
+            <input-messages input-errors="insuranceForm.policyNo.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'patientShare' | translate}} {{providerPlanLkp.selectedValue.isFixed?'('+('fixed' |
+                translate)+')':''}}</label>
+            <input type="number" name="patientShare" ng-required="insuranceMetaData.coveragePercentage.notNull"
+                ng-model="selectedInsurance.patientShare" ng-disabled="providerPlanLkp.selectedValue.isFixed" ng-min="insuranceMetaData.coveragePercentage.sized? insuranceMetaData.coveragePercentage.min:''"
+                ng-max="insuranceMetaData.coveragePercentage.sized? insuranceMetaData.coveragePercentage.max:''"
+                ng-pattern="patternPercent" ng-change="changePatientShare(selectedInsurance)" />
+            <input-messages input-errors="insuranceForm.patientShare.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'issueDate' | translate}}</label>
+            <md-datepicker date-mask name="issueDate" ng-change="issueDateChanged()" ng-required="insuranceMetaData.issueDate.notNull"
+                ng-model="selectedInsurance.issueDate"></md-datepicker>
+            <input-messages input-errors="insuranceForm.issueDate.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'expiryDate' | translate}}</label>
+            <md-datepicker date-mask md-min-date="selectedInsurance.issueDate" name="expiryDate" ng-required="insuranceMetaData.expiryDate.notNull"
+                ng-model="selectedInsurance.expiryDate"></md-datepicker>
+            <input-messages input-errors="insuranceForm.expiryDate.$error" />
+        </md-input-container>
+        <span dynamic-flex layout="row" layout-align="start center">
+            <md-checkbox ng-model="selectedInsurance.isActive" aria-label="{{'active' | translate}}">
+                {{'active' | translate}}
+            </md-checkbox>
+        </span>
+        <span dynamic-flex layout="row" layout-align="start center">
+            <md-checkbox ng-model="selectedInsurance.isVip" aria-label="{{'vip' | translate}}">
+                {{'vip' | translate}}
+            </md-checkbox>
+        </span>
+        <span dynamic-flex layout="row" layout-align="start center">
+            <md-checkbox ng-model="selectedInsurance.isDefault" aria-label="{{'default' | translate}}">
+                {{'default' | translate}}
+            </md-checkbox>
+        </span>
+        <md-input-container>
+            <md-button ng-if="!wiz" type="submit" class="md-raised md-primary" authority-checker="ADD_PATIENT_INSURANCE || UPD_PATIENT_INSURANCE"
+                ng-disabled="insuranceForm.$invalid" aria-label="{{'submit' | translate}}">
+                {{'submit' | translate}}
+            </md-button>
+        </md-input-container>
+    </form>
+</div>

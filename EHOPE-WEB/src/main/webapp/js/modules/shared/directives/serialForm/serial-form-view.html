@@ -1,0 +1,78 @@
+<md-content class="serial-form hidden-overflow-x" flex>
+    <form name="masterForm" novalidate>
+        <div layout="row" layout-wrap flex layout-align="center center">
+            <lov dynamic-flex form="masterForm" ng-if="branchLkp != null" options="branchLkp"
+                select="branchLkp.selectedValue" on-change="onBranchLkpChange"></lov>
+        </div>
+        <div layout="row" layout-wrap flex>
+            <div ng-form="serialForm" novalidate dynamic-flex layout-padding ng-repeat="serial in options.serials">
+                <md-card md-whiteframe="3" flex layout-fill>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="label">{{serial.label}}</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout-align="center center">
+                        <div layout="row" layout-wrap flex>
+                            <lov dynamic-flex="100|100|50|50|50" form="serialForm" options="serial.serialFormatLov"
+                                select="serial.serialFormatLov.selectedValue" on-change="populateExamples"
+                                on-change-params="serial" disable-select="serial.isBranchLevel"></lov>
+                            <md-input-container dynamic-flex="100|100|50|50|50">
+                                <label>
+                                    {{'startValue' | translate}}</label>
+                                <input type="number" name="currentValue" ng-model="serial.currentValue"
+                                    ng-required="serialMetaData.currentValue.notNull"
+                                    ng-min="serialMetaData.currentValue.sized? serialMetaData.currentValue.min:''"
+                                    ng-pattern="patternNum" ng-change="populateExamples(serial.serialFormat,serial)"
+                                    ng-disabled="serial.isBranchLevel" />
+                                <input-messages input-errors="serialForm.currentValue.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex="100|100|50|50|50"
+                                ng-if="serial.serialFormat.code != 'SERIAL'">
+                                <label>
+                                    {{'delimiter' | translate}}</label>
+                                <input type="text" name="delimiter" ng-model="serial.delimiter"
+                                    ng-required="serialMetaData.delimiter.notNull"
+                                    ng-minlength="serialMetaData.delimiter.sized? serialMetaData.delimiter.min:''"
+                                    ng-maxlength="serialMetaData.delimiter.sized? serialMetaData.delimiter.max:''"
+                                    ng-change="populateExamples(serial.serialFormat,serial)"
+                                    ng-disabled="serial.isBranchLevel" />
+                                <input-messages input-errors="serialForm.delimiter.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex="100|100|50|50|50">
+                                <label>
+                                    {{'filler' | translate}}</label>
+                                <input type="number" name="filler" ng-model="serial.filler"
+                                    ng-required="serialMetaData.filler.notNull"
+                                    ng-min="serialMetaData.filler.sized? serialMetaData.filler.min:''"
+                                    ng-pattern="patternNum" ng-change="populateExamples(serial.serialFormat,serial)"
+                                    ng-disabled="serial.isBranchLevel" />
+                                <input-messages input-errors="serialForm.filler.$error" />
+                            </md-input-container>
+                            <span layout="row" layout-align="start center"
+                                ng-if="branchLkp.selectedValue.rid === -1 && serial.serialType.code !== 'PATIENT_FILE_NO'">
+                                <md-checkbox ng-model="serial.isBranchLevel" aria-label="{{'branchLevel' | translate}}">
+                                    {{'branchLevel' | translate}}
+                                </md-checkbox>
+                            </span>
+                        </div>
+                        <div ng-if="!serial.isBranchLevel">
+                            <div class="label">{{'examples' | translate}}</div>
+                            <md-chips flex ng-model="serial.examples" layout="row" readonly="true" md-removable="false"
+                                layout-align="center center" layout-wrap ng-model-options="{trackBy: '$value.id'}">
+                                <md-chip-template flex>
+                                    <span class="bold" flex>{{$chip.label}}</span>
+                                </md-chip-template>
+                            </md-chips>
+                        </div>
+                    </md-card-content>
+                    <md-button class="md-fab md-mini single-submit" type="button" ng-if="options.singleSubmit"
+                        http-disable-click ng-click="options.submit(serial)" authority-checker="UPD_SERIAL"
+                        ng-disabled="serialForm.$invalid">
+                        <md-tooltip md-direction="bottom">{{'save' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                    </md-button>
+                </md-card>
+            </div>
+        </div>
+</md-content>

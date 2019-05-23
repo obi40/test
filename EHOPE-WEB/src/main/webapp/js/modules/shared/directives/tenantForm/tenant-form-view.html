@@ -1,0 +1,166 @@
+<form class="tenant-form" name="options.tenantForm" novalidate>
+    <div layout="row" flex layout-wrap>
+        <md-input-container dynamic-flex>
+            <label>{{'name' | translate}}</label>
+            <input type="text" name="name" ng-model="tenant.name" ng-required="metaData.name.notNull"
+                ng-minlength="metaData.name.sized? metaData.name.min:''"
+                ng-maxlength="metaData.name.sized? metaData.name.max:''" />
+            <input-messages input-errors="options.tenantForm.name.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'email' | translate}}</label>
+            <input type="email" name="email" ng-model="tenant.email" ng-required="metaData.email.notNull"
+                ng-minlength="metaData.email.sized? metaData.email.min:''"
+                ng-maxlength="metaData.email.sized? metaData.email.max:''" />
+            <input-messages input-errors="options.tenantForm.email.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'address' | translate}}</label>
+            <input type="text" name="address" ng-model="tenant.address" ng-required="metaData.address.notNull"
+                ng-minlength="metaData.address.sized? metaData.address.min:''"
+                ng-maxlength="metaData.address.sized? metaData.address.max:''" />
+            <input-messages input-errors="options.tenantForm.address.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'phone' | translate}}</label>
+            <input type="text" name="phoneNo" ng-model="tenant.phoneNo" ng-required="metaData.phoneNo.notNull"
+                ng-minlength="metaData.phoneNo.sized? metaData.phoneNo.min:''"
+                ng-maxlength="metaData.phoneNo.sized? metaData.phoneNo.max:''" ng-pattern="patternNum" />
+            <input-messages input-errors="options.tenantForm.username.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'website' | translate}}</label>
+            <input type="text" name="website" ng-model="tenant.website" ng-required="metaData.website.notNull"
+                ng-minlength="metaData.website.sized? metaData.website.min:''"
+                ng-maxlength="metaData.website.sized? metaData.website.max:''" />
+            <input-messages input-errors="options.tenantForm.website.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'code' | translate}}</label>
+            <input type="text" name="code" ng-model="tenant.code" ng-required="metaData.code.notNull"
+                ng-minlength="metaData.code.sized? metaData.code.min:''"
+                ng-maxlength="metaData.code.sized? metaData.code.max:''" />
+            <input-messages input-errors="options.tenantForm.code.$error" />
+        </md-input-container>
+        <div layout="row" dynamic-flex layout-wrap>
+            <md-input-container flex>
+                <label>{{'mobilePattern' | translate}}</label>
+                <input type="text" name="mobilePattern" ng-model="tenant.mobilePattern"
+                    ng-required="metaData.mobilePattern.notNull"
+                    ng-minlength="metaData.mobilePattern.sized? metaData.mobilePattern.min:''"
+                    ng-maxlength="metaData.mobilePattern.sized? metaData.mobilePattern.max:''"
+                    ng-change="onMobilePatternChange()" />
+                <span class="hint">{{'mobilePatternHint' | translate}}</span>
+                <input-messages input-errors="options.tenantForm.mobilePattern.$error" />
+            </md-input-container>
+            <md-input-container flex>
+                <label>{{'output' | translate}}</label>
+                <input type="text" name="dummyMobileNumber" ng-model="dummyMobileNumber"
+                    ui-mask="{{tenant.mobilePattern}}" ui-mask-placeholder-char="#" />
+            </md-input-container>
+        </div>
+        <country-city dynamic-flex form="options.tenantForm" model="tenant" options="countryCityOptions"></country-city>
+        <div dynamic-flex="100|100|50|50|50" layout="row">
+            <div flex>
+                <div flex class="bold">{{'availableLanguages' | translate}}</div>
+                <md-chips flex ng-if="availableLanguages!=null" ng-model="availableLanguages" name="languages"
+                    readonly="true" md-removable="false">
+                    <md-chip-template>
+                        <span class="bold clickable-item"
+                            ng-click="transferTenantLanguages($chip)">{{$chip.comLanguage.name}}</span>
+                    </md-chip-template>
+                </md-chips>
+            </div>
+            <div flex>
+                <div flex class="bold">{{'selectedLanguages' | translate}}</div>
+                <md-chips class="chips-with-radios" flex ng-if="options.tenantLanguages!=null"
+                    ng-model="options.tenantLanguages" name="languages" readonly="true" md-removable="true"
+                    md-on-remove="onTenantLanguagesRemove($chip)">
+                    <md-chip-template>
+                        <div class="bold">{{$chip.comLanguage.name}}</div>
+                        <div class="chip-radio">
+                            <md-radio-group ng-model="$chip.isPrimary"
+                                ng-change="tenantLanguagesListener($chip, 'isPrimary')">
+                                <md-radio-button ng-value="true">
+                                    {{'primary' | translate}}
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+                        <div class="chip-radio">
+                            <md-radio-group ng-model="$chip.isNamePrimary"
+                                ng-change="tenantLanguagesListener($chip, 'isNamePrimary')">
+                                <md-radio-button ng-value="true">
+                                    {{'namePrimary' | translate}}
+                                </md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </md-chip-template>
+                </md-chips>
+            </div>
+        </div>
+        <div dynamic-flex>
+            <upload-file file-data-wrapper="options.fileDataWrapper"></upload-file>
+        </div>
+        <md-input-container dynamic-flex class="md-input-has-value">
+            <label>{{ 'documentDownloadAction' | translate }}</label>
+            <md-radio-group md-autofocus name="documentDownloadAction" ng-model="tenant.isDocumentAutoDownload"
+                layout="column" class="margin-top-10">
+                <md-radio-button ng-value="true">{{ 'download' | translate }}</md-radio-button>
+                <md-radio-button ng-value="false">{{ 'openInNewTabNoFileName' | translate }}</md-radio-button>
+            </md-radio-group>
+        </md-input-container>
+
+        <div dynamic-flex>
+            <fieldset>
+                <legend>{{'printingOptions' | translate}}</legend>
+                <div layout="column" layout-wrap>
+                    <div layout="row">
+                        <span layout="row" layout-align="start center">
+                            <md-checkbox name="customHeaderCheckbox" ng-model="tenant.customHeader"
+                                aria-label="printingOptions">
+                                {{'customHeader' | translate}}
+                            </md-checkbox>
+                        </span>
+
+                        <div ng-if="tenant.customHeader">
+                            <upload-file file-data-wrapper="options.headerFileDataWrapper"></upload-file>
+                        </div>
+                    </div>
+
+                    <div layout="row">
+                        <span layout="row" layout-align="start center">
+                            <md-checkbox name="customFooterCheckbox" ng-model="tenant.customFooter"
+                                aria-label="printingOptions">
+                                {{'customFooter' | translate}}
+                            </md-checkbox>
+                        </span>
+
+                        <div ng-if="tenant.customFooter">
+                            <upload-file file-data-wrapper="options.footerFileDataWrapper"></upload-file>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" layout-wrap>
+                    <div layout="row">
+                        <span layout="row" layout-align="start center">
+                            <md-checkbox name="printHeaderCheckbox" ng-model="tenant.printHeader"
+                                aria-label="printHeader">
+                                {{'printHeader' | translate}}
+                            </md-checkbox>
+                        </span>
+                    </div>
+                    <div layout="row">
+                        <span layout="row" layout-align="start center">
+                            <md-checkbox name="printFooterCheckbox" ng-model="tenant.printFooter"
+                                aria-label="printFooter">
+                                {{'printFooter' | translate}}
+                            </md-checkbox>
+                        </span>
+                    </div>
+                </div>
+                <lov form="options.tenantForm" ng-if="printFormatLkp != null" options="printFormatLkp"
+                    select="printFormatLkp.selectedValue"></lov>
+            </fieldset>
+        </div>
+    </div>
+</form>

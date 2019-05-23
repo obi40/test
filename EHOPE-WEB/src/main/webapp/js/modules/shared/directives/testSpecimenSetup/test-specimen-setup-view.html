@@ -1,0 +1,79 @@
+<div class="test-specimen-setup">
+    <fieldset>
+        <legend>
+            {{'specimens' | translate}}
+        </legend>
+        <div>
+            <form name="masterSpecimenForm" novalidate>
+                <div>
+                    <div ng-form="specimenForm" ng-repeat="specimen in options.testDefinition.testSpecimenList" ng-if="!specimen.markedForDeletion"
+                        layout="row" layout-wrap flex class="specimen-wrapper">
+                        <div layout="row" layout-wrap flex>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'description' | translate }}</label>
+                                <input type="text" name="description" ng-model="specimen.description" />
+                                <input-messages input-errors="specimenForm.description.$error" />
+                            </md-input-container>
+                            <lov ng-if="containerTypeValues" dynamic-flex form="specimenForm" options="containerTypeOptions[$index]"
+                                select="options.testDefinition.testSpecimenList[$index].containerType"></lov>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'containerCount' | translate }}</label>
+                                <input type="number" step="1" min="1" max="100" name="containerCount" ng-model="specimen.containerCount"
+                                    ng-required="true" />
+                                <input-messages input-errors="specimenForm.containerCount.$error" />
+                            </md-input-container>
+                            <lov ng-if="temperatureValues" dynamic-flex form="specimenForm" options="temperatureOptions[$index]"
+                                select="options.testDefinition.testSpecimenList[$index].specimenTemperature"></lov>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'stability' | translate }}</label>
+                                <input type="text" name="stability" ng-pattern="stabilityPattern" ng-model="specimen.stability"
+                                    ng-change="stabilityChange($index, specimenForm)" />
+                                <span class="hint">{{stabilityHint}}</span>
+                                <input-messages input-errors="specimenForm.stability.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'minimumVolume' | translate }}</label>
+                                <input type="text" name="minimumVolume" ng-model="specimen.minimumVolume" />
+                                <input-messages input-errors="specimenForm.minimumVolume.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'rejectDueTo' | translate }}</label>
+                                <input type="text" name="rejectDueTo" ng-model="specimen.rejectDueTo" />
+                                <input-messages input-errors="specimenForm.rejectDueTo.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'specimenRequirements' | translate }}</label>
+                                <input type="text" name="specimenRequirements" ng-model="specimen.specimenRequirements" />
+                                <input-messages input-errors="specimenForm.specimenRequirements.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex>
+                                <label>{{ 'specimenVolume' | translate }}</label>
+                                <input type="text" name="specimenVolume" ng-model="specimen.specimenVolume" />
+                                <input-messages input-errors="specimenForm.specimenVolume.$error" />
+                            </md-input-container>
+                        </div>
+                        <div layout="column" layout-align="start center" class="specimen-tag-wrapper">
+                            <span class="specimen-tag">
+                                <md-tooltip md-direction="top">{{$index > 0 ? 'pediatricSpecimen' : 'defaultSpecimen' |
+                                    translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-2x" ng-class="$index > 0 ? 'fa-child' : 'fa-star'"></md-icon>
+                            </span>
+                            <md-button class="md-fab md-mini red-button tiny-button" aria-label="{{'delete' | translate}}"
+                                ng-show="$index > 0" confirm-click="deleteSpecimen">
+                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                <md-tooltip md-direction="top">{{'deleteSpecimen' | translate}}</md-tooltip>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" flex layout-align="center center" ng-show="options.testDefinition.testSpecimenList[1].markedForDeletion">
+                    <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}"
+                        ng-click="showPediatric()" ng-disabled="masterSpecimenForm.$invalid">
+                        <md-icon md-font-icon="fas fa-plus fa-2x"></md-icon>
+                        <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+                    </md-button>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div>

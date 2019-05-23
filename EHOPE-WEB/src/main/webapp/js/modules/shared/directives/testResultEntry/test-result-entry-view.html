@@ -1,0 +1,354 @@
+<div class="test-result-entry">
+    <fieldset class="test-result-entry-fieldset">
+        <legend>
+            {{'results' | translate}}
+            <md-button ng-if="!filter.fetchedStatus" class="md-fab md-mini md-primary" ng-hide="noEdit"
+                aria-label="{{ 'save' | translate}}" ng-click="saveResults()" type="button"
+                ng-disabled="totalResults == 0">
+                <md-icon md-font-icon="fas fa-save"></md-icon>
+                <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+            </md-button>
+            <md-button ng-if="filter.fetchedStatus" class="md-fab md-mini md-primary"
+                aria-label="{{ 'finalize' | translate}}" ng-click="finalizeTests()" type="button"
+                ng-disabled="totalResults == 0 || finalizeAll.disabled">
+                <md-icon md-font-icon="fas fa-clipboard-check"></md-icon>
+                <md-tooltip md-direction="top">{{'finalize' | translate}}</md-tooltip>
+            </md-button>
+            <md-button class="md-fab md-mini" type="button" ng-disabled="disabledReorderTestsButton"
+                ng-click="reorderTests()">
+                <md-icon md-font-icon="fas fa-redo-alt"></md-icon>
+                <md-tooltip md-direction="top">{{'confirmTestReorder' | translate}}</md-tooltip>
+            </md-button>
+        </legend>
+        <div ng-show="totalResults == 0">
+            {{'noData' | translate}}
+        </div>
+        <div ng-show="totalResults > 0">
+            <md-checkbox ng-if="filter.fetchedStatus" ng-model="finalizeAll.value" ng-change="toggleCheckAll()"
+                aria-label="{{ 'all' | translate}}">{{'all' | translate}}</md-checkbox>
+            <form name="mainResultForm" novalidate flex>
+                <div ng-repeat="test in actualTests" ng-form="testForm" ng-if="test.labTestActualResults.length > 0"
+                    layout="row">
+                    <div layout="column" layout-align="start center">
+                        <md-checkbox ng-if="filter.fetchedStatus" aria-label="{{ 'finalize' | translate}}"
+                            name="toFinalize" ng-model="test.toFinalize" ng-checked="test.toFinalize"
+                            ng-change="checkFinalize()"></md-checkbox>
+                    </div>
+                    <div layout="row" flex layout-wrap class="tests-wrapper">
+                        <div layout="row" flex="100" layout-align="start center">
+                            <div class="bold">{{ 'test' | translate }}: {{test.testDefinition.standardCode}} | {{
+                                'barcode' | translate }}: {{test.labSample.barcode}}
+                            </div>
+                            <span ng-if="test.testDefinition.interpretations.length > 0">
+                                <md-button class="md-fab md-mini tiny-button"
+                                    aria-label="{{ 'showHideInterpretationTable' | translate}}"
+                                    ng-click="toggleInterpretationTable(test.testDefinition)" type="button">
+                                    <md-icon md-font-icon="fas"
+                                        ng-class="test.testDefinition.showInterpretationTable ? 'fa-chevron-up' : 'fa-chevron-down'">
+                                    </md-icon>
+                                    <md-tooltip md-direction="top">{{'showHideInterpretationTable' | translate}}
+                                    </md-tooltip>
+                                </md-button>
+                            </span>
+                            <span
+                                ng-if="test.testDefinition.isAllowRepetitionSameSample && test.lkpOperationStatus.code === 'RESULTS_ENTERED'">
+                                <md-checkbox aria-label="{{ 'reorderTest' | translate}}" name="reorderTest"
+                                    ng-change="toReorderChange(test.rid)" ng-model="test.reorder"
+                                    class="no-margin-bottom">
+                                    {{'reorderTest' | translate}}</md-checkbox>
+                            </span>
+                        </div>
+                        <div flex="100" ng-if="test.testDefinition.showInterpretationTable">
+                            <div class="interpretation-table">
+                                <div layout="row" flex class="bold interpretation-table-header">
+                                    <div dynamic-flex="25|25|20|20|15">
+                                        {{ 'concentration' | translate }}
+                                        ({{test.testDefinition.allergyUnit.unitOfMeasure}})
+                                    </div>
+                                    <div dynamic-flex="15|15|10|10|5" class="text-center">
+                                        {{ 'class' | translate }}
+                                    </div>
+                                    <div dynamic-flex="60|60|70|70|80">
+                                        {{ 'explanation' | translate }}
+                                    </div>
+                                </div>
+                                <div class="interpretation-table-body">
+                                    <div class="interpretation-table-row" layout="row" flex
+                                        ng-if="!interpretation.markedForDeletion"
+                                        ng-repeat="interpretation in test.testDefinition.interpretations">
+                                        <div dynamic-flex="25|25|20|20|15">
+                                            {{ interpretation.description }}
+                                        </div>
+                                        <div dynamic-flex="15|15|10|10|5" class="text-center">
+                                            {{interpretation.interpretationClass}}
+                                        </div>
+                                        <div dynamic-flex="60|60|70|70|80">
+                                            {{interpretation.explanation}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-repeat="result in test.labTestActualResults" ng-init="resultIndex = $index" layout="row"
+                            layout-wrap flex="100" class="results-wrapper">
+                            <div ng-form="resultForm" layout="row" layout-wrap flex parent-index="{{$parent.$index}}"
+                                index="{{$index}}">
+                                <md-input-container dynamic-flex="100|50|33|25|20">
+                                    <label> {{ 'standardCode' | translate }}</label>
+                                    <input type="text" name="standardCode" ng-model="result.labResult.standardCode"
+                                        ng-disabled="true" />
+                                </md-input-container>
+                                <md-input-container dynamic-flex="100|50|33|25|20">
+                                    <label> {{ 'description' | translate }}</label>
+                                    <input type="text" name="description" ng-model="result.labResult.description"
+                                        ng-disabled="true" />
+                                </md-input-container>
+                                <md-input-container dynamic-flex="100|50|33|25|20"
+                                    ng-if="result.labResult.resultValueType.code === 'RATIO'">
+                                    <label> {{ 'ratio' | translate }}</label>
+                                    <input type="text" name="ratio" ng-model="result.ratio" ng-required="true"
+                                        ng-disabled="noEdit" ng-pattern="ratioPattern" />
+                                    <input-messages input-errors="resultForm.ratio.$error" />
+                                </md-input-container>
+                                <div dynamic-flex="100|50|33|25|20" class="field-with-unit"
+                                    ng-if="result.labResult.isDifferential">
+                                    <md-input-container>
+                                        <label>{{ 'percentage' | translate }}</label>
+                                        <input type="number" name="percentage" min="0" max="100"
+                                            ng-model="result.percentage" ng-required="true"
+                                            ng-pattern="/^-?[0-9][^\.]*$/"
+                                            ng-change="differentialPercentageChange(test.rid, result.labResult.comprehensiveResult.standardCode, testForm)"
+                                            ng-disabled="noEdit" />
+                                        <input-messages input-errors="resultForm.percentage.$error" />
+                                    </md-input-container>
+                                    <span class="unit-wrapper">%</span>
+                                    <div class="differential-error"
+                                        ng-show="isPercentageInvalid(comprehensiveResults[result.compCode].totalPercentages)">
+                                        {{ 'totalPercentagesOfDifferentialResultsMustBe100' | translate }}
+                                    </div>
+                                </div>
+                                <span ng-if="result.labResult.isDifferential || result.labResult.isComprehensive"
+                                    class="hidden-field-error no-display">
+                                    <input type="number" name="percentageValidator" ng-required="true"
+                                        ng-model="comprehensiveResults[result.compCode].totalPercentages" min="100"
+                                        max="100" />
+                                </span>
+                                <div class="field-with-unit" dynamic-flex="100|50|33|25|20" layout="row" layout-wrap
+                                    ng-if="result.labResult.resultValueType.code === 'QN' || result.labResult.resultValueType.code === 'QN_SC'">
+                                    <md-input-container flex="100">
+                                        <label>{{ result.labResult.primaryUnitType.code === 'SI' ? 'siResult' :
+                                            'convResult' | translate }}</label>
+                                        <input type="text" name="primaryResultValue"
+                                            ng-pattern="result.primaryResultPattern"
+                                            ng-model="result.primaryResultValue" ng-required="!noEdit"
+                                            ng-change="enteringPrimaryResult(test, result, result.labResult.primaryDecimals, result.labResult.secondaryDecimals, testForm)"
+                                            ng-disabled="noEdit || result.labResult.isDifferential" />
+                                        <input-messages input-errors="resultForm.primaryResultValue.$error" />
+                                    </md-input-container>
+                                    <span class="unit-wrapper">{{result.labResult.primaryUnit.unitOfMeasure}}</span>
+                                    <div class="differential-error" flex="100" ng-show="isComprehensiveInvalid(result)"
+                                        ng-if="result.labResult.isComprehensive">
+                                        {{ 'comprehensiveResultMustBeFilled' | translate }}
+                                    </div>
+                                </div>
+                                <div class="field-with-unit" dynamic-flex="100|50|33|25|20" layout="row"
+                                    ng-if="result.labResult.resultValueType.code === 'QN_QL'">
+                                    <md-input-container flex>
+                                        <label>{{ 'concentration' | translate }}</label>
+                                        <input type="text" name="primaryResultValue"
+                                            ng-pattern="test.allergyResultPattern" ng-model="result.primaryResultValue"
+                                            ng-required="!noEdit"
+                                            ng-change="enteringPrimaryResult(test, result, test.testDefinition.allergyDecimals)"
+                                            ng-disabled="noEdit" />
+                                        <input-messages input-errors="resultForm.primaryResultValue.$error" />
+                                    </md-input-container>
+                                    <span class="unit-wrapper">{{test.testDefinition.allergyUnit.unitOfMeasure}}</span>
+                                </div>
+                                <md-input-container dynamic-flex="100|50|33|25|20"
+                                    ng-if="result.labResult.resultValueType.code === 'QN_QL'">
+                                    <label>{{ 'class' | translate }}</label>
+                                    <input name="class" ng-model="result.class" ng-disabled="true"></input>
+                                </md-input-container>
+                                <div class="field-with-unit" ng-if="result.labResult.resultValueType.code === 'QN_SC'"
+                                    dynamic-flex="100|50|33|25|20">
+                                    <md-input-container flex>
+                                        <label>{{ result.labResult.primaryUnitType.code === 'CONV' ? 'siResult' :
+                                            'convResult' | translate }}
+                                        </label>
+                                        <input type="text" name="secondaryResultParsed"
+                                            ng-model="result.secondaryResultParsed" ng-disabled="true" />
+                                    </md-input-container>
+                                    <span class="unit-wrapper">{{result.labResult.secondaryUnit.unitOfMeasure}}</span>
+                                </div>
+                                <lov ng-if="result.labResult.resultValueType.code === 'CE' && result.codedResultOptions"
+                                    dynamic-flex="100|50|33|25|20" form="resultForm" options="result.codedResultOptions"
+                                    select="result.codedResultOptions.selectedValue" disable-select="noEdit"></lov>
+                                <lov ng-if="result.labResult.resultValueType.code === 'ORG' && result.organismDetectionOptions"
+                                    dynamic-flex="100|50|33|25|20" form="resultForm"
+                                    options="result.organismDetectionOptions"
+                                    select="result.organismDetectionOptions.selectedValue" disable-select="noEdit">
+                                </lov>
+                                <md-input-container dynamic-flex="100|50|33|25|20">
+                                    <label>{{ 'comments' | translate }}</label>
+                                    <textarea md-detect-hidden name="comments"
+                                        ng-change="commentChanged(test.rid, result, testForm)"
+                                        ng-model="result.comments" ng-disabled="noEdit"></textarea>
+                                </md-input-container>
+                                <md-input-container dynamic-flex="100|50|33|25|20"
+                                    ng-if="(result.labResult.resultValueType.code === 'CE' || result.labResult.resultValueType.code === 'QN' || result.labResult.resultValueType.code === 'QN_SC') && test.labTestActualResults.length === 1">
+                                    <md-checkbox ng-model="result.isConfirmed" name="confirmed">
+                                        {{ 'confirmed' | translate }}
+                                    </md-checkbox>
+                                </md-input-container>
+                                <md-input-container
+                                    ng-if="test.lkpOperationStatus.code === 'FINALIZED' || test.lkpOperationStatus.code === 'CLOSED'"
+                                    dynamic-flex="100|50|33|25|20">
+                                    <label> {{ 'amendmentReason' | translate }}</label>
+                                    <input type="text" name="amendmentReason" ng-model="result.amendmentReason"
+                                        ng-required="true" />
+                                    <input-messages input-errors="resultForm.amendmentReason.$error" />
+                                </md-input-container>
+                                <md-input-container ng-if="result.labResult.resultValueType.code === 'NAR'" flex="100">
+                                    <label> {{ 'narrativeValue' | translate }}</label>
+                                    <textarea md-detect-hidden name="narrativeText" ng-model="result.narrativeText"
+                                        ng-required="!noEdit" ng-disabled="noEdit"></textarea>
+                                    <input-messages input-errors="resultForm.narrativeText.$error" />
+                                </md-input-container>
+                                <div flex="100"
+                                    ng-if="result.labResult.resultValueType.code === 'NAR' && result.labResult.narrativeTemplates.length > 0 && !noEdit"
+                                    class="narrative-templates-wrapper">
+                                    <fieldset class="narrative-templates-fieldset"
+                                        ng-class="result.showNarrativeTemplates ? '' : 'no-border'">
+                                        <legend>{{ 'narrativeTemplates' | translate }}
+                                            <md-button class="md-fab md-mini tiny-button"
+                                                aria-label="{{ 'showHide' | translate}}"
+                                                ng-click="toggleNarrativeTemplates(result)" type="button"
+                                                ng-disabled="totalResults == 0">
+                                                <md-icon md-font-icon="fas"
+                                                    ng-class="result.showNarrativeTemplates ? 'fa-chevron-up' : 'fa-chevron-down'">
+                                                </md-icon>
+                                                <md-tooltip md-direction="top">{{'showHide' | translate}}</md-tooltip>
+                                            </md-button>
+                                        </legend>
+                                        <div ng-show="result.showNarrativeTemplates">
+                                            <md-list-item
+                                                ng-click="copyNarrativeTemplate(result, narrativeTemplate, resultForm)"
+                                                ng-repeat="narrativeTemplate in result.labResult.narrativeTemplates">
+                                                {{narrativeTemplate.text}}
+                                            </md-list-item>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div flex="100"
+                                    ng-if="result.labResult.resultValueType.code === 'ORG' && result.organismDetectionOptions.selectedValue.code === 'GROWTH'">
+                                    <fieldset>
+                                        <legend>
+                                            {{ 'organisms' | translate }}
+                                        </legend>
+                                        <div class="organism-entry-wrapper">
+                                            <div layout="row" flex layout-wrap>
+                                                <div ng-repeat="actualOrganism in result.actualOrganismList"
+                                                    ng-form="actualOrganismForm"
+                                                    ng-show="!actualOrganism.markedForDeletion"
+                                                    class="actual-organism-wrapper" dynamic-flex="100|50|50|50|50">
+                                                    <div class="actual-organism" layout="row" layout-wrap
+                                                        layout-align="center stretch">
+                                                        <div layout="row" layout-wrap flex>
+                                                            <md-autocomplete ng-required="!noEdit" ng-disabled="noEdit"
+                                                                md-no-cache="true" md-input-name="organismField"
+                                                                dynamic-flex="100|100|50|50|50" md-min-length="0"
+                                                                md-floating-label="{{'organism' | translate}}"
+                                                                md-item-text="organism.name" md-clear-button="true"
+                                                                md-items="organism in organismListSearch(actualOrganism.organism)"
+                                                                md-search-text="actualOrganism.organism">
+                                                                <md-item-template>
+                                                                    <span md-highlight-text="actualOrganism.organism"
+                                                                        md-highlight-flags="ig">{{organism.name}}</span>
+                                                                </md-item-template>
+                                                                <input-messages
+                                                                    input-errors="actualOrganismForm.organismField.$error" />
+                                                            </md-autocomplete>
+                                                            <md-input-container dynamic-flex="100|100|50|50|50">
+                                                                <label>{{ 'colonyCount' | translate }}</label>
+                                                                <input type="text" name="colonyCount"
+                                                                    ng-disabled="noEdit"
+                                                                    ng-model="actualOrganism.colonyCount" />
+                                                            </md-input-container>
+                                                        </div>
+                                                        <div layout="column" layout-align="center center">
+                                                            <md-button class="md-fab md-mini red-button tiny-button"
+                                                                aria-label="{{'delete' | translate}}"
+                                                                ng-disabled="noEdit"
+                                                                ng-click="deleteOrganism(actualOrganism, testForm, resultIndex)">
+                                                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                                                <md-tooltip md-direction="top">
+                                                                    {{'deleteOrganism' | translate}}</md-tooltip>
+                                                            </md-button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div layout="row" flex layout-align="center center">
+                                                <md-button class="md-raised md-fab md-mini green-button"
+                                                    ng-disabled="noEdit" aria-label="{{'add' | translate}}"
+                                                    ng-click="addOrganism(result)">
+                                                    <md-icon md-font-icon="fas fa-plus"></md-icon>
+                                                    <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+                                                </md-button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <div class="anti-microbial-entry-wrapper">
+                                        <div layout="row" flex layout-align="center center"
+                                            class="bold sensitivity-header">
+                                            <span flex="20">{{ 'antiMicrobial' | translate }}</span>
+                                            <span flex="20" class="text-center">{{ 'susceptible' | translate }}</span>
+                                            <span flex="20" class="text-center">{{ 'intermediate' | translate }}</span>
+                                            <span flex="20" class="text-center">{{ 'resistant' | translate }}</span>
+                                            <span flex="20" class="text-center">{{ 'notTested' | translate }}</span>
+                                        </div>
+                                        <div ng-repeat="actualAntiMicrobial in result.actualAntiMicrobialList"
+                                            class="sensitivity-body">
+                                            <md-radio-group ng-model="actualAntiMicrobial.organismSensitivity"
+                                                layout="row" flex layout-align="center center">
+                                                <span flex="20" class="bold anti-microbial-name">
+                                                    {{actualAntiMicrobial.antiMicrobial.name}}
+                                                </span>
+                                                <span flex="20" class="sensitivity-radio-button-wrapper">
+                                                    <md-radio-button ng-disabled="noEdit"
+                                                        aria-label="actualAntiMicrobial.code + ' ' + {{ 'susceptible' | translate }}"
+                                                        ng-value="sensitivityS"></md-radio-button>
+                                                </span>
+                                                <span flex="20" class="sensitivity-radio-button-wrapper">
+                                                    <md-radio-button ng-disabled="noEdit"
+                                                        aria-label="actualAntiMicrobial.code + ' ' + {{ 'intermediate' | translate }}"
+                                                        ng-value="sensitivityI"></md-radio-button>
+                                                </span>
+                                                <span flex="20" class="sensitivity-radio-button-wrapper">
+                                                    <md-radio-button ng-disabled="noEdit"
+                                                        aria-label="actualAntiMicrobial.code + ' ' + {{ 'resistant' | translate }}"
+                                                        ng-value="sensitivityR"></md-radio-button>
+                                                </span>
+                                                <span flex="20" class="sensitivity-radio-button-wrapper">
+                                                    <md-radio-button ng-disabled="noEdit"
+                                                        aria-label="actualAntiMicrobial.code + ' ' + {{ 'notTested' | translate }}"
+                                                        ng-value="null"></md-radio-button>
+                                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="no-display">
+                            <span flex="100" layout="row" layout-align="start end" class="hidden-field-error">
+                                <input type="hidden" name="differentialValidator" ng-model="differentialValidator" />
+                                <input-messages input-errors="testForm.differentialValidator.$error"
+                                    messages="differentialValidatorMessages" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+</div>

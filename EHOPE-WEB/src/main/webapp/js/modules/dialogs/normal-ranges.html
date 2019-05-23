@@ -1,0 +1,166 @@
+<md-dialog id="normalRanges" aria-label="{{'normalRanges' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'normalRanges' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form ng-cloak name="allNormalRangesForm" novalidate validate-non-visible-controls>
+        <md-dialog-content>
+            <div class="md-dialog-content" flex>
+                {{result.resultValueType}}
+                <div class="normal-ranges-container">
+                    <div ng-repeat="normalRange in normalRanges" data-index="{{$index}}"
+                        ng-if="!normalRange.markedForDeletion" class="normal-range-item" layout="row" layout-wrap flex
+                        layout-align="center stretch">
+                        <div ng-form="normalRange.form" layout="row" layout-wrap flex>
+                            <lov dynamic-flex="100|50|33|20|20" form="normalRange.form" options="genderOptions[$index]"
+                                select="genderOptions[$index].selectedValue"></lov>
+                            <md-input-container dynamic-flex="100|50|33|20|20">
+                                <label>{{ 'ageFrom' | translate }}</label>
+                                <input type="text" name="ageFromData" ng-pattern="ageFromPattern"
+                                    ng-model="normalRange.ageFromData"
+                                    ng-change="ageChange($index, normalRange.form)" />
+                                <span class="hint">{{ageFromHint}}</span>
+                                <input-messages input-errors="normalRange.form.ageFromData.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex="100|50|33|20|20">
+                                <label>{{ 'ageTo' | translate }}</label>
+                                <input type="text" name="ageToData" ng-pattern="ageToPattern"
+                                    ng-model="normalRange.ageToData" ng-change="ageChange($index, normalRange.form)" />
+                                <span class="hint">{{ageToHint}}</span>
+                                <input-messages input-errors="normalRange.form.ageToData.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex="100|50|33|20|20">
+                                <label>{{ 'criterionName' | translate }}</label>
+                                <input type="text" name="criterionName" ng-model="normalRange.criterionName" />
+                                <input-messages input-errors="normalRange.form.criterionName.$error" />
+                            </md-input-container>
+                            <md-input-container dynamic-flex="100|50|33|20|20">
+                                <label>{{ 'criterionValue' | translate }}</label>
+                                <input type="text" name="criterionValue" ng-model="normalRange.criterionValue" />
+                                <input-messages input-errors="normalRange.form.criterionValue.$error" />
+                            </md-input-container>
+                            <div dynamic-flex="100|50|33|20|20" layout="column"
+                                ng-if="resultType === 'QN' || resultType === 'QN_SC'">
+                                <md-input-container flex="100">
+                                    <label>{{ 'minNormalValue' | translate }}</label>
+                                    <input type="text" name="minValueData" ng-pattern="minValuePattern"
+                                        ng-change="normalValueChange($index, normalRange.form)"
+                                        ng-model="normalRange.minValueData" />
+                                    <span class="hint">{{minValueHint}}</span>
+                                    <input-messages input-errors="normalRange.form.minValueData.$error" />
+                                </md-input-container>
+                                <md-input-container flex="100">
+                                    <label>{{ 'maxNormalValue' | translate }}</label>
+                                    <input type="text" name="maxValueData" ng-pattern="maxValuePattern"
+                                        ng-change="normalValueChange($index, normalRange.form)"
+                                        ng-model="normalRange.maxValueData" />
+                                    <span class="hint">{{maxValueHint}}</span>
+                                    <input-messages input-errors="normalRange.form.maxValueData.$error" />
+                                </md-input-container>
+                            </div>
+                            <div dynamic-flex="100|50|33|20|20" layout="column"
+                                ng-if="resultType === 'QN' || resultType === 'QN_SC'">
+                                <md-input-container flex="100">
+                                    <label>{{ 'minRerunValue' | translate }}</label>
+                                    <input type="text" name="minRerunValue" ng-pattern="rerunAndPanicPattern"
+                                        ng-model="normalRange.minRerunValue" />
+                                    <input-messages input-errors="normalRange.form.minRerunValue.$error" />
+                                </md-input-container>
+                                <md-input-container flex="100">
+                                    <label>{{ 'maxRerunValue' | translate }}</label>
+                                    <input type="text" name="maxRerunValue" ng-pattern="rerunAndPanicPattern"
+                                        ng-model="normalRange.maxRerunValue" />
+                                    <input-messages input-errors="normalRange.form.maxRerunValue.$error" />
+                                </md-input-container>
+                            </div>
+                            <div dynamic-flex="100|50|33|20|20" layout="column"
+                                ng-if="resultType === 'QN' || resultType === 'QN_SC'">
+                                <md-input-container flex="100">
+                                    <label>{{ 'minPanicValue' | translate }}</label>
+                                    <input type="text" name="minPanicValue" ng-pattern="rerunAndPanicPattern"
+                                        ng-model="normalRange.minPanicValue" />
+                                    <input-messages input-errors="normalRange.form.minPanicValue.$error" />
+                                </md-input-container>
+                                <md-input-container flex="100">
+                                    <label>{{ 'maxPanicValue' | translate }}</label>
+                                    <input type="text" name="maxPanicValue" ng-pattern="rerunAndPanicPattern"
+                                        ng-model="normalRange.maxPanicValue" />
+                                    <input-messages input-errors="normalRange.form.maxPanicValue.$error" />
+                                </md-input-container>
+                            </div>
+                            <md-input-container ng-if="resultType === 'RATIO'" dynamic-flex="100|50|33|20|20">
+                                <label>{{ 'ratio' | translate }}</label>
+                                <input type="text" name="ratio" ng-pattern="ratioPattern"
+                                    ng-model="normalRange.ratio" />
+                                <span class="hint">{{ratioHint}}</span>
+                                <input-messages input-errors="normalRange.form.ratio.$error" />
+                            </md-input-container>
+                            <lov ng-if="resultType === 'CE'" dynamic-flex="100|50|33|20|20" form="normalRange.form"
+                                options="codedResultOptions[$index]" select="codedResultOptions[$index].selectedValue">
+                            </lov>
+                            <md-input-container dynamic-flex="100|50|33|20|20">
+                                <md-switch class="inline-switch" md-invert ng-model="normalRange.isActive"
+                                    aria-label="{{ 'active' | translate }}">
+                                    {{ 'active' | translate }}: {{ normalRange.isActive ? 'yes' : 'no' | translate }}
+                                </md-switch>
+                            </md-input-container>
+                            <md-input-container ng-show="normalRange.rid" dynamic-flex="100|50|33|20|20">
+                                <label>{{ normalRange.stateChangeDateLabel }}</label>
+                                <input type="text" name="stateChangeDate" ng-disabled="true"
+                                    value="{{ normalRange.stateChangeDate | dateFormat }}" />
+                            </md-input-container>
+                            <span flex="100" class="hidden-field-error">
+                                <input type="hidden" name="ageValidator" ng-model="normalRange.ageValidator" />
+                                <input-messages input-errors="normalRange.form.ageValidator.$error"
+                                    messages="ageMessages" />
+                            </span>
+                            <span flex="100" class="hidden-field-error">
+                                <input type="hidden" name="valueValidator" ng-model="normalRange.valueValidator" />
+                                <input-messages input-errors="normalRange.form.valueValidator.$error"
+                                    messages="valueMessages" />
+                            </span>
+                            <span flex="100" class="hidden-field-error">
+                                <input type="hidden" name="oneValueValidator"
+                                    ng-model="normalRange.oneValueValidator" />
+                                <input-messages input-errors="normalRange.form.oneValueValidator.$error"
+                                    messages="oneValueMessages" />
+                            </span>
+                        </div>
+                        <div layout="column" layout-align="center center">
+                            <md-button class="md-raised md-fab md-mini red-button tiny-button"
+                                aria-label="{{'delete' | translate}}" ng-click="deleteNormalRange(normalRange)">
+                                <!-- confirm-click="deleteNormalRange" confirm-click-arg="normalRange" -->
+                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                            </md-button>
+                            <i class="fas fa-grip-vertical drag-handle">
+                                <md-tooltip md-direction="top">{{'dragToReorder' | translate}}</md-tooltip>
+                            </i>
+                        </div>
+                    </div>
+                    <div layout="row" flex layout-align="center center">
+                        <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}"
+                            ng-click="addNormalRange()">
+                            <md-icon md-font-icon="fas fa-plus"></md-icon>
+                            <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" flex layout-align="end end">
+            <md-button class="md-raised md-primary" ng-click="submit()" ng-disabled="allNormalRangesForm.$invalid">
+                <md-tooltip md-direction="top">{{'submit' | translate}}</md-tooltip>
+                {{'submit' | translate}}
+            </md-button>
+            <md-button class="md-raised" ng-click="cancel()">
+                <md-tooltip md-direction="top">{{'cancel' | translate}}</md-tooltip>
+                {{'cancel' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

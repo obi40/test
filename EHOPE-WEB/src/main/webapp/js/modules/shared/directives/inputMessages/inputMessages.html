@@ -1,0 +1,14 @@
+<div ng-messages="inputErrors" ng-messages-multiple>
+	<div ng-message="required">{{messages.requiredField?messages.requiredField:'requiredField' | translate}}</div>
+	<div ng-message="min">{{messages.minLength?messages.minLength:'minLength' | translate}}</div>
+	<div ng-message="minlength">{{messages.minLength?messages.minLength:'minLength' | translate}}</div>
+	<div ng-message="max">{{messages.maxLength?messages.maxLength:'maxLength' | translate}}</div>
+	<div ng-message="maxlength">{{messages.maxLength?messages.maxLength:'maxLength' | translate}}</div>
+	<div ng-message="email">{{messages.email?messages.email:'invalidFormat' | translate}}</div>
+	<div ng-message="number">{{messages.number?messages.number:'invalidFormat' | translate}}</div>
+	<div ng-message="pattern">{{messages.pattern?messages.pattern:'invalidFormat' | translate}}</div>
+	<div ng-message="passwordMatch">{{messages.passwordNoMatch?messages.passwordNoMatch:'passwordNoMatch' | translate}}</div>
+	<div ng-message="maxdate">{{messages.maxDate?messages.maxDate:'maxDate' | translate}}</div>
+	<div ng-message="mindate">{{messages.minDate?messages.minDate:'minDate' | translate}}</div>
+	<div ng-message="invalid">{{messages.invalid?messages.invalid:'invalid' | translate}}</div>
+</div>

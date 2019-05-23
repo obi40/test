@@ -1,0 +1,35 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'refund' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-margin>
+        <form novalidate name="refundVisitForm">
+            <div>
+                {{'maxAmount' | translate}}: <span class="bold">{{cancelledAmounts}}</span>
+            </div>
+            <div ng-if="payments!=null" flex ng-repeat="payment in payments" layout="row" layout-wrap
+                ng-model-options="{trackBy: '$value.rid'}">
+                <lov dynamic-flex="100|100|50|50|50" ng-if="paymentMethodLkp != null" form="refundVisitForm"
+                    options="paymentMethodLkp" select="payment.lkpPaymentMethod" disable-select="true"></lov>
+                <md-input-container dynamic-flex="100|100|50|50|50">
+                    <label>{{'amount' | translate}}</label>
+                    <input type="number" name="{{'amount_'+payment.rid}}" ng-model="payment.amount" ng-required="true"
+                        ng-pattern="patternPercent" ng-min="payment.minAmount" ng-max="payment.maxAmount" />
+                    <input-messages input-errors="refundVisitForm['amount_'+payment.rid].$error" />
+                </md-input-container>
+            </div>
+            <div layout="row" layout-align="end center">
+                <md-button aria-label="{{'submit' | translate }}" class="md-primary md-raised"
+                    ng-disabled="refundVisitForm.$invalid || isRefundDisabled" confirm-click="refundPayment"
+                    authority-checker="REFUND_PAYMENT">
+                    {{'submit' | translate}}
+                </md-button>
+            </div>
+        </form>
+    </md-dialog-content>
+</md-dialog>

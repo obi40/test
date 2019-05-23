@@ -1,0 +1,26 @@
+<md-dialog aria-label="{{'creationConfirmation' | translate}}" class="creationConfirmation">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex>{{'creationConfirmation' | translate}}</span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-font-icon="fa fa-times"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <form ng-cloak>
+    <md-dialog-content>
+      <div class="md-dialog-content" flex>
+        <p>{{'patientSimilar' | translate}}</p>
+        <div id="similarPatientsGrid" kendo-grid="similarPatientsGrid" options="similarPatientsGridOptions"></div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-disabled="selectedPatient == null" ng-click="chooseAndProgress(selectedPatient)">
+        {{'progress' | translate}}
+      </md-button>
+      <md-button http-disable-click ng-click="createNew()">
+        {{'create' | translate}}
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

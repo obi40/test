@@ -1,0 +1,84 @@
+<form novalidate name="options.form" flex>
+    <div flex layout="row" layout-wrap>
+        <lov options="visitTypeLkp" form="options.form" ng-if="visitTypeLkp != null" select="visitTypeLkp.selectedValue"
+            dynamic-flex></lov>
+        <div ng-if="doctorsLov !== null" dynamic-flex layout="row" layout-wrap>
+            <lov flex ng-if="doctorsLov != null" form="options.form" options="doctorsLov"
+                select="doctorsLov.selectedValue"></lov>
+            <div layout="row" layout-align="center center">
+                <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini tiny-button" type="button"
+                    ng-click="showCreateDoctorDialog()">
+                    <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-plus"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <md-input-container dynamic-flex>
+            <label>{{'orderDate' | translate}}</label>
+            <md-datepicker date-mask ng-required="{{visitMetaData.visitDate.notNull}}" name="visitDate"
+                ng-model="order.visitDate" md-max-date="currentDate" ng-disabled="options.isOrderDateDisabled">
+            </md-datepicker>
+            <input-messages input-errors="options.form.visitDate.$error" />
+        </md-input-container>
+        <md-radio-group dynamic-flex layout="row" layout-align="start center" ng-model="order.isStat"
+            ng-change="visitStatusListener()">
+            <md-radio-button ng-value="false">{{'isRoutine' | translate}}</md-radio-button>
+            <md-radio-button ng-value="true">{{'isStat' | translate}}</md-radio-button>
+        </md-radio-group>
+        <div dynamic-flex="100|100|100|50|50" class="visit-insurance-container"
+            ng-if="visitTypeLkp.selectedValue.code != 'REFERRAL'">
+            <md-radio-group layout="row" layout-align="start center" flex ng-model="order.isInsurance"
+                ng-change="isInsuranceListener()">
+                <md-radio-button ng-value="false">{{'cash' | translate}}</md-radio-button>
+                <md-radio-button ng-value="true">{{'insurance' | translate}}</md-radio-button>
+            </md-radio-group>
+            <div flex ng-if="order.isInsurance" flex layout="row" layout-wrap>
+                <md-input-container flex>
+                    <label>
+                        {{'insFormNumber' | translate}}</label>
+                    <input type="text" name="insFormNumber" ng-model="order.insFormNumber" ng-required="true"
+                        ng-minlength="visitMetaData.insFormNumber.sized? visitMetaData.insFormNumber.min:''"
+                        ng-maxlength="visitMetaData.insFormNumber.sized? visitMetaData.insFormNumber.max:''" />
+                    <input-messages input-errors="options.form.insFormNumber.$error" />
+                </md-input-container>
+                <div flex>
+                    <div flex layout="row">
+                        <lov flex options="patientProviderPlanInsLov" form="options.form"
+                            on-change="patientProviderPlanLovChange" ng-if="patientProviderPlanInsLov != null"
+                            select="patientProviderPlanInsLov.selectedValue"></lov>
+                        <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini tiny-button"
+                            type="button" ng-click="showCreatePatientInsuranceDialog($event)">
+                            <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-plus"></md-icon>
+                        </md-button>
+                    </div>
+                    <md-input-container flex>
+                        <label>{{'patientShare' | translate}}
+                            {{patientProviderPlanInsLov.selectedValue.insProviderPlan.isFixed?'('+('fixed'
+                                    | translate)+')':''}}</label>
+                        <input type="number" name="patientShare"
+                            ng-model="patientProviderPlanInsLov.selectedValue.patientInsuranceInfo.patientShare"
+                            ng-disabled="patientProviderPlanInsLov.selectedValue == null || patientProviderPlanInsLov.selectedValue.insProviderPlan.isFixed"
+                            ng-pattern="patternPercent" ng-max="100" ng-min="0"
+                            ng-change="changePatientShare(patientProviderPlanInsLov.selectedValue.patientInsuranceInfo)"
+                            ng-required="true" />
+                        <input-messages input-errors="options.form.patientShare.$error" />
+                    </md-input-container>
+                </div>
+
+            </div>
+        </div>
+        <div dynamic-flex ng-if="visitTypeLkp.selectedValue.code == 'REFERRAL'" layout="column" flex layout-wrap>
+            <lov flex options="insuranceTypeLkp" form="options.form" select="insuranceTypeLkp.selectedValue"
+                ng-if="insuranceTypeLkp!=null"></lov>
+            <lov flex form="options.form" ng-if="providersLov !== null" options="providersLov"
+                select="providersLov.selectedValue" parent="insuranceTypeLkp.selectedValue">
+            </lov>
+            <lov flex form="options.form" ng-if="providersPlanLov !== null"
+                ng-hide="providersLov.selectedValue.isSimple" options="providersPlanLov"
+                select="providersPlanLov.selectedValue" parent="providersLov.selectedValue"
+                on-change="providersPlanLovChange">
+            </lov>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,103 @@
+<md-content md-whiteframe="3" class="tenant-management">
+	<md-tabs md-dynamic-height="true" md-border-bottom="true">
+		<md-tab label="{{ 'information' | translate }}">
+			<md-content layout-padding>
+				<tenant-form ng-if="tenant!=null" tenant="tenant" options="tenantFormOptions"></tenant-form>
+				<div layout="row" layout-wrap flex ng-if="tenant!=null">
+					<md-button class="md-primary md-raised" type="button" ng-click="submitTenant()" ng-disabled="tenantFormOptions.isFormInvalid()"
+					 authority-checker="UPD_TENANT">
+						{{'save' | translate}}
+					</md-button>
+				</div>
+			</md-content>
+		</md-tab>
+		<md-tab label="{{ 'smsConfiguration' | translate }}">
+			<form name="smsConfigForm" ng-submit="setSmsConfigurations(submitSmsConfigurations)" layout-padding novalidate ng-if="smsConfigurationMetaData!=null && tenantSmsConfigurations!=null">
+				<div ng-repeat="tsc in tenantSmsConfigurations" layout="row" layout-wrap flex ng-class="{'bottom-rule':!$last}">
+					<md-input-container dynamic-flex>
+						<label>
+							{{'key' | translate}}</label>
+						<input type="text" name="key" ng-model="tsc.key" ng-required="smsConfigurationMetaData.key.notNull" ng-minlength="smsConfigurationMetaData.key.sized? smsConfigurationMetaData.key.min:''"
+						 ng-maxlength="smsConfigurationMetaData.key.sized? smsConfigurationMetaData.email.max:''" />
+						<input-messages input-errors="smsConfigForm.key.$error" />
+					</md-input-container>
+					<md-input-container flex>
+						<md-checkbox name="isEncodeKey" ng-model="tsc.isEncodeKey" ng-checked="tsc.isEncodeKey" aria-label="{{'isEncoded' | translate}}"
+						 ng-disabled="tsc.smsKeyLkp.selectedValue.code == 'BASE_URL'">{{'isEncoded'|
+							translate}}</md-checkbox>
+					</md-input-container>
+					<md-input-container dynamic-flex>
+						<label>
+							{{'value' | translate}}</label>
+						<input type="text" name="value" ng-model="tsc.value" ng-required="smsConfigurationMetaData.value.notNull"
+						 ng-minlength="smsConfigurationMetaData.value.sized? smsConfigurationMetaData.value.min:''" ng-maxlength="smsConfigurationMetaData.value.sized? smsConfigurationMetaData.value.max:''"
+						 ng-change="onSmsValueChange(tsc)" ng-disabled="tsc.smsKeyLkp.selectedValue != null" />
+						<input-messages input-errors="smsConfigForm.value.$error" />
+					</md-input-container>
+					<md-input-container flex>
+						<md-checkbox name="isEncodeValue" ng-model="tsc.isEncodeValue" ng-checked="tsc.isEncodeValue" aria-label="{{'isEncoded' | translate}}"
+						 ng-disabled="tsc.smsKeyLkp.selectedValue.code == 'BASE_URL'">{{'isEncoded'
+							| translate}}</md-checkbox>
+					</md-input-container>
+					<lov dynamic-flex ng-if="tsc.smsKeyLkp!=null" disable-select="tsc.value != null && tsc.value != ''" form="smsConfigForm"
+					 options="tsc.smsKeyLkp" select="tsc.smsKeyLkp.selectedValue"></lov>
+					<md-button class="md-fab md-mini" ng-if="tsc.rid>0" aria-label="{{'delete' | translate}}" type="button"
+					 confirm-click="deleteSMS" confirm-click-arg="tsc">
+						<md-icon md-font-icon="fas fa-trash"></md-icon>
+						<md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+					</md-button>
+					<div>
+						<md-button class="md-fab md-mini" ng-if="tsc.rid<0" aria-label="{{'delete' | translate}}" type="button" ng-click="deleteSMS(tsc)">
+							<md-icon md-font-icon="fas fa-trash"></md-icon>
+							<md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+						</md-button>
+					</div>
+
+				</div>
+				<div layout="row" layout-wrap flex layout-align="center center">
+					<md-button aria-label="{{'add' | translate}}" ng-click="addDummySMS()" class="md-fab md-mini" type="button">
+						<md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+						<md-icon md-font-icon="fas fa-plus"></md-icon>
+					</md-button>
+				</div>
+				<fieldset>
+					<legend>
+						{{'smsTest' | translate}}
+					</legend>
+					<div flex layout="row" layout-wrap>
+						<md-input-container flex="100">
+							<label>
+								{{'output' | translate}}</label>
+							<textarea md-detect-hidden name="smsTestOutput" ng-model="smsTest.output" ng-disabled="true"></textarea>
+						</md-input-container>
+						<md-input-container dynamic-flex="100|100|25|25|25">
+							<label>
+								{{'mobileNumber' | translate}}
+							</label>
+							<input type="text" name="smsTestMobileNumber" ng-model="smsTest.mobileNumber" ui-mask="{{tenant.mobilePattern}}"
+							 ui-mask-placeholder-char="#" ng-change="smsTestOutputGenerator()" model-view-value="true" />
+						</md-input-container>
+						<md-input-container dynamic-flex="100|100|70|70|70">
+							<label>
+								{{'message' | translate}}
+							</label>
+							<input type="text" name="smsTestMessage" ng-model="smsTest.message" ng-change="smsTestOutputGenerator()" />
+						</md-input-container>
+						<div dynamic-flex="100|100|5|5|5" layout="row" layout-align="center center">
+							<md-button aria-label="{{'send' | translate}}" class="md-fab md-mini" ng-click="setSmsConfigurations(testSMSConfigurations)"
+							 type="button" ng-disabled="smsTest.output == null || smsTest.mobileNumber == null || smsTest.message == null">
+								<md-tooltip md-direction="top">{{'send' | translate}}</md-tooltip>
+								<md-icon md-font-icon="fas fa-paper-plane"></md-icon>
+							</md-button>
+						</div>
+					</div>
+				</fieldset>
+				<div layout="row" layout-wrap flex>
+					<md-button class="md-primary md-raised" type="submit" ng-disabled="smsConfigForm.$invalid">
+						{{'save' | translate}}
+					</md-button>
+				</div>
+			</form>
+		</md-tab>
+	</md-tabs>
+</md-content>

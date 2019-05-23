@@ -1,0 +1,8 @@
+How to generate the font-file:
+
+1- Go to https://glyphter.com/
+2- Upload all the SVG files
+3- Put the following settings:
+	a. Font name: eHOpe Font
+	b. Class prefix: lis-
+4- Download the font

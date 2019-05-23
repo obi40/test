@@ -1,0 +1,27 @@
+<div class="landing-page-wrapper" flex layout="row" layout-align="center center" layout-wrap>
+    <!-- <div flex="80" class="text-center welcome-text">
+        {{ 'welcome' | translate }}
+    </div> -->
+    <div flex="80" class="text-center desc-text">
+        {{ 'lis' | translate }}
+    </div>
+    <div class="nav-grid" layout="row" layout-wrap flex="80">
+        <div dynamic-flex="100|33|20|20|20" class="nav-item-wrapper" ng-repeat="item in itemsToView">
+            <md-button ng-click="navClick(item)" class="no-margin">
+                <div class="nav-item text-center" layout-fill flex>
+                    <md-icon class="icon" md-font-icon="{{item.icon}}"></md-icon>
+                    <div class="item-text">
+                        {{item.label | translate}}
+                    </div>
+                </div>
+            </md-button>
+        </div>
+
+        <div flex="100" ng-show="showBackButton">
+            <md-button class="md-raised" ng-click="back()">
+                <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+                <md-tooltip md-direction="top">{{ 'back' | translate }}</md-tooltip>
+            </md-button>
+        </div>
+    </div>
+</div>

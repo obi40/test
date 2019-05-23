@@ -1,0 +1,85 @@
+.patient-card-wrapper {
+    padding: 20px;
+    min-height: 185px;
+    .patient-card {
+        cursor: pointer;
+        outline: none;
+        padding: 0;
+        position: relative;
+        margin-top: -40px;
+        background-color: $card-layout-color;
+        border-radius: 10px;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        color: $card-text-color;
+        md-card-title {
+            padding: 8px;
+            outline: none;
+            md-card-title-media {
+                margin-top: 0;
+            }
+        }
+        md-card-title-text {
+            padding-#{$direction}: 8px;
+            .md-subhead {
+                color: inherit !important;
+            }
+        }
+        md-card-actions {
+            md-icon {
+                cursor: auto;
+                color: inherit !important;
+                font-size: 2em;
+                width: 1em;
+                height: 1em;
+                margin: 0 3px;
+                line-height: 1em;
+                outline: none;
+            }
+            .vip-indicator {
+                &.fa-star:before {
+                    color: $gold;
+                    margin: 0;
+                }
+            }
+            .normal-balance {
+                color: $green !important;
+                cursor: pointer;
+            }
+            .out-standing-balance {
+                color: $red !important;
+                cursor: pointer;
+            }
+        }
+        .md-media-sm {
+            height: auto;
+            width: 65px;
+            .patient-img {
+                border-radius: 50%;
+                overflow: hidden;
+                width: 65px;
+                height: 65px;
+                img {
+                    height: 100%;
+                }
+                md-icon {
+                    font-size: 65px;
+                    height: 65px;
+                }
+            }
+        }
+        .file-number {
+            margin-top: 8px;
+        }
+    }
+    .circular-menu {
+        position: relative;
+        top: 8px;
+        #{$opposite-direction}: calc(-100% + 48px);
+    }
+    .inactive {
+        opacity: 0.6;
+    }
+    .patient-card:hover {
+        background-color: $card-layout-hover-color
+    }
+}

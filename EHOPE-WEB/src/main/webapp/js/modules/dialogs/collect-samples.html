@@ -1,0 +1,44 @@
+<md-dialog aria-label="{{'sendToMachine' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'sendToMachine' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" flex>
+            <md-toolbar class="short-toolbar" flex>
+                <div class="md-toolbar-tools">
+                    <div layout="row" flex layout-wrap>
+                        <md-button aria-label="{{'checkUncheckAll' | translate}}" class="md-fab md-mini"
+                            ng-click="checkUncheckAll()">
+                            <md-icon md-font-icon="fas fa-check-double"></md-icon>
+                            <md-tooltip md-direction="top">{{ 'checkUncheckAll' | translate }}</md-tooltip>
+                        </md-button>
+                    </div>
+                    <div layout="row">
+                        <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                            ng-click="refreshGrid()" type="button">
+                            <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-sync"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-toolbar>
+            <div kendo-tree-list="samplesGrid" id="samplesGrid" class="k-widget k-tree-list"
+                options="samplesGridOptions"></div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" flex layout-align="end end">
+        <md-button class="md-raised md-primary" ng-click="submit()" ng-disabled="noTestsSelected">
+            <md-tooltip md-direction="top">{{'submit' | translate}}</md-tooltip>
+            {{'submit' | translate}}
+        </md-button>
+        <md-button class="md-raised" ng-click="cancel()">
+            <md-tooltip md-direction="top">{{'cancel' | translate}}</md-tooltip>
+            {{'cancel' | translate}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

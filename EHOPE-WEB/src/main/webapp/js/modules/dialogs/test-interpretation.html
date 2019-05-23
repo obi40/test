@@ -1,0 +1,88 @@
+<md-dialog id="testInterpretation" aria-label="{{'interpretation' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'interpretation' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div class="padding-10">
+        <form name="mainInterpretationForm">
+            <md-dialog-content class="test-interpretation-container">
+                <div ng-repeat="interpretation in interpretations" ng-form="interpretation.form"
+                    ng-if="!interpretation.markedForDeletion" layout="row" layout-wrap flex
+                    layout-align="center stretch" class="interpretation" data-index="{{$index}}">
+                    <div layout="row" layout-wrap flex>
+                        <md-input-container dynamic-flex="40|40|20|20|20">
+                            <label>{{ 'minConcentration' | translate }}</label>
+                            <input type="text" name="minValueData" ng-pattern="minValuePattern"
+                                ng-change="interpretationValueChange(interpretation, interpretation.form)"
+                                ng-model="interpretation.minValueData" />
+                            <span class="hint">{{minValueHint}}</span>
+                            <input-messages input-errors="interpretation.form.minValueData.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex="40|40|20|20|20">
+                            <label>{{ 'maxConcentration' | translate }}</label>
+                            <input type="text" name="maxValueData" ng-pattern="maxValuePattern"
+                                ng-change="interpretationValueChange(interpretation, interpretation.form)"
+                                ng-model="interpretation.maxValueData" />
+                            <span class="hint">{{maxValueHint}}</span>
+                            <input-messages input-errors="interpretation.form.maxValueData.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex="20|20|10|10|10">
+                            <label>{{ 'class' | translate }}</label>
+                            <input ng-required="true" type="text" name="interpretationClass"
+                                ng-model="interpretation.interpretationClass" />
+                            <input-messages input-errors="interpretation.form.interpretationClass.$error" />
+                        </md-input-container>
+                        <md-input-container dynamic-flex="100|100|50|50|50">
+                            <label>{{ 'explanation' | translate }}</label>
+                            <textarea ng-required="true" md-detect-hidden name="explanation"
+                                ng-model="interpretation.explanation"></textarea>
+                            <input-messages input-errors="interpretation.form.explanation.$error" />
+                        </md-input-container>
+                        <span flex="100" class="hidden-field-error">
+                            <input type="hidden" name="valueValidator" ng-model="interpretation.valueValidator" />
+                            <input-messages input-errors="interpretation.form.valueValidator.$error"
+                                messages="valueMessages" />
+                        </span>
+                        <span flex="100" class="hidden-field-error">
+                            <input type="hidden" name="oneValueValidator" ng-model="interpretation.oneValueValidator" />
+                            <input-messages input-errors="interpretation.form.oneValueValidator.$error"
+                                messages="oneValueMessages" />
+                        </span>
+                    </div>
+                    <div layout="column" layout-align="center center">
+                        <md-button class="md-raised md-fab md-mini red-button tiny-button"
+                            aria-label="{{'delete' | translate}}" ng-click="deleteInterpretation(interpretation)">
+                            <md-icon md-font-icon="fas fa-trash"></md-icon>
+                            <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        </md-button>
+                        <i class="fas fa-grip-vertical drag-handle">
+                            <md-tooltip md-direction="top">{{'dragToReorder' | translate}}</md-tooltip>
+                        </i>
+                    </div>
+                </div>
+                <div layout="row" flex layout-align="center center">
+                    <md-button class="md-raised md-fab md-mini green-button" aria-label="{{'add' | translate}}"
+                        ng-click="addInterpretation()">
+                        <md-icon md-font-icon="fas fa-2x fa-plus"></md-icon>
+                        <md-tooltip md-direction="top">{{'add' | translate}}</md-tooltip>
+                    </md-button>
+                </div>
+            </md-dialog-content>
+            <md-dialog-actions layout="row" flex layout-align="end end">
+                <md-button class="md-raised md-primary" ng-click="submit()"
+                    ng-disabled="mainInterpretationForm.$invalid">
+                    <md-tooltip md-direction="top">{{'submit' | translate}}</md-tooltip>
+                    {{'submit' | translate}}
+                </md-button>
+                <md-button class="md-raised" ng-click="cancel()">
+                    <md-tooltip md-direction="top">{{'cancel' | translate}}</md-tooltip>
+                    {{'cancel' | translate}}
+                </md-button>
+            </md-dialog-actions>
+        </form>
+    </div>
+</md-dialog>

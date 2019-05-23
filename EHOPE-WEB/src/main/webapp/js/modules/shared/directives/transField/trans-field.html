@@ -1,0 +1,25 @@
+<div class="trans-field">
+	<div layout="row" flex="100" dir="{{primaryLanguage.direction}}">
+		<div flex>
+			<md-input-container flex>
+				<label>{{ primaryLanguage.labelCode | translator:primaryLanguage.language }}</label>
+				<input ng-required="primaryLanguage.required" ng-model="model[primaryLanguage.fieldName][primaryLanguage.language]"
+				 name="{{primaryLanguage.fieldName}}" ng-change="onChange(primaryLanguage)" />
+				<input-messages input-errors="form[primaryLanguage.fieldName].$error" />
+			</md-input-container>
+		</div>
+		<div flex="nogrow" layout="row" layout-align="center center">
+			<md-button aria-label="{{ 'multilingual' | translate }}" class="sml-btn" ng-click="showAllLangs()">
+				<md-tooltip md-direction="top">{{ 'multilingual' | translate }}</md-tooltip>
+				<md-icon md-font-icon="fas fa-globe"></md-icon>
+			</md-button>
+		</div>
+	</div>
+	<div class="secondary-languages" ng-class="showSecondary ? 'open' : ''" layout-padding md-whiteframe="3" tabindex="-1"
+	 ng-blur="hideAllLangs($event)">
+		<md-input-container dir="{{lang.direction}}" flex ng-repeat="lang in languages | orderBy : '-primary' | limitTo: 1 - languages.length">
+			<label>{{ lang.labelCode | translator:lang.language }}</label>
+			<input ng-model="model[lang.fieldName][lang.language]" ng-blur="hideAllLangs($event)" ng-change="onChange(lang)" />
+		</md-input-container>
+	</div>
+</div>

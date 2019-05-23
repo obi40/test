@@ -1,0 +1,36 @@
+<form name="secGroupForm" layout="column" flex novalidate ng-submit="saveSecGroup(secGroupForm.$valid)"
+    http-disable-click class="group-management-wrapper">
+    <md-content>
+        <div layout="column">
+            <div>
+                <md-card md-whiteframe="3">
+                    <md-card-title>
+                        <md-card-title-text layout="column" layout-align="center center">
+                            <h2 class="md-display-1">{{selectedSecGroup!=null?newSecGroup.name[userLocale]:('groupNew'
+                                | translate)}}</h2>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column" flex>
+                        <trans-field form="secGroupForm" model="newSecGroup" languages="secGroupTransFields.name">
+                        </trans-field>
+                        <shuttle-box options="roleShuttleBoxOptions"></shuttle-box>
+                        <chips-wrapper options="userChipsOptions" />
+                        <div kendo-grid="userViewGrid" id="userViewGrid" class="k-widget k-grid users-grid"
+                            options="userViewGridOptions"></div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </md-content>
+    <div layout="row" flex>
+        <md-button class="md-primary md-raised" type="button" ng-click="toggleView()">
+            <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+        </md-button>
+        <md-button class="md-primary md-raised" type="submit" ng-disabled="secGroupForm.$invalid">
+            {{'save' | translate}}
+        </md-button>
+        <md-button class="md-primary md-raised" type="button" ng-click="clearForm(secGroupForm)">
+            {{'clear' | translate}}
+        </md-button>
+    </div>
+</form>

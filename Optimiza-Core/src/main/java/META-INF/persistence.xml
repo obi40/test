@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Optimiza-Core">
+		<class>com.optimiza.core.admin.lkp.model.LkpUserStatus</class>
+		<class>com.optimiza.core.admin.model.SecGroup</class>
+		<class>com.optimiza.core.admin.model.SecGroupRole</class>
+		<class>com.optimiza.core.admin.model.SecGroupUser</class>
+		<class>com.optimiza.core.admin.model.SecRight</class>
+		<class>com.optimiza.core.admin.model.SecRole</class>
+		<class>com.optimiza.core.admin.model.SecRoleRight</class>
+		<class>com.optimiza.core.admin.model.SecTenant</class>
+		<class>com.optimiza.core.admin.model.SecUser</class>
+		<class>com.optimiza.core.admin.model.SecUserRole</class>
+		<class>com.optimiza.core.base.entity.BaseAuditableBranchedEntity</class>
+		<class>com.optimiza.core.base.entity.BaseAuditableEntity</class>
+		<class>com.optimiza.core.base.entity.BaseAuditableTenantedEntity</class>
+		<class>com.optimiza.core.base.entity.BaseEntity</class>
+		<class>com.optimiza.core.base.entity.BaseHistoricalEntity</class>
+		<class>com.optimiza.core.base.entity.BaseView</class>
+		<class>com.optimiza.core.common.audit.CustomRevisionEntity</class>
+		<class>com.optimiza.core.lkp.model.ComLanguage</class>
+		<class>com.optimiza.core.lkp.model.ComTenantLanguage</class>
+		<class>com.optimiza.core.lkp.model.LkpCity</class>
+		<class>com.optimiza.core.lkp.model.LkpCompareType</class>
+		<class>com.optimiza.core.lkp.model.LkpCountry</class>
+		<class>com.optimiza.core.lkp.model.LkpCurrency</class>
+		<class>com.optimiza.core.lkp.model.LkpFieldType</class>
+		<class>com.optimiza.core.lkp.model.LkpGender</class>
+		<class>com.optimiza.core.lkp.model.LkpMaster</class>
+		<class>com.optimiza.core.system.model.SysModule</class>
+		<class>com.optimiza.core.system.model.SysPage</class>
+	</persistence-unit>
+</persistence>

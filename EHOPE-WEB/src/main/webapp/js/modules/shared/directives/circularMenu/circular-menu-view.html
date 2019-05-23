@@ -1,0 +1,26 @@
+<div ng-class="quantityClass" class="circular-menu">
+    <md-fab-speed-dial md-open="isOpen" md-direction="up" class="md-scale">
+        <md-fab-trigger>
+            <md-button aria-label="menu" class="md-fab md-mini md-primary trigger-button">
+                <md-icon md-font-icon="fas fa-bars fa-2x" class="menu-icon"></md-icon>
+                <md-icon md-font-icon="fas fa-times fa-2x" class="close-icon"></md-icon>
+            </md-button>
+        </md-fab-trigger>
+        <md-fab-actions>
+            <span ng-repeat="icon in icons">
+                <md-button ng-if="icon.confirmClick" aria-label="{{icon.label | translate}}" authority-checker="{{icon.authorityChecker}}"
+                    class="md-fab md-mini cm-btn" id="btn-{{$index}}" ng-disabled="icon.disable" confirm-click="clickAction"
+                    confirm-click-arg="icon.action" confirm-click-msg="{{icon.confirmClickMsg}}">
+                    <md-icon class="{{icon.iconClass}}" aria-label="{{icon.label | translate}}"></md-icon>
+                    <md-tooltip md-direction="top">{{icon.label | translate}}</md-tooltip>
+                </md-button>
+                <md-button ng-if="icon.confirmClick === undefined || !icon.confirmClick" aria-label="{{icon.label | translate}}"
+                    authority-checker="{{icon.authorityChecker}}" class="md-fab md-mini cm-btn" id="btn-{{$index}}"
+                    ng-disabled="icon.disable" ng-click="clickAction(icon.action)">
+                    <md-icon class="{{icon.iconClass}}" aria-label="{{icon.label | translate}}"></md-icon>
+                    <md-tooltip md-direction="top">{{icon.label | translate}}</md-tooltip>
+                </md-button>
+            </span>
+        </md-fab-actions>
+    </md-fab-speed-dial>
+</div>

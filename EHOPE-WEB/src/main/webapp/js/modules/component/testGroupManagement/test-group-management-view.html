@@ -1,0 +1,153 @@
+<md-content>
+    <div ng-hide="isEdit">
+        <md-toolbar class="short-toolbar">
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="createGroup()"
+                        type="button" authority-checker="ADD_TEST_GROUP">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                        ng-disabled="selectedGroup == null" ng-click="editGroup()" authority-checker="UPD_TEST_GROUP">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+                    <md-button ng-disabled="selectedGroup == null" aria-label="{{'delete' | translate}}"
+                        class="md-fab md-mini" type="button" authority-checker="DEL_TEST_GROUP"
+                        confirm-click="deleteGroup">
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGroupGrid()" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="groupGrid" id="groupGrid" class="k-widget k-grid grid-ellipsis" options="groupGridOptions">
+        </div>
+    </div>
+
+    <div ng-show="isEdit">
+        <form name="groupForm" novalidate ng-submit="submitGroup()" http-disable-click>
+            <div layout="row" flex layout-wrap>
+                <md-input-container dynamic-flex>
+                    <label>
+                        {{'name' | translate}}</label>
+                    <input type="text" name="name" ng-model="selectedGroup.name"
+                        ng-required="groupMetaData.name.notNull"
+                        ng-minlength="groupMetaData.name.sized? groupMetaData.name.min:''"
+                        ng-maxlength="groupMetaData.name.sized? groupMetaData.name.max:''" />
+                    <input-messages input-errors="groupForm.name.$error" />
+                </md-input-container>
+                <div dynamic-flex layout="row" ng-if="!selectedGroup.isProfile" flex layout-wrap>
+                    <md-input-container dynamic-flex="100|100|50|50|50">
+                        <label>{{'discountAmount' | translate}}</label>
+                        <input type="number" name="discountAmount" ng-pattern="patternPercent"
+                            ng-model="selectedGroup.discountAmount"
+                            ng-disabled="selectedGroup.discountPercentage != null"
+                            ng-change="caluclateGroupDiscounts(selectedGroup)" ng-min="0"
+                            ng-max="selectedGroup.totalPrice"
+                            ng-required="!selectedGroup.isProfile && selectedGroup.discountPercentage == null" />
+                        <input-messages input-errors="groupForm.discountAmount.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex="100|100|50|50|50">
+                        <label>{{'discountPercentage' | translate}}</label>
+                        <input type="number" name="discountPercentage" ng-pattern="patternPercent" ng-min="0"
+                            ng-max="100" ng-model="selectedGroup.discountPercentage"
+                            ng-disabled="selectedGroup.discountAmount != null"
+                            ng-change="caluclateGroupDiscounts(selectedGroup)"
+                            ng-required="!selectedGroup.isProfile && selectedGroup.discountAmount == null" />
+                        <input-messages input-errors="groupForm.discountPercentage.$error" />
+                    </md-input-container>
+                </div>
+                <span dynamic-flex layout="row" layout-align="start center">
+                    <md-checkbox ng-model="selectedGroup.isProfile" aria-label="{{'profile' | translate}}"
+                        ng-change="isProfileListener()">
+                        {{'profile' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex layout="row" layout-align="start center">
+                    <md-checkbox ng-model="selectedGroup.isActive" aria-label="{{'active' | translate}}">
+                        {{'active' | translate}}
+                    </md-checkbox>
+                </span>
+            </div>
+            <div ng-if="selectedGroup.totalPrice != null" layout="column">
+                <div class="bold">{{ ('total'|translate) + ' = '+ (selectedGroup.totalPrice | number:2) +'
+                    '+userCurrency}}</div>
+                <div ng-if="!selectedGroup.isProfile && selectedGroup.groupPrice != null" class="bold">{{
+                    ('packagePrice'|translate) + ' = '+(selectedGroup.groupPrice | number:2) +' '+userCurrency}}</div>
+            </div>
+            <chips-wrapper options="testChipsOptions" />
+            <autocomplete-search dynamic-flex="100|100|50|33|25" options="testSearchOptions"></autocomplete-search>
+            <div kendo-grid="testGrid" id="testGrid" class="k-widget k-grid" options="testGridOptions"></div>
+            <!-- <fieldset ng-if="selectedGroup.isProfile">
+                <legend>{{ 'details' | translate}}</legend>
+                <md-toolbar class="short-toolbar">
+                    <div class="md-toolbar-tools">
+                        <div layout="row" flex>
+                            <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                                ng-click="addGroupDetail()" type="button" authority-checker="ADD_TEST_GROUP_DETAIL"
+                                ng-disabled="testChipsOptions.data.length == 0">
+                                <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                            </md-button>
+                            <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                                ng-disabled="selectedGroupDetail == null || testChipsOptions.data.length == 0"
+                                ng-click="editGroupDetail(selectedGroupDetail)"
+                                authority-checker="UPD_TEST_GROUP_DETAIL">
+                                <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-edit"></md-icon>
+                            </md-button>
+                            <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" type="button"
+                                ng-click="saveGroupDetailChanges()"
+                                ng-disabled="!groupDetailChanged || testChipsOptions.data.length == 0">
+                                <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-save"></md-icon>
+                            </md-button>
+                            <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                                ng-disabled="!groupDetailChanged || testChipsOptions.data.length == 0"
+                                ng-click="cancelChangesGroupDetail()">
+                                <md-icon md-font-icon="fas fa-undo"></md-icon>
+                                <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                            </md-button>
+                            <md-button ng-disabled="selectedGroupDetail == null" aria-label="{{'delete' | translate}}"
+                                class="md-fab md-mini" type="button" authority-checker="DEL_TEST_GROUP_DETAIL"
+                                confirm-click="deleteGroupDetail">
+                                <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                            </md-button>
+                        </div>
+                        <div layout="row">
+                            <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                                ng-click="refreshGroupDetailGrid()" type="button">
+                                <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-sync"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </md-toolbar>
+                <div kendo-grid="groupDetailGrid" id="groupDetailGrid" class="k-widget k-grid grid-ellipsis"
+                    options="groupDetailGridOptions"></div>
+            </fieldset> -->
+            <div layout="row" layout-wrap flex>
+                <md-button class="md-primary md-raised" type="button" ng-click="toggleView()">
+                    <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+                </md-button>
+                <md-button class="md-primary md-raised" type="button" ng-click="clear()">
+                    {{'clear' | translate}}
+                </md-button>
+                <md-button class="md-primary md-raised" type="submit"
+                    ng-disabled="groupForm.$invalid || testChipsOptions.data.length == 0">
+                    {{'save' | translate}}
+                </md-button>
+            </div>
+        </form>
+    </div>
+</md-content>

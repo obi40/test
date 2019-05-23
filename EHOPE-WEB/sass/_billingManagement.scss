@@ -1,0 +1,8 @@
+//this is the partial scss file for billingManagement 
+.billing-management-wrapper {
+    #billClassificationTreeList {
+        .k-grid-content {
+            max-height: calc(100vh - 198px);
+        }
+    }
+}

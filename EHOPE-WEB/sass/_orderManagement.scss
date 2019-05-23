@@ -1,0 +1,116 @@
+// AFTER CHANGING CLASS NAMES HERE CHECK THE CONTROLLER TO APPLY CHANGES
+.status-tree-data-tooltip {
+    // for the tooltip
+    md-icon {
+        color: $primary-theme-white-color;
+    }
+}
+
+.sample-management-container {
+    overflow: hidden;
+    #orderManagementTreeGrid {
+        border-bottom-width: 0;
+    }
+    .status-tree {
+        z-index: 1;
+        margin-bottom: 15px;
+        ul {
+            padding: 0 !important;
+            margin-top: 0 !important;
+        }
+        md-icon {
+            color: $primary-theme-white-color;
+            font-size: 1.5em;
+        }
+        .status-name {
+            position: absolute;
+            width: 100%;
+            top: 70px;
+            left: 0;
+            line-height: 1em;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+        .status {
+            width: 4em;
+            height: 4em;
+            text-align: center;
+            line-height: 3.5em;
+            border-radius: 100%;
+            background: $green;
+            margin: 1em 1em;
+            display: inline-block;
+            position: relative;
+            border: 0.2em solid $white;
+            outline: none;
+            box-shadow: 0px 0px 0px 2px grey;
+        }
+        .status::before {
+            left: -3em;
+        }
+        .status::after {
+            right: -3em;
+        }
+        .status::before,
+        .status::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 0.2em);
+            width: 6em;
+            height: .4em;
+            background: $green;
+            z-index: -1;
+        }
+        .status:last-child::after,
+        .status:last-child::before,
+        .status:first-child::after,
+        .status:first-child::before,
+        .status:nth-child(2)::before,
+        .status:nth-child(7)::after {
+            display: none;
+        }
+        .current-status {
+            background: $green;
+        }
+        .current-status::after,
+        .current-status~.status,
+        .current-status~.status:not(:first-child)::before,
+        .current-status~.status::after,
+        .status:nth-child(1) {
+            background: $primary-theme-color;
+        }
+        .status:hover,
+        .status:focus {
+            border: 0.2em solid $grey;
+        }
+        .cancelled-status {
+            opacity: 0.5;
+        }
+        .cancelled-status-color {
+            background: $red !important;
+        }
+        .paid-fully-color {
+            background: $green !important;
+        }
+        .paid-partially-color {
+            background: $gold !important;
+        }
+        .paid-none-color {
+            background: $red !important;
+        }
+        .no-data {
+            opacity: initial !important;
+            .current-status,
+            .current-status::after,
+            .current-status::before,
+            .status,
+            .status::after,
+            .status::before {
+                background: $grey !important;
+            }
+            li {
+                cursor: default !important;
+            }
+        }
+    }
+}

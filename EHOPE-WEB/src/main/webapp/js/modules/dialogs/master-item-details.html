@@ -1,0 +1,52 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'info' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-margin>
+        <div>
+            <span>{{'code' | translate}}:</span>
+            <span class="bold">{{masterItem.code}}</span>
+        </div>
+        <div>
+            <span>{{'standardCode' | translate}}:</span>
+            <span class="bold">{{masterItem.standardCode}}</span>
+        </div>
+        <div>
+            <span>{{'description' | translate}}:</span>
+            <span class="bold">{{masterItem.description}}</span>
+        </div>
+        <div>
+            <span>{{'priceList' | translate}}:</span>
+            <span class="bold">{{priceList.name[userLocale]}}</span>
+        </div>
+        <div layout="column">
+            <table class="custom-table" border="1">
+                <thead>
+                    <tr>
+                        <th> {{'price' | translate}}</th>
+                        <th> {{'startDate' | translate}}</th>
+                        <th> {{'endDate' | translate}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="pricing in masterItem.billPricings">
+                        <td>{{pricing.price + ' ' + currency}}</td>
+                        <td>{{pricing.startDate | dateTimeFormat}}</td>
+                        <td ng-if="pricing.endDate!=null">{{pricing.endDate | dateTimeFormat}}</td>
+                        <td ng-if="pricing.endDate==null">
+                            <md-icon md-font-icon="fas fa-infinity">
+                            </md-icon>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>
+        </div>
+    </md-dialog-content>
+</md-dialog>

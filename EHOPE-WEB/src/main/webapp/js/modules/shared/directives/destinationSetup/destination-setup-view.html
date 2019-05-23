@@ -1,0 +1,30 @@
+<div class="destination-setup">
+    <fieldset>
+        <legend>
+            {{ 'destination' | translate }}
+        </legend>
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <md-button class="md-fab md-mini" ng-click="addDestination()">
+                    <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-plus"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="editDestination(selectedDestination)" ng-disabled="!selectedDestination">
+                    <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-edit"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="saveDestination()" ng-disabled="!destinationChanged">
+                    <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-save"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="cancelDestination()" ng-disabled="!destinationChanged">
+                    <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-undo"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <div layout="row" flex layout-wrap>
+            <div class="k-widget k-grid" id="destinationGrid" kendo-grid="destinationGrid" options="destinationGridOptions"></div>
+        </div>
+    </fieldset>
+</div>

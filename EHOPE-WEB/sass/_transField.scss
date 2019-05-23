@@ -1,0 +1,26 @@
+.trans-field {
+    position: relative;
+    .secondary-languages {
+        position: absolute;
+        width: calc(100% - 16px);
+        left: 8px;
+        right: 8px;
+        background-color: $white;
+        z-index: 60;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: -25px;
+        transform: scale(0);
+        transition: transform 0.3s ease-in-out;
+        visibility: hidden;
+        &.open {
+            transform: scale(1);
+            visibility: visible;
+        }
+    }
+}
+
+.sml-btn {
+    min-width: 1px;
+    margin: 0;
+}

@@ -1,0 +1,25 @@
+<md-dialog id="artifactsDialog" aria-label="{{'files' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{dialogTitle}} - {{'files' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" flex>
+            <artifact parent="artifactParent" type="artifactType"></artifact>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" flex layout-align="end end">
+        <md-button class="md-raised md-primary" ng-click="submit()">
+            <md-tooltip md-direction="top">{{'submit' | translate}}</md-tooltip>
+            {{'submit' | translate}}
+        </md-button>
+        <md-button class="md-raised" ng-click="cancel()">
+            <md-tooltip md-direction="top">{{'cancel' | translate}}</md-tooltip>
+            {{'cancel' | translate}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

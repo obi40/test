@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="LISTemplate" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2cbeb3d6-cd8d-4d0e-9a1f-27814ece0e1a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement mode="Transparent" x="211" y="2" width="140" height="40" uuid="ae5c79a8-df82-423e-9d45-61267c2951cd"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<imageExpression><![CDATA["reports/images/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="474" y="60" width="80" height="20" uuid="80e717a9-7fb6-46b4-8a55-6a6715ce5ae1"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER} + " of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement mode="Transparent" x="0" y="10" width="140" height="40" uuid="a5f437da-a8c0-4f77-a09b-6239b90922fb"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2"/>
+				<imageExpression><![CDATA["reports/images/logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="416" y="34" width="54" height="15" uuid="4585146d-a288-46c3-bbf4-90cabf0c98d7"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[www.acculab.me]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="25" width="70" height="25" uuid="76890706-9258-43a2-9099-8e09a8d5dfa3"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[T+ 962 6 5555555
+  + 962 6 5555555
+F+ 962 6 5555555]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="30" width="170" height="20" uuid="d0adb63e-44fd-4b9c-9d5a-1904afbcdfb5"/>
+				<textElement>
+					<font fontName="Arial" size="6"/>
+				</textElement>
+				<text><![CDATA[Mecca Towers - Mecca Street - Complex No.999
+P.O. Box 999 Amman 99999 Jordan]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

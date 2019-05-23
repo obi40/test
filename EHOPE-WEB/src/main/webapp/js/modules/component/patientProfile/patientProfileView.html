@@ -1,0 +1,522 @@
+<md-content class="patient-profile">
+  <patient-info ng-if="patientInfoOptions!=null" options="patientInfoOptions"></patient-info>
+  <md-tabs md-dynamic-height="true" md-border-bottom="true" md-selected="tabToSelect">
+    <md-tab ng-disabled="personalInfoTabDisabled" authority-checker-var="personalInfoTabDisabled"
+      authority-checker="VIEW_PATIENT_PROFILE">
+      <md-tab-label>
+        {{ 'patientInformation' | translate }}
+      </md-tab-label>
+      <md-tab-body>
+        <div ng-if="patientProfileMode === 'view'">
+          <fieldset class="patient-info">
+            <legend>{{'personalInfo' | translate}}</legend>
+            <div flex layout="row" layout-wrap>
+              <div dynamic-flex="50|50|50|100|100" layout-wrap layout="row"
+                ng-repeat="language in languages | orderBy : '-primary'" dir="{{language.direction}}">
+                <div class="info-field" dynamic-flex="100|100|50|25|25">
+                  <div class="info-head">{{ 'firstName' | translator:language.language }}</div>
+                  <div class="info-body">
+                    {{patient.firstName[language.language]}}
+                  </div>
+                </div>
+                <div class="info-field" dynamic-flex="100|100|50|25|25">
+                  <div class="info-head">{{ 'secondName' | translator:language.language }}</div>
+                  <div class="info-body">
+                    {{patient.secondName[language.language]}}
+                  </div>
+                </div>
+                <div class="info-field" dynamic-flex="100|100|50|25|25">
+                  <div class="info-head">{{ 'thirdName' | translator:language.language }}</div>
+                  <div class="info-body">
+                    {{patient.thirdName[language.language]}}
+                  </div>
+                </div>
+                <div class="info-field" dynamic-flex="100|100|50|25|25">
+                  <div class="info-head">{{ 'lastName' | translator:language.language }}</div>
+                  <div class="info-body">
+                    {{patient.lastName[language.language]}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div flex layout="row" layout-wrap>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'dob' | translate }}
+                </div>
+                <div class="info-body">
+                  {{patient.dateOfBirth | dateFormat }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'sex' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.gender.name[locale] }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'maritalStatus' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.maritalStatus.name[locale] }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'bloodType' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.bloodType.name[locale] }}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset ng-if="patient.artifactDescriptions.length">
+            <legend>{{'files' | translate}}</legend>
+            <div layout="row" flex layout-wrap>
+              <div dynamic-flex="100|100|50|50|50">
+                <artifact parent="patient" type="'patient'" view-only="true"></artifact>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="patient-info">
+            <legend>{{'contactInfo' | translate}}</legend>
+            <div layout="row" flex layout-wrap>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'nationalNumber' | translate }}
+                </div>
+                <div class="info-body">
+                  {{patient.nationalId}}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'mobileNumber' | translate }}
+                </div>
+                <div class="info-body">
+                  {{patient.mobileNo}}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'secondaryMobileNumber' | translate }}
+                </div>
+                <div class="info-body">
+                  {{patient.secondaryMobileNo}}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'email' | translate }}
+                </div>
+                <div class="info-body">
+                  {{patient.email}}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'country' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.country.name[locale] }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'address' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.address[locale] }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'remarks' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.remarks[locale] }}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="patient-info">
+            <legend>{{'resultDelivery' | translate}}</legend>
+            <div layout="row" flex layout-wrap>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'sendSmsNotification' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isSmsNotification ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <!-- <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'sendWhatsappNotification' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isWhatsappNotification ? 'yes' : 'no' | translate }}
+                </div>
+              </div> -->
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'sendEmailNotification' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isEmailNotification ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="patient-info">
+            <legend>{{'indicators' | translate}}</legend>
+            <div layout="row" flex layout-wrap>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isVip' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isVip ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <!-- <div class="info-field" dynamic-flex="100|100|50|25|25">
+                  <div class="info-head">
+                    {{ 'isBlackListed' | translate }}
+                  </div>
+                  <div class="info-body">
+                    {{ patient.isBlackListed ? 'yes' : 'no' | translate }}
+                  </div>
+                </div> -->
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isHypertension' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isHypertension ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isAllergies' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isAllergies ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isDifficultyFindingVeins' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isDifficultyFindingVeins ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isBloodSamplePhobia' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isBloodSamplePhobia ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isHardTemperedPatient' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isHardTemperedPatient ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isPregnancy' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isPregnancy ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isDiabetes' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isDiabetes ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+              <div class="info-field" dynamic-flex="100|100|50|25|25">
+                <div class="info-head">
+                  {{ 'isHeartDisease' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.isHeartDisease ? 'yes' : 'no' | translate }}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="patient-info">
+            <legend>{{'information' | translate}}</legend>
+            <div layout="row" flex layout-wrap>
+              <div class="info-field" dynamic-flex="100|100|50|50|50">
+                <div class="info-head">
+                  {{ 'medicalInformation' | translate }}
+                </div>
+                <div class="info-body">
+                  {{ patient.medicalInformation}}
+                </div>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div ng-if="patientProfileMode === 'edit'">
+          <patient-form patient="patient" options="patientFormOptions"></patient-form>
+        </div>
+      </md-tab-body>
+    </md-tab>
+    <md-tab md-on-select="onInsuranceTabSelection()" ng-disabled="patientInsuranceTabDisabled"
+      authority-checker-var="patientInsuranceTabDisabled" authority-checker="VIEW_PATIENT_INSURANCE">
+      <md-tab-label>
+        {{ 'insInfo' | translate }}
+      </md-tab-label>
+      <md-tab-body>
+        <div ng-show="patientProfileMode === 'view'">
+          <md-card ng-repeat="insurance in insuranceList" layout="row" flex layout-wrap layout-padding>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'cardNumber' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.cardNumber}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'policyNumber' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.policyNo}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'patientShare' | translate }}
+              </div>
+              <div class="info-body">
+                {{100 - insurance.coveragePercentage}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'subscriberName' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.subscriber}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'dependencyType' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.lkpDependencyType.name[locale]}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'insProvider' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.insProvider.name[locale]}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'insProviderPlan' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.insProviderPlan.name[locale]}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'issueDate' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.issueDate | dateFormat}}
+              </div>
+            </div>
+            <div class="info-field" dynamic-flex>
+              <div class="info-head">
+                {{ 'expiryDate' | translate }}
+              </div>
+              <div class="info-body">
+                {{insurance.expiryDate | dateFormat}}
+              </div>
+            </div>
+          </md-card>
+        </div>
+        <div ng-include="editInsuranceInfoTemplate" ng-show="patientProfileMode === 'edit'"></div>
+      </md-tab-body>
+    </md-tab>
+    <md-tab md-on-select="onOrderTabSelection()" ng-disabled="orderTabDisabled" authority-checker-var="orderTabDisabled"
+      authority-checker="VIEW_ORDERS">
+      <md-tab-label>
+        {{ 'orders' | translate }}
+      </md-tab-label>
+      <md-tab-body>
+        <div>
+          <md-toolbar class="short-toolbar" ng-show="patientProfileMode === 'edit'">
+            <div class="md-toolbar-tools">
+              <div layout="row" flex layout-wrap>
+                <md-button aria-label="{{'create' | translate}}" authority-checker="ADD_ORDER" class="md-fab md-mini"
+                  ng-click="addOrder()" type="button" ng-disabled="patient.isActive == false">
+                  <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-plus"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'printInvoice' | translate}}" class="md-fab md-mini"
+                  ng-click="generateInvoiceReport()" type="button" ng-disabled="!selectedOrder">
+                  <md-tooltip md-direction="top">{{'printInvoice' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'printInsuranceInvoice' | translate}}" class="md-fab md-mini"
+                  ng-click="generateInsuranceInvoiceReport()" type="button"
+                  ng-disabled="checkIfInsuranceInvoiceCanBePrinted()">
+                  <md-tooltip md-direction="top">{{'printInsuranceInvoice' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'printResults' | translate}}" class="md-fab md-mini"
+                  ng-click="generateResultsReport()" type="button" ng-disabled="!selectedOrder">
+                  <md-tooltip md-direction="top">{{'printResults' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'files' | translate}}" class="md-fab md-mini" ng-click="showArtifactDialog()"
+                  type="button" ng-disabled="!selectedOrder">
+                  <md-tooltip md-direction="top">{{'files' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-file"></md-icon>
+                </md-button>
+              </div>
+              <div layout="row">
+                <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                  ng-click="refreshOrderGrid()" type="button">
+                  <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+              </div>
+            </div>
+          </md-toolbar>
+          <md-toolbar class="short-toolbar" ng-show="patientProfileMode !== 'edit'">
+            <div class="md-toolbar-tools">
+              <div layout="row" flex layout-wrap>
+                <md-button aria-label="{{'printInvoice' | translate}}" class="md-fab md-mini"
+                  ng-click="generateInvoiceReport()" type="button" ng-disabled="selectedOrder == null">
+                  <md-tooltip md-direction="top">{{'printInvoice' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'printInsuranceInvoice' | translate}}" class="md-fab md-mini"
+                  ng-click="generateInsuranceInvoiceReport()" type="button"
+                  ng-disabled="checkIfInsuranceInvoiceCanBePrinted()">
+                  <md-tooltip md-direction="top">{{'printInsuranceInvoice' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+                <md-button aria-label="{{'printResults' | translate}}" class="md-fab md-mini"
+                  ng-click="generateResultsReport()" type="button" ng-disabled="selectedOrder == null">
+                  <md-tooltip md-direction="top">{{'printResults' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-print"></md-icon>
+                </md-button>
+              </div>
+              <div layout="row">
+                <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                  ng-click="refreshOrderGrid()" type="button">
+                  <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                  <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+              </div>
+            </div>
+          </md-toolbar>
+          <div kendo-grid="orderGrid" id="orderGrid" class="k-widget k-grid" options="orderGridOptions"></div>
+
+          <test-result-entry ng-if="selectedOrder" no-edit="patientProfileMode === 'view'" visit="selectedOrder">
+          </test-result-entry>
+          <!-- <fieldset ng-show="selectedOrder !== null">
+            <legend>
+              {{ 'results' | translate }}
+              <md-button ng-click="generateResultsReport()" http-disable-click authority-checker="GENERATE_RESULTS_REPORT" aria-label="{{ 'printResults' | translate }}"
+                class="md-fab md-mini">
+                <md-icon md-font-icon="fas fa-print"></md-icon>
+                <md-tooltip md-direction="top">{{ 'printResults' | translate }}</md-tooltip>
+              </md-button>
+            </legend>
+            <div>
+              <md-toolbar class="short-toolbar" ng-show="patientProfileMode === 'edit'" authority-checker="UPD_TEST_ACTUAL_RESULT">
+                <div class="md-toolbar-tools">
+                  <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" ng-disabled="!orderTestResultsDataSource.hasChanges()"
+                    ng-click="saveOrderTestResultChanges()">
+                    <md-icon md-font-icon="fas fa-save"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                  </md-button>
+                  <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini" ng-disabled="!orderTestResultsDataSource.hasChanges()"
+                    ng-click="cancelOrderTestResultChanges()">
+                    <md-icon md-font-icon="fas fa-undo"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                  </md-button>
+                </div>
+              </md-toolbar>
+              <div kendo-grid="orderTestResultsGrid" id="orderTestResultsGrid" class="k-widget k-grid" options="orderTestResultsGridOptions"></div>
+            </div>
+          </fieldset> -->
+        </div>
+      </md-tab-body>
+    </md-tab>
+    <md-tab md-on-select="onHistoricalOrdersTabSelection()">
+      <md-tab-label>
+        {{ 'historicalResults' | translate }}
+      </md-tab-label>
+      <md-tab-body>
+        <div>
+          <fieldset>
+            <legend>
+              {{ 'historicalOrders' | translate }}
+            </legend>
+            <md-toolbar class="short-toolbar">
+              <div class="md-toolbar-tools">
+                <div layout="row" flex layout-wrap>
+                </div>
+                <div layout="row">
+                  <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                    ng-click="refreshHistoricalOrderGrid()" type="button">
+                    <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-sync"></md-icon>
+                  </md-button>
+                </div>
+              </div>
+            </md-toolbar>
+            <div kendo-grid="historicalOrdersGrid" id="historicalOrdersGrid" class="k-widget k-grid historical-grid"
+              options="historicalOrdersGridOptions"></div>
+          </fieldset>
+          <fieldset ng-show="selectedHistoricalOrder">
+            <legend>
+              {{ 'historicalTests' | translate }}
+            </legend>
+            <div kendo-grid="historicalTestsGrid" id="historicalTestsGrid" class="k-widget k-grid historical-grid"
+              options="historicalTestsGridOptions"></div>
+          </fieldset>
+          <fieldset ng-show="selectedHistoricalTest && selectedHistoricalOrder">
+            <legend>
+              {{ 'historicalResults' | translate }}
+            </legend>
+            <div kendo-grid="historicalResultsGrid" id="historicalResultsGrid" class="k-widget k-grid historical-grid"
+              options="historicalResultsGridOptions"></div>
+          </fieldset>
+        </div>
+      </md-tab-body>
+    </md-tab>
+  </md-tabs>
+  <md-button aria-label="{{ 'patientLookup' | translate }}" class="md-raised md-primary" type="button"
+    ng-click="goToPatientLookup()">
+    <md-icon md-font-icon="fas fa-search"></md-icon>
+    <md-tooltip md-direction="top">{{ 'patientLookup' | translate }}</md-tooltip>
+  </md-button>
+</md-content>

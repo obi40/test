@@ -1,0 +1,21 @@
+.price-list-details-wrapper {
+    //this class used in grid template
+    tr.k-state-selected {
+        md-icon {
+            color: $primary-theme-white-color !important;
+        }
+    }
+    .pricing {
+        md-icon {
+            font-size: 1.25em;
+            outline: none;
+            color: $info-color;
+        }
+        .info {
+            float: $opposite-direction;
+        }
+        .expired {
+            color: $red;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<fieldset class="shuttle-box-wrapper">
+    <legend>{{options.shuttleLabel}}</legend>
+    <md-input-container dynamic-flex="100|50|50|25|25">
+        <label>
+            {{'search' | translate}}</label>
+        <input type="text" name="quickSearchValue" ng-model="quickSearchValue" ng-keyup="quickSearchListener()" />
+    </md-input-container>
+    <div flex layout="row" layout-wrap class="shuttle-container">
+        <div flex layout="column" class="shuttle">
+            <div class="box-label">{{'available' | translate}}</div>
+            <div class="custom-box" flex>
+                <md-list flex class="dense-shuttle">
+                    <md-list-item ng-model-options="{trackBy: '$value.rid'}" ng-repeat="obj in data"
+                        ng-click="options.moveData(obj,true)" flex aria-label="data">
+                        <div ng-bind-html="objectLabel(obj)"></div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+        <div layout="column" layout-align="center center">
+            <md-button aria-label="{{'addAll' | translate}}" class="md-fab md-mini" ng-click="selectAllData(true)"
+                ng-disabled="selectedData.length == originalDataLength" type="button">
+                <md-tooltip md-direction="top">{{'addAll' | translate}}</md-tooltip>
+                <md-icon ng-class="direction=='rtl'?'fas fa-angle-double-left':'fas fa-angle-double-right'"></md-icon>
+            </md-button>
+            <md-button aria-label="{{'removeAll' | translate}}" class="md-fab md-mini"
+                ng-click="options.clearSelection()" ng-disabled="selectedData.length == 0" type="button">
+                <md-tooltip md-direction="bottom">{{'removeAll' | translate}}</md-tooltip>
+                <md-icon ng-class="direction=='rtl'?'fas fa-angle-double-right':'fas fa-angle-double-left'"></md-icon>
+            </md-button>
+        </div>
+        <div flex layout="column" class="shuttle">
+            <div class="box-label">{{'selected' | translate}}</div>
+            <div class="custom-box" flex>
+                <md-list flex class="dense-shuttle">
+                    <md-list-item ng-model-options="{trackBy: '$value.rid'}" ng-repeat="obj in selectedData"
+                        ng-click="options.moveData(obj,false)" flex aria-label="data">
+                        <div ng-bind-html="objectLabel(obj)"></div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </div>
+</fieldset>

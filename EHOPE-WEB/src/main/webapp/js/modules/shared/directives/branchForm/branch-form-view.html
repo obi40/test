@@ -1,0 +1,45 @@
+<form name="branchForm" novalidate flex>
+    <div layout="row" layout-wrap flex>
+        <trans-field dynamic-flex form="branchForm" model="branch" languages="branchTransfields.name"></trans-field>
+        <trans-field dynamic-flex form="branchForm" model="branch" languages="branchTransfields.address"></trans-field>
+        <md-input-container dynamic-flex>
+            <label>{{'code' | translate}}</label>
+            <input type="text" name="code" ng-required="branchMetaData.code.notNull" ng-model="branch.code"
+                ng-minlength="branchMetaData.code.sized? branchMetaData.code.min:''" ng-maxlength="branchMetaData.code.sized? branchMetaData.code.max:''" />
+            <input-messages input-errors="branchForm.code.$error" />
+        </md-input-container>
+        <md-input-container dynamic-flex>
+            <label>{{'phone' | translate}}</label>
+            <input type="text" name="phoneNo" ng-required="branchMetaData.phoneNo.notNull" ng-pattern="patternNum"
+                ng-model="branch.phoneNo" ng-minlength="branchMetaData.phoneNo.sized? branchMetaData.phoneNo.min:''"
+                ng-maxlength="branchMetaData.phoneNo.sized? branchMetaData.phoneNo.max:''" ng-pattern="patternNum" />
+            <input-messages input-errors="branchForm.phoneNo.$error" />
+        </md-input-container>
+        <div dynamic-flex layout="row" flex layout-wrap>
+            <md-input-container flex>
+                <label>
+                    {{'mobilePattern' | translate}}</label>
+                <input type="text" name="mobilePattern" ng-model="branch.mobilePattern" ng-required="branchMetaData.mobilePattern.notNull"
+                    ng-minlength="branchMetaData.mobilePattern.sized? branchMetaData.mobilePattern.min:''" ng-maxlength="branchMetaData.mobilePattern.sized? branchMetaData.mobilePattern.max:''"
+                    ng-change="onMobilePatternChange()" />
+                <span class="hint">{{'mobilePatternHint' | translate}}</span>
+                <input-messages input-errors="branchForm.mobilePattern.$error" />
+            </md-input-container>
+            <md-input-container flex>
+                <label>
+                    {{'output' | translate}}
+                </label>
+                <input type="text" name="dummyMobileNumber" ng-model="dummyMobileNumber" ui-mask="{{branch.mobilePattern}}"
+                    ui-mask-placeholder-char="#" />
+            </md-input-container>
+        </div>
+        <country-city dynamic-flex form="branchForm" model="branch" options="countryCityOptions"></country-city>
+    </div>
+    <div>
+        <span dynamic-flex layout="row" layout-align="start center">
+            <md-checkbox ng-model="branch.isActive" aria-label="Active">
+                {{'active' | translate}}
+            </md-checkbox>
+        </span>
+    </div>
+</form>

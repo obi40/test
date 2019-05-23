@@ -1,0 +1,97 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "ng-stomp",
+        "scope": null,
+        "escapedName": "ng-stomp",
+        "name": "ng-stomp",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\Users\\mpoladian\\eclipse-workspace\\EHOPE-LIS\\trunk\\EHOPE-WEB"
+    ]
+  ],
+  "_from": "ng-stomp@latest",
+  "_id": "ng-stomp@0.5.0",
+  "_inCache": true,
+  "_location": "/ng-stomp",
+  "_nodeVersion": "9.5.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/ng-stomp_0.5.0_1518186843578_0.7159276980769658"
+  },
+  "_npmUser": {
+    "name": "beevelop",
+    "email": "yo@beevelop.com"
+  },
+  "_npmVersion": "5.6.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "ng-stomp",
+    "scope": null,
+    "escapedName": "ng-stomp",
+    "name": "ng-stomp",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng-stomp/-/ng-stomp-0.5.0.tgz",
+  "_shasum": "f17ab8adc8ffb6ed894c2b742c9473a83412d18c",
+  "_shrinkwrap": null,
+  "_spec": "ng-stomp",
+  "_where": "C:\\Users\\mpoladian\\eclipse-workspace\\EHOPE-LIS\\trunk\\EHOPE-WEB",
+  "author": {
+    "name": "Maik Hummel",
+    "email": "m@ikhummel.com"
+  },
+  "bugs": {
+    "url": "https://github.com/beevelop/ng-stomp/issues"
+  },
+  "dependencies": {},
+  "description": "STOMP for AngularJS",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-file-exists": "^0.1.4"
+  },
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-m8BCrrJRimyCuxbuUYanyeBvxMu+JmggnpMw8ZrauSmnsns9GkgKyt8HS07P8aqCIY+XgFkVK8YxGr8tc/87bg==",
+    "shasum": "f17ab8adc8ffb6ed894c2b742c9473a83412d18c",
+    "tarball": "https://registry.npmjs.org/ng-stomp/-/ng-stomp-0.5.0.tgz",
+    "fileCount": 10,
+    "unpackedSize": 77695
+  },
+  "gitHead": "c19ed65bb6350d7bee30ad50e46740e4cde17891",
+  "homepage": "https://github.com/beevelop/ng-stomp",
+  "keywords": [
+    "AngularJS",
+    "STOMP",
+    "websocket"
+  ],
+  "license": "MIT",
+  "main": "src/ng-stomp.js",
+  "maintainers": [
+    {
+      "name": "beevelop",
+      "email": "yo@beevelop.com"
+    }
+  ],
+  "name": "ng-stomp",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beevelop/ng-stomp.git"
+  },
+  "scripts": {
+    "test": "grunt --verbose"
+  },
+  "version": "0.5.0"
+}

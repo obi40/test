@@ -1,0 +1,15 @@
+.tenant-form {
+    md-chips {
+        md-chips-wrap {
+            box-shadow: none !important;
+        }
+        &.chips-with-radios {
+            md-chip {
+                height: auto;
+                md-radio-button {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

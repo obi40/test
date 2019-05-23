@@ -1,0 +1,61 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'info' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-margin>
+        <table class="custom-table" layout-margin border="1">
+            <thead>
+                <tr>
+                    <th>
+                        <md-checkbox ng-model="printAll" ng-change="printAllListener()"
+                            aria-label="{{'print' | translate}}">
+                        </md-checkbox>
+                    </th>
+                    <th> {{'description' | translate}}</th>
+                    <th> {{'cptCode' | translate}}</th>
+                    <th> {{'originalPrice' | translate}}</th>
+                    <th> {{'coInsurance' | translate}}</th>
+                    <th> {{'coGroupPercentage' | translate}}</th>
+                    <th> {{'fees' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="obj in flatDetails">
+                    <td ng-if="obj.piLength != null" rowspan="{{obj.piLength}}">
+                        <md-checkbox ng-model="obj.isPrint" ng-change="printListener(obj)"
+                            aria-label="{{'print' | translate}}">
+                        </md-checkbox>
+                    </td>
+                    <td ng-if="obj.piLength != null" rowspan="{{obj.piLength}}">
+                        <span class="bold">{{obj.tdStandardCode}}</span>{{obj.tdDesc}}
+                    </td>
+                    <td>{{obj.cptCode}}</td>
+                    <td>{{obj.pricing}}</td>
+                    <td>{{obj.percentage}}</td>
+                    <td>{{obj.groupDiscountPercentage}}</td>
+                    <td>{{obj.amount}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" class="bold"> {{'testCount' | translate}}</td>
+                    <td class="bold">{{testCount}}</td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="bold"> {{'totalAmount' | translate}}</td>
+                    <td class="bold">{{total | number:2}} {{userCurrency}}</td>
+                </tr>
+            </tfoot>
+        </table>
+        <md-button aria-label="{{ 'print' | translate }}" class="md-primary md-raised" ng-click="printPayment()"
+            ng-disabled="nonPicked">
+            <md-tooltip md-direction="top">{{'print' | translate}}</md-tooltip>
+            <md-icon md-font-icon="fas fa-print fa-2x"></md-icon>
+        </md-button>
+    </md-dialog-content>
+</md-dialog>

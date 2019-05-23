@@ -1,0 +1,126 @@
+<md-content flex class="client-management-wrapper">
+    <lis-breadcrumb options="breadcrumbOptions"></lis-breadcrumb>
+    <div ng-show="showInsProviderGrid">
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="addInsProvider()"
+                        type="button" authority-checker="ADD_INS_PROVIDER">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button type="button" ng-disabled="insProvider == null" aria-label="{{'edit' | translate}}"
+                        class="md-fab md-mini" ng-click="editInsProvider(insProvider)"
+                        authority-checker="UPD_INS_PROVIDER">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" http-disable-click
+                        type="button" ng-disabled="!insProviderChanged" ng-click="saveInsProvider()">
+                        <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                        ng-disabled="!insProviderChanged" ng-click="cancelInsProviderChanges()">
+                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrids(insProviderGridName)" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="insProvidersGrid" id="insProvidersGrid" class="k-widget k-grid"
+            options="insProvidersGridOptions"></div>
+    </div>
+
+    <div ng-show="showInsProviderPlanGrid">
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                        ng-click="addInsProviderPlan()" type="button">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                        ng-disabled="insProviderPlan==null" ng-click="editInsProviderPlan(insProviderPlan)">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" http-disable-click
+                        type="button" ng-disabled="!insProviderPlanChanged" ng-click="saveInsProviderPlan()">
+                        <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" type="button"
+                        ng-disabled="insProviderPlan==null" confirm-click="deleteInsProviderPlan">
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                        ng-disabled="!insProviderPlanChanged" ng-click="cancelInsProviderPlanChanges()">
+                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrids(insProviderPlanGridName)" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="insProviderPlansGrid" id="insProviderPlansGrid" class="k-widget k-grid"
+            options="insProviderPlansGridOptions"></div>
+    </div>
+    <div ng-show="showInsCovDetailGrid">
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                        ng-click="addInsCoverageDetail()" type="button">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                        ng-disabled="insCoverageDetail==null" ng-click="editInsCoverageDetail(insCoverageDetail)">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" type="button"
+                        ng-disabled="!insCoverageDetailChanged" ng-click="saveInsCoverageDetail()" http-disable-click>
+                        <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" type="button"
+                        ng-disabled="insCoverageDetail==null" confirm-click="deleteInsCoverageDetail">
+                        <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                        ng-disabled="!insCoverageDetailChanged" ng-click="cancelInsCoverageDetailChanges()">
+                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrids(insCovDetailGridName)" type="button">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="insCoverageDetailsGrid" id="insCoverageDetailsGrid" class="k-widget k-grid"
+            options="insCoverageDetailGridOptions"></div>
+    </div>
+</md-content>

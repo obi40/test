@@ -1,0 +1,36 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{ 'appointmentCard' | translate }}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="appointmentCardForm" http-disable-click id="appointmentCardForm" novalidate flex ng-submit="submit(appointmentCardForm.$invalid)">
+        <md-dialog-content flex>
+            <div class="md-dialog-content" flex layout="column" layout-wrap>
+                <md-input-container dynamic-flex>
+                    <label>{{'resultDate' | translate}}</label>
+                    <md-datepicker ng-required="true" date-mask name="ResultDate" ng-model="info.resultDate"
+                        md-min-date="visitDate"></md-datepicker>
+                </md-input-container>
+
+                <md-input-container dynamic-flex>
+                    <label>{{'resultTime' | translate}}</label>
+                    <kendo-timepicker required k-interval="15" ng-model="info.resultTime"></kendo-timepicker>
+                </md-input-container>
+
+                <md-input-container flex>
+                    <label>{{ 'notes' | translate }}</label>
+                    <input type="text" name="notes" ng-model="info.notes" />
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" flex>
+            <md-button type="submit" class="md-primary md-raised" ng-disabled="appointmentCardForm.$invalid">
+                {{ 'print' | translate }}
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

@@ -1,0 +1,25 @@
+<md-dialog>
+    <md-toolbar class="dialog-toolbar">
+        <div class="md-toolbar-tools">
+            <span flex>{{'cancel' | translate}}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fa fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <form name="form" novalidate>
+            <div layout-margin>
+                <md-input-container>
+                    <label>{{'cancelReason' | translate }}</label>
+                    <textarea md-detect-hidden name="reason" ng-model="reason" ng-required="true"></textarea>
+                    <input-messages input-errors="form.reason.$error" />
+                </md-input-container>
+            </div>
+            <md-button aria-label="{{'submit' | translate }}" class="md-primary md-raised" ng-click="submit()"
+                ng-disabled="form.$invalid">
+                {{'submit' | translate}}
+            </md-button>
+        </form>
+    </md-dialog-content>
+</md-dialog>

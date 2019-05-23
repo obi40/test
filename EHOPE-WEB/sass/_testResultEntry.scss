@@ -1,0 +1,177 @@
+.test-result-entry {
+    fieldset {
+        padding-bottom: 0;
+        padding-top: 0;
+
+        form {
+            padding: 0;
+
+            .tests-wrapper {
+                margin-bottom: 5px;
+
+                md-checkbox {
+                    margin-left: 10px;
+                }
+
+                .interpretation-table {
+                    margin-bottom: 1em;
+
+                    .interpretation-table-header {
+                        background-color: $soft-grey;
+
+                        >div {
+                            padding: 0.5em 1.286em;
+                            border-top: 1px solid $table-border-color;
+                            border-bottom: 1px solid $table-border-color;
+                            border-#{$direction}: 1px solid $table-border-color;
+
+                            &:last-child {
+                                border-#{$opposite-direction}: 1px solid $table-border-color;
+                            }
+                        }
+                    }
+
+                    .interpretation-table-body {
+                        .interpretation-table-row {
+                            &:nth-child(even) {
+                                background: $row-alt-color;
+                            }
+
+                            >div {
+                                padding: 0.2em 1.286em;
+                                border-bottom: 1px solid $table-border-color;
+                                border-#{$direction}: 1px solid $table-border-color;
+
+                                &:last-child {
+                                    border-#{$opposite-direction}: 1px solid $table-border-color;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .results-wrapper {
+                    margin-bottom: 5px;
+                    padding: 0;
+
+                    div.field-with-unit {
+                        position: relative;
+
+                        .unit-wrapper {
+                            position: absolute;
+                            top: 21px;
+                            #{$opposite-direction}: 2px;
+                        }
+                    }
+
+                    &:not(:last-of-type) {
+                        border-bottom: 1px solid;
+                    }
+
+                    .narrative-templates-wrapper {
+                        .narrative-templates-fieldset {
+                            margin: 0;
+                            margin-bottom: 10px;
+                            padding-bottom: 5px;
+
+                            legend {
+                                font-size: 1em;
+                            }
+
+                            md-list-item {
+                                margin-bottom: 5px;
+
+                                .md-list-item-inner {
+                                    line-height: initial;
+                                }
+                            }
+                        }
+                    }
+
+                    .organism-entry-wrapper {
+                        .actual-organism-wrapper {
+                            padding: 0 5px;
+
+                            .actual-organism {
+                                border-bottom: 1px solid;
+                                margin-top: 5px;
+                            }
+                        }
+                    }
+
+                    .anti-microbial-entry-wrapper {
+                        margin-top: 1em;
+
+                        .sensitivity-header {
+                            background-color: $soft-grey;
+
+                            >span {
+                                padding: 0.5em 1.286em;
+                                border-top: 1px solid $table-border-color;
+                                border-bottom: 1px solid $table-border-color;
+                                border-#{$direction}: 1px solid $table-border-color;
+
+                                &:last-child {
+                                    border-#{$opposite-direction}: 1px solid $table-border-color;
+                                }
+                            }
+                        }
+
+                        .sensitivity-body {
+                            &:nth-child(odd) {
+                                background: $row-alt-color;
+                            }
+
+                            .anti-microbial-name {
+                                padding: 0.2em 1.286em;
+                                border-bottom: 1px solid $table-border-color;
+                                border-#{$direction}: 1px solid $table-border-color;
+
+                                &:last-child {
+                                    border-#{$opposite-direction}: 1px solid $table-border-color;
+                                }
+                            }
+
+                            .sensitivity-radio-button-wrapper {
+                                padding: 0.2em 1.286em;
+                                border-bottom: 1px solid $table-border-color;
+                                border-#{$direction}: 1px solid $table-border-color;
+
+                                &:last-child {
+                                    border-#{$opposite-direction}: 1px solid $table-border-color;
+                                }
+
+                                text-align: center;
+
+                                md-radio-button {
+                                    display: inline-block;
+                                    width: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .differential-error {
+                    font-size: 0.8571em;
+                    color: $error-color;
+                    margin: -10px 2px 0 2px;
+                }
+
+                &:not(:last-of-type) {
+                    border-bottom: 1px solid;
+                }
+            }
+        }
+    }
+}
+
+#testResultEntryPop {
+    fieldset.test-result-entry-fieldset {
+        border: 0;
+
+        >legend {
+            display: none;
+        }
+    }
+}

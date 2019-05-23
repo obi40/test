@@ -1,0 +1,16 @@
+.test-specimen-setup {
+    .specimen-wrapper {
+        &:not(:last-child) {
+            border-bottom: 2px solid $black;
+        }
+        &:not(:first-child) {
+            padding-top: 15px;
+        }
+        .specimen-tag-wrapper {
+            width: 56px;
+            .specimen-tag {
+                padding: 5px;
+            }
+        }
+    }
+}

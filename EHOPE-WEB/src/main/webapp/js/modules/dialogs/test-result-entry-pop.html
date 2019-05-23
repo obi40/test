@@ -1,0 +1,30 @@
+<md-dialog aria-label="{{'results' | translate}}" id="testResultEntryPop">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{ 'results' | translate }}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+        <test-result-entry filter="filterResultEntry" visit="visit" no-edit="noEdit" dialog-action="dialogAction">
+        </test-result-entry>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="space-between center">
+        <span>
+            <md-button class="md-raised md-primary" ng-click="reorderTests()"
+                ng-disabled="dialogAction.disabledReorderTestsButton.value">
+                {{'confirmTestReorder' | translate}}
+            </md-button>
+        </span>
+        <span>
+            <md-button class="md-primary md-raised" ng-click="save()">
+                {{'save' | translate}}
+            </md-button>
+            <md-button class="md-raised" ng-click="cancel()">
+                {{'cancel' | translate}}
+            </md-button>
+        </span>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,58 @@
+<div layout="row" class="lkp-management-wrapper">
+    <md-content flex>
+        <form name="lkpMasterForm" novalidate flex>
+            <md-toolbar class="short-toolbar">
+                <div class="md-toolbar-tools">
+                    <div layout="row" flex>
+                        <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="addLkp()"
+                            type="button" authority-checker="ADD_LKP">
+                            <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-plus"></md-icon>
+                        </md-button>
+                        <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini" ng-disabled="selectedLkp === null"
+                            ng-click="editLkp(selectedLkp)" authority-checker="UPD_LKP">
+                            <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-edit"></md-icon>
+                        </md-button>
+                        <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" type="button" ng-disabled="!lkpChanged"
+                            ng-click="saveLkp()">
+                            <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-save"></md-icon>
+                        </md-button>
+                        <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini" ng-disabled="!lkpChanged"
+                            ng-click="cancelLkpChanges()">
+                            <md-icon md-font-icon="fas fa-undo"></md-icon>
+                            <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                        </md-button>
+                        <md-button ng-disabled="selectedLkp === null" aria-label="{{'delete' | translate}}" class="md-fab md-mini"
+                            type="button" authority-checker="DEL_LKP" confirm-click="deleteLkp">
+                            <md-tooltip md-direction="top">{{'delete' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-trash"></md-icon>
+                        </md-button>
+                    </div>
+                    <div layout="row">
+                        <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                            ng-click="refreshGrid()" type="button">
+                            <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                            <md-icon md-font-icon="fas fa-sync"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </md-toolbar>
+            <div kendo-grid="lkpsGrid" id="lkpsGrid" class="k-widget k-grid grid-ellipsis" options="lkpsGridOptions"></div>
+        </form>
+    </md-content>
+    <div class="side-list-container" ng-class="ruleCss" laytout="column" flex="15">
+        <md-input-container>
+            <label>
+                {{'search' | translate}}</label>
+            <input type="text" name="searchLkpMaster" ng-model="searchLkpMaster" ng-change="searchLkpMasterList()" />
+        </md-input-container>
+        <md-list class="side-list">
+            <md-list-item ng-repeat="lkp in lkpMasterList | orderBy:'entity'" ng-click="viewLkp(lkp)" ng-class="{'highlight':lkp.rid === selectedMasterLkp.rid}"
+                http-disable-click>
+                <div id="{{'lkp_'+lkp.rid}}">{{lkp.name[userLocale]}}</div>
+            </md-list-item>
+        </md-list>
+    </div>
+</div>

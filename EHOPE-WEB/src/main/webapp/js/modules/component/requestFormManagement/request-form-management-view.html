@@ -1,0 +1,61 @@
+<div>
+    <md-toolbar class="short-toolbar" flex>
+        <div class="md-toolbar-tools">
+            <div flex layout="row">
+                <md-button class="md-fab md-mini" authority-checker="ADD_REQUEST_FORM" ng-click="addRequestForm()">
+                    <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-plus"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" authority-checker="UPD_REQUEST_FORM" ng-click="editRequestForm(selectedRequestForm)"
+                    ng-disabled="selectedRequestForm === null || !selectedRequestFormIsActive">
+                    <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-edit"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="saveRequestForm()" ng-disabled="!requestFormChanged">
+                    <md-tooltip md-direction="top">{{'save' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-save"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" ng-click="cancelRequestForm()" ng-disabled="!requestFormChanged">
+                    <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-undo"></md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini" authority-checker="ACTIVATE_REQUEST_FORM" ng-disabled="selectedRequestForm === null || selectedRequestFormIsActive || selectedRequestForm.rid === ''"
+                    ng-click="activateRequestForm()">
+                    <md-icon md-font-icon="fas fa-check"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'activate' | translate }}</md-tooltip>
+                </md-button>
+                <md-button class="md-fab md-mini" authority-checker="DEACTIVATE_REQUEST_FORM" ng-disabled="selectedRequestForm === null || !selectedRequestFormIsActive || selectedRequestForm.rid === ''"
+                    ng-click="deactivateRequestForm()">
+                    <md-icon md-font-icon="fas fa-times"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'deactivate' | translate }}</md-tooltip>
+                </md-button>
+            </div>
+            <div layout="row">
+                <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click ng-click="refreshRequestForms()"
+                    type="button">
+                    <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div id="requestFormGrid" kendo-grid="requestFormGrid" options="requestFormGridOptions"></div>
+</div>
+<br>
+<fieldset ng-show="selectedRequestForm !== null && selectedRequestForm.rid !== ''">
+    <legend>
+        {{ 'tests' | translate }}
+        <md-button authority-checker="UPD_REQUEST_FORM" ng-click="saveRequestFormTests()" aria-label="{{ 'save' | translate }}"
+            class="md-fab md-mini tiny-button">
+            <md-icon md-font-icon="fas fa-save"></md-icon>
+            <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+        </md-button>
+    </legend>
+    <chips-wrapper options="requestFormTestsChipsOptions" />
+    <form name="testFilterForm" novalidate class="filter-wrapper" flex layout="row" layout-wrap>
+        <autocomplete-search dynamic-flex="100|100|50|33|25" options="testSearchOptions"></autocomplete-search>
+        <lov ng-if="sectionLov.data.length > 0" dynamic-flex="100|100|50|33|25" form="testFilterForm" on-change="applySectionFilter"
+            options="sectionLov" select="sectionLov.selectedValue"></lov>
+    </form>
+    <div class="k-widget k-grid" id="requestFormTestGrid" kendo-grid="requestFormTestGrid" options="requestFormTestOptions"></div>
+</fieldset>

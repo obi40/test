@@ -1,0 +1,25 @@
+form[name="patientProfileForm"] {
+    .fingerprint-action-wrapper {
+        &.waiting {
+            button {
+                i.fa-spinner {
+                    display: inline-block;
+                }
+            }
+        }
+        button {
+            i.fa-spinner {
+                display: none;
+            }
+        }
+        img {
+            width: 60px;
+            display: none;
+        }
+        &.read {
+            img {
+                display: block;
+            }
+        }
+    }
+}

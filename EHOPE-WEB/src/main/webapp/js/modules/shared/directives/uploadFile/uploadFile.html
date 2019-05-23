@@ -1,0 +1,26 @@
+<div class="upload-file">
+    <div>
+        {{fileDataWrapper.labelCode | translate}}
+    </div>
+    <div flex layout="row" layout-align="start center">
+        <div ng-if="isImage">
+            <img class="profile-image" ng-hide="fileDataWrapper.oldFile === undefined || fileDataWrapper.oldFile === null"
+                ng-src="data:image/jpeg;base64,{{fileDataWrapper.oldFile}}" alt="old-file" width="100%" />
+            <img ng-hide="newFile === undefined" class="profile-image" ng-src="{{newFile}}" alt="file-to-upload" width="100%" />
+        </div>
+        <div layout="column">
+            <md-button ng-click="openFileDialog()" ng-disabled="fileDataWrapper.fileModel!=null" class="md-fab md-mini md-primary md-raised">
+                <md-tooltip md-direction="top">{{'upload' | translate}}</md-tooltip>
+                <md-icon md-font-icon="fas fa-upload"></md-icon>
+            </md-button>
+            <md-button ng-click="fileDataWrapper.reset()" ng-disabled="fileDataWrapper.fileModel==null" class="md-fab md-mini md-primary md-raised">
+                <md-tooltip md-direction="top">{{'remove' | translate}}</md-tooltip>
+                <md-icon md-font-icon="fas fa-trash"></md-icon>
+            </md-button>
+        </div>
+    </div>
+    <div ng-hide="newFile === undefined">{{fileDataWrapper.fileModel.name}}</div>
+    <div>
+        <input class="file-input no-display" type="file" accept="{{typeStrings}}" />
+    </div>
+</div>

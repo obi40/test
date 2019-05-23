@@ -1,0 +1,35 @@
+.md-button {
+    text-transform: none;
+    &:not(:disabled).md-default-theme.md-fab md-icon,
+    &:not(:disabled).md-fab md-icon {
+        color: $white !important;
+    }
+    &.md-default-theme.md-fab:not([disabled]).md-focused,
+    &.md-fab:not([disabled]).md-focused,
+    &.md-default-theme.md-fab:not([disabled]):hover,
+    &.md-fab:not([disabled]):hover {
+        background-color: $fab-focus-color;
+    }
+    &.green-button {
+        background-color: $green;
+    }
+    &.green-button:not([disabled]):hover,
+    &.green-button:not([disabled]).md-focused {
+        background-color: $green !important;
+    }
+    &.red-button {
+        background-color: $red;
+    }
+    &.red-button:not([disabled]):hover,
+    &.red-button:not([disabled]).md-focused {
+        background-color: $red !important;
+    }
+}
+
+.tiny-button {
+    line-height: 30px !important;
+    width: 30px !important;
+    min-height: 30px !important;
+    height: 30px !important;
+    padding: 0 !important;
+}

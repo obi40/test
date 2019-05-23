@@ -1,0 +1,211 @@
+<div class="daily-reports" layout="row" layout-wrap flex>
+    <!--Daily Cash Form-->
+    <form class="daily-cash-form padding-10" name="dailyCashForm" ng-submit="generateDailyCashPaymentsReport()"
+        dynamic-flex="100|100|50|50|50">
+        <md-card layout-fill class="daily-cash">
+            <md-card-content>
+                <h2>{{ 'dailyCashPaymentsReport' | translate}}</h2>
+            </md-card-content>
+            <md-card-content>
+                <div layout="row" layout-wrap flex>
+                    <md-input-container dynamic-flex>
+                        <label>{{'from' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyCashDateFrom"
+                            ng-model="filters.dailyCashDateFrom"
+                            md-max-date="filters.dailyCashDateTo?filters.dailyCashDateTo:''"></md-datepicker>
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>{{'to' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyCashDateTo"
+                            ng-model="filters.dailyCashDateTo" md-min-date="filters.dailyCashDateFrom"></md-datepicker>
+                    </md-input-container>
+                    <div dynamic-flex ng-if="dailyCashBranchLkp" name="dailyCashBranchLOV">
+                        <lov form="dailyCashForm" options="dailyCashBranchLkp"
+                            select="dailyCashBranchLkp.selectedValue"></lov>
+                    </div>
+                    <div dynamic-flex name="paymentMethodLOV">
+                        <lov form="dailyCashForm" ng-if="paymentMethodLkp != null" options="paymentMethodLkp"
+                            select="paymentMethodLkp.selectedValue"></lov>
+                    </div>
+                </div>
+                <div layout="row layout-wrap flex">
+                    <md-input-container flex>
+                        <md-button type="submit" class="md-raised" ng-disabled="dailyCashForm.$invalid"
+                            authority-checker="VIEW_DAILY_CASH_REPORT">
+                            {{'print' | translate}}
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+    </form>
+
+    <!--Daily Income Form-->
+    <form class="daily-income-form padding-10" name="dailyIncomeForm" ng-submit="generateDailyIncomeReport()"
+        dynamic-flex="100|100|50|50|50">
+        <md-card layout-fill class="daily-income">
+            <md-card-content>
+                <h2>{{'dailyIncomeReport' | translate}}</h2>
+            </md-card-content>
+            <md-card-content>
+                <div layout="row" layout-wrap flex>
+                    <md-input-container dynamic-flex>
+                        <label>{{'from' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyIncomeDateFrom"
+                            ng-model="filters.dailyIncomeDateFrom"
+                            md-max-date="filters.dailyIncomeDateTo?filters.dailyIncomeDateTo:''"></md-datepicker>
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>{{'to' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyIncomeDateTo"
+                            ng-model="filters.dailyIncomeDateTo" md-min-date="filters.dailyIncomeDateFrom">
+                        </md-datepicker>
+                    </md-input-container>
+                    <div dynamic-flex ng-if="dailyIncomeBranchLkp" name="dailyIncomeBranchLOV">
+                        <lov form="dailyIncomeForm" options="dailyIncomeBranchLkp"
+                            select="dailyIncomeBranchLkp.selectedValue"></lov>
+                    </div>
+                </div>
+                <div layout="row layout-wrap flex">
+                    <md-input-container flex>
+                        <md-button type="submit" class="md-raised" ng-disabled="dailyIncomeForm.$invalid"
+                            authority-checker="VIEW_DAILY_INCOME_REPORT">
+                            {{'print' | translate}}
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+    </form>
+
+    <!--Daily Credit Payments Form-->
+    <form class="daily-credit-payment-form padding-10" name="dailyCreditPaymentForm"
+        ng-submit="generateDailyCreditPaymentReport()" dynamic-flex="100|100|50|50|50">
+        <md-card layout-fill class="daily-credit-payment">
+            <md-card-content>
+                <h2>{{'dailyCreditPaymentReport' | translate}}</h2>
+            </md-card-content>
+            <md-card-content>
+                <div layout="row" layout-wrap flex>
+                    <md-input-container dynamic-flex>
+                        <label>{{'from' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyCreditPaymentDateFrom"
+                            ng-model="filters.dailyCreditPaymentDateFrom"
+                            md-max-date="filters.dailyCreditPaymentDateTo?filters.dailyCreditPaymentDateTo:''">
+                        </md-datepicker>
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>{{'to' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="DailyCreditPaymentDateTo"
+                            ng-model="filters.dailyCreditPaymentDateTo"
+                            md-min-date="filters.dailyCreditPaymentDateFrom"></md-datepicker>
+                    </md-input-container>
+                    <div dynamic-flex ng-if="dailyCreditPaymentBranchLkp" name="dailyCreditPaymentBranchLOV">
+                        <lov form="dailyCreditPaymentForm" options="dailyCreditPaymentBranchLkp"
+                            select="dailyCreditPaymentBranchLkp.selectedValue">
+                        </lov>
+                    </div>
+                </div>
+                <div layout="row layout-wrap flex">
+                    <md-input-container flex>
+                        <md-button type="submit" class="md-raised" ng-disabled="dailyCreditPaymentForm.$invalid"
+                            authority-checker="VIEW_DAILY_CREDIT_PAYMENT_REPORT">
+                            {{'print' | translate}}
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+    </form>
+
+    <!--Claim Form-->
+    <form class="claim-report-form padding-10" name="claimForm" ng-submit="generateClaimReport()"
+        dynamic-flex="100|100|50|50|50">
+        <md-card layout-fill class="claim-report">
+            <md-card-content>
+                <h2>{{'claimReport' | translate}}</h2>
+            </md-card-content>
+            <md-card-content>
+                <div layout="row" layout-wrap flex>
+                    <md-input-container dynamic-flex>
+                        <label>{{'from' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="filters.ClaimDateFrom"
+                            ng-model="filters.claimDateFrom" md-max-date="filters.claimDateTo?filters.claimDateTo:''">
+                        </md-datepicker>
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>{{'to' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="filters.ClaimDateTo"
+                            ng-model="filters.claimDateTo" md-min-date="filters.claimDateFrom"></md-datepicker>
+                    </md-input-container>
+                    <div dynamic-flex name="insProviderLOV">
+                        <lov form="claimForm" ng-if="providerLkp != null" options="providerLkp"
+                            select="providerLkp.selectedValue"></lov>
+                    </div>
+                    <div dynamic-flex ng-if="claimBranchLkp" name="claimBranchLOV">
+                        <lov form="claimForm" options="claimBranchLkp" select="claimBranchLkp.selectedValue"></lov>
+                    </div>
+                    <md-input-container dynamic-flex>
+                        <md-radio-group name="isReportSummarized" ng-model="isReportSummarized" layout="row"
+                            ng-required="true">
+                            <md-radio-button ng-value="true" class="md-primary"> {{'summarized' | translate}}
+                            </md-radio-button>
+                            <md-radio-button ng-value="false"> {{'detailed' | translate}} </md-radio-button>
+                        </md-radio-group>
+                    </md-input-container>
+                </div>
+                <div layout="row layout-wrap flex">
+                    <md-input-container flex>
+                        <md-button type="submit" class="md-raised" ng-disabled="claimForm.$invalid"
+                            authority-checker="VIEW_CLAIM_REPORT">
+                            {{'print' | translate}}
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+    </form>
+
+    <!--Referral-Out Form-->
+    <form class="referral-out-form padding-10" name="referralOutForm" ng-submit="generateReferralOutReport()"
+        dynamic-flex="100|100|50|50|50">
+        <md-card layout-fill class="referral-out">
+            <md-card-content>
+                <h2>{{'referralOutReport' | translate}}</h2>
+            </md-card-content>
+            <md-card-content>
+                <div layout="row" layout-wrap flex>
+                    <md-input-container dynamic-flex>
+                        <label>{{'from' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="filters.referralOutDateFrom"
+                            ng-model="filters.referralOutDateFrom"
+                            md-max-date="filters.referralOutDateTo?filters.referralOutDateTo:''"></md-datepicker>
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>{{'to' | translate}}</label>
+                        <md-datepicker ng-required="true" date-mask name="filters.referralOutDateTo"
+                            ng-model="filters.referralOutDateTo" md-min-date="filters.referralOutDateFrom">
+                        </md-datepicker>
+                    </md-input-container>
+                    <div dynamic-flex name="testDestinationLkpLOV">
+                        <lov form="referralOutForm" ng-if="testDestinationLkp != null" options="testDestinationLkp"
+                            select="testDestinationLkp.selectedValue"></lov>
+                    </div>
+                    <div dynamic-flex name="referralProviderLkpLOV">
+                        <lov form="referralOutForm" ng-if="referralProviderLkp != null" options="referralProviderLkp"
+                            ng-show="testDestinationLkp.selectedValue != null"
+                            select="referralProviderLkp.selectedValue" parent="testDestinationLkp.selectedValue"></lov>
+                    </div>
+                </div>
+                <div layout="row layout-wrap flex">
+                    <md-input-container flex>
+                        <md-button type="submit" class="md-raised" ng-disabled="referralOutForm.$invalid"
+                            authority-checker="VIEW_REFERRAL_OUT_REPORT">
+                            {{'print' | translate}}
+                        </md-button>
+                    </md-input-container>
+                </div>
+            </md-card-content>
+        </md-card>
+    </form>
+</div>

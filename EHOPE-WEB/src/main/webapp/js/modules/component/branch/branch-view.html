@@ -1,0 +1,41 @@
+<md-content flex class="branch-wrapper">
+    <div ng-show="mainTemplate" flex layout="column">
+        <md-toolbar class="short-toolbar">
+            <div class="md-toolbar-tools">
+                <div layout="row" flex>
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" type="button"
+                        ng-click="createMode()" authority-checker="ADD_BRANCH">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button type="button" aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                        ng-click="updateMode()" ng-disabled="branch==null" authority-checker="UPD_BRANCH">
+                        <md-tooltip md-direction="top">{{'edit' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'activate' | translate}}" class="md-fab md-mini" type="button"
+                        ng-click="activateBranch()" http-disable-click authority-checker="ACTIVATE_BRANCH"
+                        ng-disabled="branch==null || branch.isActive">
+                        <md-tooltip md-direction="top">{{'activate' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-check"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'deactivate' | translate}}" class="md-fab md-mini" type="button"
+                        ng-click="deactivateBranch()" http-disable-click authority-checker="DEACTIVATE_BRANCH"
+                        ng-disabled="branch==null || !branch.isActive">
+                        <md-tooltip md-direction="top">{{'deactivate' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-times"></md-icon>
+                    </md-button>
+                </div>
+                <div layout="row">
+                    <md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+                        ng-click="refreshGrid()" type="button" authority-checker="VIEW_BRANCH">
+                        <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-sync"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="branchGrid" id="branchGrid" class="k-widget k-grid" options="branchGridOptions"></div>
+    </div>
+    <div ng-hide="mainTemplate" ng-include="editBranchTemplate" flex></div>
+</md-content>

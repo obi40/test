@@ -1,0 +1,525 @@
+<!-- continue applying dynamic-flex -->
+<div layout="column" flex class="edit-test-definition">
+    <!-- <form name="forms.testDefinitionForm" novalidate ng-submit="submitForm(testDefinitionForm.$valid)"> -->
+    <md-content>
+        <div layout="column">
+            <div>
+                <md-card md-whiteframe="3">
+                    <md-card-title>
+                        <md-card-title-text layout="column" layout-align="center center">
+                            <h2 class="md-display-1 no-margin-bottom">
+                                {{viewMode == 'add' ? ('newTestDefinition' | translate) :
+                                selectedTestDefinition.standardCode }}
+                            </h2>
+                            <h3>
+                                {{viewMode == 'add' ? '' : selectedTestDefinition.description }}
+                            </h3>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content layout="column" flex>
+                        <wizard indicators-position="top">
+                            <wz-step wz-order="1" wz-title="{{ 'overview' | translate }}"
+                                description="testDefinitionOverviewForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="end center">
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionOverviewForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionOverviewForm" novalidate layout="row" flex layout-wrap>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'standardCode' | translate }}</label>
+                                        <input type="text" name="standardCode"
+                                            ng-model="selectedTestDefinition.standardCode"
+                                            ng-required="testDefinitionMetaData.standardCode.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.standardCode.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'description' | translate }}</label>
+                                        <textarea md-detect-hidden name="description"
+                                            ng-model="selectedTestDefinition.description"
+                                            ng-required="testDefinitionMetaData.description.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.description.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'secondaryCode' | translate }}</label>
+                                        <input type="text" name="secondaryCode"
+                                            ng-model="selectedTestDefinition.secondaryCode"
+                                            ng-required="testDefinitionMetaData.secondaryCode.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.secondaryCode.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'usefulFor' | translate }}</label>
+                                        <textarea md-detect-hidden name="usefulFor"
+                                            ng-model="selectedTestDefinition.usefulFor"
+                                            ng-required="testDefinitionMetaData.usefulFor.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.usefulFor.$error" />
+                                    </md-input-container>
+                                    <lov dynamic-flex form="forms.testDefinitionOverviewForm" options="lkpTestingMethod"
+                                        select="lkpTestingMethod.selectedValue"></lov>
+                                    <lov ng-if="section.data.length > 0" dynamic-flex
+                                        form="forms.testDefinitionOverviewForm" options="section"
+                                        select="section.selectedValue"></lov>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'reportingDescription' | translate }}</label>
+                                        <textarea md-detect-hidden name="reportingDescription"
+                                            ng-model="selectedTestDefinition.reportingDescription"
+                                            ng-required="testDefinitionMetaData.reportingDescription.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.reportingDescription.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'aliases' | translate }}</label>
+                                        <textarea md-detect-hidden name="aliases"
+                                            ng-model="selectedTestDefinition.aliases"
+                                            ng-required="testDefinitionMetaData.aliases.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.aliases.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'additionalTestingRequirements' | translate }}</label>
+                                        <textarea md-detect-hidden name="additionalTestingRequirements"
+                                            ng-model="selectedTestDefinition.additionalTestingRequirements"
+                                            ng-required="testDefinitionMetaData.additionalTestingRequirements.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.additionalTestingRequirements.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'geneticsTestInformation' | translate }}</label>
+                                        <textarea md-detect-hidden name="geneticsTestInformation"
+                                            ng-model="selectedforms.TestDefinition.geneticsTestInformation"
+                                            ng-required="testDefinitionMetaData.geneticsTestInformation.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOverviewForm.geneticsTestInformation.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'ranking' | translate }}</label>
+                                        <input type="number" name="rank" ng-model="selectedTestDefinition.rank"
+                                            ng-required="testDefinitionMetaData.rank.notNull" ng-pattern="patternNum" />
+                                        <input-messages input-errors="forms.testDefinitionOverviewForm.rank.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <md-switch md-invert ng-model="selectedTestDefinition.isPanel"
+                                            aria-label="{{ 'panel' | translate }}">
+                                            {{ 'panel' | translate }}: {{ selectedTestDefinition.isPanel ? 'yes' : 'no'
+                                            | translate }}
+                                        </md-switch>
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <md-switch md-invert ng-model="selectedTestDefinition.orderableSeparately"
+                                            aria-label="{{ 'orderableSeparately' | translate }}">
+                                            {{ 'orderableSeparately' | translate }}: {{
+                                            selectedTestDefinition.orderableSeparately ? 'yes' : 'no' | translate }}
+                                        </md-switch>
+                                    </md-input-container>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="2" wz-disabled="{{!selectedTestDefinition.isPanel}}"
+                                wz-title="{{ 'components' | translate }}" description="testDefinitionComponentForm"
+                                canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionComponentForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionComponentForm" novalidate>
+                                    <autocomplete-search dynamic-flex="100|50|50|25|25"
+                                        options="componentSearchOptions"></autocomplete-search>
+                                    <md-chips ng-model="tempComponents" class="auto-height-chips" readonly="true"
+                                        md-removable="true" md-on-remove="removeChip($chip, 'componentGrid')">
+                                        <md-chip-template>
+                                            <md-tooltip md-direction="top">{{$chip.description}}</md-tooltip>
+                                            <span class="bold">{{$chip.standardCode}}</span>
+                                            </br>
+                                            <md-switch class="inline-flex" md-invert ng-model="$chip.alwaysPerformed"
+                                                aria-label="always performed">
+                                                {{ 'alwaysPerformed' | translate }}: {{ $chip.alwaysPerformed ? 'yes' :
+                                                'no' | translate }}
+                                            </md-switch>
+                                        </md-chip-template>
+                                    </md-chips>
+                                    <div kendo-grid="componentGrid" id="componentGrid" class="k-widget k-grid"
+                                        options="componentGridOptions"></div>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="3" wz-title="{{ 'reflexTests' | translate }}"
+                                description="testDefinitionReflexTestForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionReflexTestForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionReflexTestForm" novalidate>
+                                    <autocomplete-search dynamic-flex="100|50|50|25|25"
+                                        options="reflexTestSearchOptions"></autocomplete-search>
+                                    <md-chips ng-model="tempReflexTests" class="auto-height-chips" readonly="true"
+                                        md-removable="true" md-on-remove="removeChip($chip, 'reflexTestGrid')">
+                                        <md-chip-template>
+                                            <md-tooltip md-direction="top">{{$chip.description}}</md-tooltip>
+                                            <span class="bold">{{$chip.standardCode}}</span>
+                                            </br>
+                                            <md-switch class="inline-flex" md-invert ng-model="$chip.alwaysPerformed"
+                                                aria-label="always performed">
+                                                {{ 'alwaysPerformed' | translate }}: {{ $chip.alwaysPerformed ? 'yes' :
+                                                'no' | translate }}
+                                            </md-switch>
+                                        </md-chip-template>
+                                    </md-chips>
+                                    <div kendo-grid="reflexTestGrid" id="reflexTestGrid" class="k-widget k-grid"
+                                        options="reflexTestGridOptions"></div>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="4" wz-title="{{ 'specimen' | translate }}"
+                                description="testDefinitionSpecimenInfoForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionSpecimenInfoForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionSpecimenInfoForm" novalidate layout="column">
+                                    <fieldset ng-class="selectedTestDefinition.specimen === null ? 'no-border' : ''">
+                                        <legend>
+                                            {{'specimen' | translate}}
+                                            <md-button aria-label="{{ 'delete' | translate }}"
+                                                class="md-fab md-mini md-accent" ng-click="deleteSpecimen()"
+                                                ng-show="selectedTestDefinition.specimen !== null">
+                                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                                <md-tooltip md-direction="top">{{ 'delete' | translate }}</md-tooltip>
+                                            </md-button>
+                                            <md-button aria-label="{{ 'create' | translate }}"
+                                                class="md-fab md-mini md-accent" ng-click="addSpecimen()"
+                                                ng-show="selectedTestDefinition.specimen === null">
+                                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                                                <md-tooltip md-direction="top">{{ 'create' | translate }}</md-tooltip>
+                                            </md-button>
+                                        </legend>
+                                        <md-content class="hidden-overflow-x" layout="row" flex layout-wrap>
+                                            <lov dynamic-flex="100|100|50|25|25"
+                                                form="forms.testDefinitionSpecimenInfoForm"
+                                                ng-show="selectedTestDefinition.specimen !== null"
+                                                options="lkpSpecimenType" select="lkpSpecimenType.selectedValue"></lov>
+                                            <lov dynamic-flex="100|100|50|25|25"
+                                                form="forms.testDefinitionSpecimenInfoForm"
+                                                ng-show="selectedTestDefinition.specimen !== null"
+                                                options="lkpSpecimenTemperature"
+                                                select="lkpSpecimenTemperature.selectedValue"></lov>
+                                            <md-input-container dynamic-flex="100|100|50|25|25"
+                                                ng-show="selectedTestDefinition.specimen !== null">
+                                                <label> {{ 'stability' | translate }}</label>
+                                                <input type="number" name="specimenStabilityDigit"
+                                                    ng-model="selectedTestDefinition.specimen.stabilityDigit"
+                                                    ng-required="testDefinitionMetaData.specimen.notNull"
+                                                    ng-pattern="patternNum" />
+                                                <input-messages
+                                                    input-errors="forms.testDefinitionSpecimenInfoForm.specimen.$error" />
+                                            </md-input-container>
+                                            <lov dynamic-flex="100|100|50|25|25"
+                                                form="forms.testDefinitionSpecimenInfoForm"
+                                                ng-show="selectedTestDefinition.specimen !== null"
+                                                options="lkpSpecimenStabilityUnit"
+                                                select="lkpSpecimenStabilityUnit.selectedValue"></lov>
+                                        </md-content>
+                                    </fieldset>
+                                    <md-content flex layout="row" layout-wrap class="hidden-overflow-x">
+                                        <lov dynamic-flex form="forms.testDefinitionSpecimenInfoForm"
+                                            options="lkpContainerType" select="lkpContainerType.selectedValue"></lov>
+                                    </md-content>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="5" wz-title="{{ 'clinicalAndInterpretive' | translate }}"
+                                description="testDefinitionClinicalAndInterpretiveForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit"
+                                        ng-disabled="forms.testDefinitionClinicalAndInterpretiveForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionClinicalAndInterpretiveForm" novalidate flex layout-wrap
+                                    layout="row">
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'clinicalInformation' | translate }}</label>
+                                        <textarea md-detect-hidden name="clinicalInformation"
+                                            ng-model="selectedforms.TestDefinition.clinicalInformation"
+                                            ng-required="testDefinitionMetaData.clinicalInformation.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.clinicalInformation.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'normalRangeText' | translate }}</label>
+                                        <textarea md-detect-hidden name="normalRangeText"
+                                            ng-model="selectedTestDefinition.normalRangeText"
+                                            ng-required="testDefinitionMetaData.normalRangeText.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.normalRangeText.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'interpretation' | translate }}</label>
+                                        <textarea md-detect-hidden md-detect-hidden name="interpretation"
+                                            ng-model="selectedTestDefinition.interpretation"
+                                            ng-required="testDefinitionMetaData.interpretation.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.interpretation.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'cautions' | translate }}</label>
+                                        <textarea md-detect-hidden name="cautions"
+                                            ng-model="selectedTestDefinition.cautions"
+                                            ng-required="testDefinitionMetaData.cautions.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.cautions.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'supportiveData' | translate }}</label>
+                                        <textarea md-detect-hidden name="supportiveData"
+                                            ng-model="selectedTestDefinition.supportiveData"
+                                            ng-required="testDefinitionMetaData.supportiveData.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.supportiveData.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'clinicalReference' | translate }}</label>
+                                        <textarea md-detect-hidden name="clinicalReference"
+                                            ng-model="selectedTestDefinition.clinicalReference"
+                                            ng-required="testDefinitionMetaData.clinicalReference.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.clinicalReference.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'advisoryInformation' | translate }}</label>
+                                        <textarea md-detect-hidden name="advisoryInformation"
+                                            ng-model="selectedforms.TestDefinition.advisoryInformation"
+                                            ng-required="testDefinitionMetaData.advisoryInformation.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.advisoryInformation.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'necessaryInformation' | translate }}</label>
+                                        <textarea md-detect-hidden name="necessaryInformation"
+                                            ng-model="selectedforms.TestDefinition.necessaryInformation"
+                                            ng-required="testDefinitionMetaData.necessaryInformation.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.necessaryInformation.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'urinePreservativeCollectionOptions' | translate }}</label>
+                                        <textarea md-detect-hidden name="urinePreservativeCollectionOptions"
+                                            ng-model="selectedTestDefinition.urinePreservativeCollectionOptions"
+                                            ng-required="testDefinitionMetaData.urinePreservativeCollectionOptions.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionClinicalAndInterpretiveForm.urinePreservativeCollectionOptions.$error" />
+                                    </md-input-container>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="6" wz-title="{{ 'performance' | translate }}"
+                                description="testDefinitionPerformanceForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionPerformanceForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionPerformanceForm" novalidate layout="row" flex
+                                    layout-wrap>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'daysTimesPerformed' | translate }}</label>
+                                        <textarea md-detect-hidden name="daysTimesPerformed"
+                                            ng-model="selectedforms.TestDefinition.daysTimesPerformed"
+                                            ng-required="testDefinitionMetaData.daysTimesPerformed.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionPerformanceForm.daysTimesPerformed.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'analyticTime' | translate }}</label>
+                                        <input type="text" name="analyticTime"
+                                            ng-model="selectedTestDefinition.analyticTime"
+                                            ng-required="testDefinitionMetaData.analyticTime.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionPerformanceForm.analyticTime.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'maximumLabTime' | translate }}</label>
+                                        <textarea md-detect-hidden name="maximumLabTime"
+                                            ng-model="selectedTestDefinition.maximumLabTime"
+                                            ng-required="testDefinitionMetaData.maximumLabTime.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionPerformanceForm.maximumLabTime.$error" />
+                                    </md-input-container>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="7" wz-title="{{ 'feesAndCoding' | translate }}"
+                                description="testDefinitionFeesAndCodingForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit"
+                                        ng-disabled="forms.testDefinitionFeesAndCodingForm.$invalid" class="md-raised"
+                                        wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionFeesAndCodingForm" novalidate layout="row" flex
+                                    layout-wrap>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'cptCode' | translate }}</label>
+                                        <input type="text" name="cptCode" ng-model="selectedTestDefinition.cptCode"
+                                            ng-required="testDefinitionMetaData.cptCode.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionFeesAndCodingForm.cptCode.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'cptUnits' | translate }}</label>
+                                        <input type="text" name="cptUnits" ng-model="selectedTestDefinition.cptUnits"
+                                            ng-required="testDefinitionMetaData.cptUnits.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionFeesAndCodingForm.cptUnits.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'loincCode' | translate }}</label>
+                                        <input type="text" name="loincCode" ng-model="selectedTestDefinition.loincCode"
+                                            ng-required="testDefinitionMetaData.loincCode.notNull" />
+                                        <input-messages
+                                            input-errors="forms.testDefinitionFeesAndCodingForm.loincCode.$error" />
+                                    </md-input-container>
+                                    <!-- <lov dynamic-flex form="forms.testDefinitionFeesAndCodingForm" options="loincAttributes" select="loincAttributes.selectedValue"></lov> -->
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="8" wz-title="{{ 'other' | translate }}"
+                                description="testDefinitionOtherForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionOtherForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionOtherForm" novalidate layout="row" flex layout-wrap>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'shippingInstructions' | translate }}</label>
+                                        <textarea md-detect-hidden name="shippingInstructions"
+                                            ng-model="selectedTestDefinition.shippingInstructions"
+                                            ng-required="testDefinitionMetaData.shippingInstructions.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOtherForm.shippingInstructions.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'specialInstructions' | translate }}</label>
+                                        <textarea md-detect-hidden name="specialInstructions"
+                                            ng-model="selectedTestDefinition.specialInstructions"
+                                            ng-required="testDefinitionMetaData.specialInstructions.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOtherForm.specialInstructions.$error" />
+                                    </md-input-container>
+                                    <md-input-container dynamic-flex>
+                                        <label> {{ 'testingAlgorithm' | translate }}</label>
+                                        <textarea md-detect-hidden name="testingAlgorithm"
+                                            ng-model="selectedTestDefinition.testingAlgorithm"
+                                            ng-required="testDefinitionMetaData.testingAlgorithm.notNull"></textarea>
+                                        <input-messages
+                                            input-errors="forms.testDefinitionOtherForm.testingAlgorithm.$error" />
+                                    </md-input-container>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="9" wz-title="{{ 'questions' | translate }}"
+                                description="testDefinitionQuestionForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionQuestionForm.$invalid"
+                                        class="md-raised" wz-next>{{'next' | translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionQuestionForm" novalidate>
+                                    <md-toolbar class="short-toolbar">
+                                        <div class="md-toolbar-tools">
+                                            <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                                                ng-click="addTestQuestion()" type="button">
+                                                <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                                            </md-button>
+                                            <md-button aria-label="Edit" class="md-fab md-mini md-accent"
+                                                ng-disabled="selectedTestQuestion == null"
+                                                ng-click="editTestQuestion(selectedTestQuestion)">
+                                                <md-icon md-font-icon="fas fa-edit"></md-icon>
+                                                <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                                            </md-button>
+                                            <md-button aria-label="Save" class="md-fab md-mini md-accent"
+                                                ng-disabled="!testQuestionsChanged"
+                                                ng-click="saveTestQuestionChanges()">
+                                                <md-icon md-font-icon="fas fa-save"></md-icon>
+                                                <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                                            </md-button>
+                                            <md-button aria-label="Delete" class="md-fab md-mini md-accent"
+                                                ng-disabled="selectedTestQuestion == null"
+                                                confirm-click="deleteTestQuestion">
+                                                <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                                <md-tooltip md-direction="top">{{ 'delete' | translate }}</md-tooltip>
+                                            </md-button>
+                                        </div>
+                                    </md-toolbar>
+                                    <div kendo-grid="testQuestionGrid" id="testQuestionGrid" class="k-widget k-grid"
+                                        options="testQuestionGridOptions"></div>
+                                </form>
+                            </wz-step>
+                            <wz-step wz-order="10" wz-title="{{ 'results' | translate }}"
+                                description="testDefinitionResultForm" canexit="exitValidation">
+                                <br>
+                                <div flex="100" layout="row" layout-align="space-between center">
+                                    <md-button class="md-raised" wz-previous>{{'previous' | translate}}</md-button>
+                                    <md-button type="submit" ng-disabled="forms.testDefinitionResultForm.$invalid"
+                                        ng-click="submitForm()" class="md-raised md-primary" wz-finish>{{'submit' |
+                                        translate}}</md-button>
+                                </div>
+                                <form name="forms.testDefinitionResultForm" novalidate>
+                                    <test-result-setup options="resultSetupOptions"></test-result-setup>
+                                </form>
+                                <!-- <form name="forms.testDefinitionResultForm" novalidate>
+                                    <fieldset ng-hide="selectedTestResult === null || testResultsChanged">
+                                        <legend>{{'normalRanges' | translate}}</legend>
+                                        <div>
+                                            <md-toolbar class="short-toolbar">
+                                                <div class="md-toolbar-tools">
+                                                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="addNormalRange()" type="button">
+                                                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                                                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                                                    </md-button>
+                                                    <md-button aria-label="{{'edit' | translate}}" class="md-fab md-mini" ng-disabled="selectedNormalRange == null" ng-click="editNormalRange(selectedNormalRange)">
+                                                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                                                        <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                                                    </md-button>
+                                                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini" ng-disabled="!normalRangeChanged" ng-click="saveNormalRangeChanges()">
+                                                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                                                        <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                                                    </md-button>
+                                                    <md-button aria-label="{{'cancel' | translate}}" class="md-fab md-mini" ng-disabled="!normalRangeChanged" ng-click="cancelNormalRangeChanges()">
+                                                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                                                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                                                    </md-button>
+                                                    <md-button aria-label="{{'delete' | translate}}" class="md-fab md-mini" ng-disabled="selectedNormalRange === null" confirm-click="deleteNormalRange">
+                                                        <md-icon md-font-icon="fas fa-trash"></md-icon>
+                                                        <md-tooltip md-direction="top">{{ 'delete' | translate }}</md-tooltip>
+                                                    </md-button>
+                                                </div>
+                                            </md-toolbar>
+                                            <div kendo-grid="normalRangeGrid" id="normalRangeGrid" class="k-widget k-grid" options="normalRangeGridOptions"></div>
+                                        </div>
+                                    </fieldset>
+                                </form> -->
+                            </wz-step>
+                        </wizard>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        <div layout="row" flex>
+            <md-button class="md-primary md-raised" type="button" ng-click="setView('viewAll')">
+                <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+            </md-button>
+            <md-button class="md-primary md-raised" type="button" ng-click="clearForm()">
+                {{'reset' | translate}}
+            </md-button>
+        </div>
+    </md-content>
+</div>

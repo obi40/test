@@ -1,0 +1,113 @@
+<md-card md-whiteframe="3">
+    <md-card-content layout="column" flex>
+        <div>
+            <md-toolbar class="short-toolbar">
+                <div class="md-toolbar-tools">
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                        authority-checker="ADD_BILL_MASTER_ITEM" ng-click="addBillMasterItem()" type="button">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                    <md-button aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                        authority-checker="UPD_BILL_MASTER_ITEM"
+                        ng-disabled="selectedBillMasterItem == null || !selectedBillMasterItemIsActive"
+                        ng-click="editBillMasterItem(selectedBillMasterItem)">
+                        <md-icon md-font-icon="fas fa-edit"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini md-accent" http-disable-click
+                        ng-disabled="!billMasterItemsChanged" ng-click="saveBillMasterItemChanges($event)">
+                        <md-icon md-font-icon="fas fa-save"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                        ng-disabled="!billMasterItemsChanged" ng-click="cancelBillMasterItemChanges()">
+                        <md-icon md-font-icon="fas fa-undo"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="{{ 'activate' | translate }}" class="md-fab md-mini"
+                        authority-checker="ACTIVATE_BILL_MASTER_ITEM"
+                        ng-disabled="selectedBillMasterItem == null || selectedBillMasterItemIsActive"
+                        confirm-click="activateBillMasterItem">
+                        <md-icon md-font-icon="fas fa-check"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'activate' | translate }}</md-tooltip>
+                    </md-button>
+                    <md-button aria-label="{{ 'deactivate' | translate }}" class="md-fab md-mini"
+                        authority-checker="DEACTIVATE_BILL_MASTER_ITEM"
+                        ng-disabled="selectedBillMasterItem == null || selectedBillMasterItem.rid == undefined || !selectedBillMasterItemIsActive"
+                        confirm-click="deactivateBillMasterItem">
+                        <md-icon md-font-icon="fas fa-times"></md-icon>
+                        <md-tooltip md-direction="top">{{ 'deactivate' | translate }}</md-tooltip>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div kendo-grid="billMasterItemsGrid" id="billMasterItemsGrid" class="k-widget k-grid"
+                options="billMasterItemsGridOptions"></div>
+        </div>
+        <br>
+        <fieldset ng-show="selectedBillMasterItem.type.code === 'TEST' && selectedBillMasterItem.rid !== undefined">
+            <legend>
+                {{ 'tests' | translate }}
+                <md-button aria-label="{{ 'save' | translate }}" class="md-fab md-mini"
+                    authority-checker="UPD_BILL_MASTER_ITEM" ng-click="saveBillTestItems()">
+                    <md-icon md-font-icon="fas fa-save"></md-icon>
+                    <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                </md-button>
+            </legend>
+            <chips-wrapper options="billTestItemsChipsOptions" />
+            <autocomplete-search dynamic-flex="100|100|50|33|25" options="testSearchOptions"></autocomplete-search>
+            <div kendo-grid="billTestItemsGrid" id="billTestItemsGrid" class="k-widget k-grid"
+                options="billTestItemsGridOptions"></div>
+        </fieldset>
+        <br>
+        <fieldset ng-show="selectedBillMasterItem.rid !== undefined">
+            <legend>
+                {{ 'billPricing' | translate }}
+            </legend>
+            <div>
+                <md-toolbar class="short-toolbar" flex>
+                    <div class="md-toolbar-tools">
+                        <div layout="row" flex>
+                            <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini"
+                                authority-checker="ADD_BILL_PRICING" ng-click="addBillPricing()" type="button">
+                                <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                            </md-button>
+                            <md-button aria-label="{{'edit' | translate}}" class="md-fab md-mini"
+                                authority-checker="ADD_BILL_PRICING" ng-disabled="selectedBillPricing == null"
+                                ng-click="editBillPricing(selectedBillPricing)">
+                                <md-icon md-font-icon="fas fa-edit"></md-icon>
+                                <md-tooltip md-direction="top">{{ 'edit' | translate }}</md-tooltip>
+                            </md-button>
+                            <md-button aria-label="{{'save' | translate}}" class="md-fab md-mini"
+                                ng-disabled="!billPricingsChanged" ng-click="saveBillPricingChanges()"
+                                http-disable-click>
+                                <md-icon md-font-icon="fas fa-save"></md-icon>
+                                <md-tooltip md-direction="top">{{ 'save' | translate }}</md-tooltip>
+                            </md-button>
+                            <md-button aria-label="{{ 'cancel' | translate }}" class="md-fab md-mini"
+                                ng-disabled="!billPricingsChanged" ng-click="cancelBillPricingChanges()">
+                                <md-icon md-font-icon="fas fa-undo"></md-icon>
+                                <md-tooltip md-direction="top">{{ 'cancel' | translate }}</md-tooltip>
+                            </md-button>
+                        </div>
+                        <div layout="row">
+                            <md-button aria-label="{{'create' | translate}} {{ 'priceList' | translate }}"
+                                class="md-fab md-mini" ng-click="showBillPriceListDialog()" type="button">
+                                <md-tooltip md-direction="top">{{ 'create' | translate }} {{ 'priceList' | translate }}
+                                </md-tooltip>
+                                <md-icon md-font-icon="fas fa-plus"></md-icon>
+                            </md-button>
+                        </div>
+                    </div>
+                </md-toolbar>
+                <div kendo-grid="billPricingsGrid" id="billPricingsGrid" class="k-widget k-grid"
+                    options="billPricingsGridOptions"></div>
+            </div>
+        </fieldset>
+    </md-card-content>
+</md-card>
+<md-button class="md-primary md-raised" type="button" ng-click="setView('billingClassification')">
+    <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+    <md-tooltip md-direction="top">{{ 'back' | translate }}</md-tooltip>
+</md-button>

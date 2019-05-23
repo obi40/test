@@ -1,0 +1,191 @@
+.nav-menu {
+    max-width: 50px;
+    width: 50px;
+    min-width: 50px;
+    overflow: visible;
+    background-color: $sidenav-background !important;
+    min-height: 100%;
+    md-icon {
+        color: $sidenav-icons;
+    }
+    md-list-item .md-list-item-inner:before,
+    md-list-item:before {
+        display: none !important;
+    }
+    .list {
+        padding: 0;
+        .item {
+            padding: 0;
+            height: 50px;
+            cursor: pointer;
+            border-#{$direction}: 3px solid transparent;
+            padding-#{$opposite-direction}: 3px;
+            &:hover {
+                border-color: $primary-theme-color;
+                .sub-list {
+                    display: block;
+                    .sub-item {
+                        margin-#{$opposite-direction}: 0;
+                    }
+                }
+                .icon {
+                    color: $primary-theme-white-color;
+                }
+                .label {
+                    color: $primary-theme-white-color;
+                }
+                .item-info {
+                    display: block !important;
+                }
+            }
+            .item-info {
+                line-height: 50px;
+            }
+            .icon {
+                text-align: center;
+                width: 100%;
+            }
+            .link {
+                width: 100%;
+                height: 100%;
+                line-height: 50px;
+                text-decoration: none;
+                display: block;
+            }
+            .label {
+                margin: 0px !important;
+                text-align: $direction;
+                display: inline;
+                text-transform: capitalize;
+                color: $sidenav-icons;
+                font-size: 0.85em;
+                font-weight: bold;
+                outline: none;
+            }
+        }
+        .sub-list {
+            display: none;
+            position: absolute;
+            top: 0;
+            #{$direction}: 47px;
+            background-color: $sidenav-background;
+            min-width: 250px;
+            border-top-#{$opposite-direction}-radius: 5px;
+            border-bottom-#{$opposite-direction}-radius: 5px;
+            padding: 0;
+            .item-info {
+                padding-left: 5px;
+                padding-right: 5px;
+                white-space: nowrap;
+            }
+        }
+        .sub-item {
+            padding-#{$direction}: 5px;
+            background-color: #304047;
+            border-bottom-#{$opposite-direction}-radius: 5px;
+            .icon {
+                width: 1.6em;
+            }
+        }
+    } // .expand-cover {
+    //     content: " ";
+    //     position: absolute;
+    //     bottom: 0;
+    //     height: calc(100% - 150px);
+    //     width: 100%;
+    //     background: $sidenav-background;
+    //     pointer-events: all;
+    // }
+    // .expand-nav {
+    //     position: absolute;
+    //     top: 175px;
+    //     z-index: 1;
+    //     text-align: center;
+    //     width: 100%;
+    //     md-icon {
+    //         line-height: 24px;
+    //         background-color: $sidenav-background;
+    //         border: 3px solid $sidenav-icons;
+    //         border-radius: 5px;
+    //         outline: none;
+    //     }
+    // }
+    // .shrink-nav {
+    //     position: relative !important;
+    //     top: 0 !important;
+    // }
+    .collapse-list-icon {
+        text-align: center;
+        outline: none;
+        position: absolute;
+        #{$opposite-direction}: 12px;
+        top: 0;
+        font-size: 0.75em;
+        md-icon {
+            padding: 0px !important;
+            color: $sidenav-icons !important;
+            -webkit-transition: all 0.2s linear;
+            -moz-transition: all 0.2s linear;
+            -ms-transition: all 0.2s linear;
+            -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+        }
+    }
+    .sub-list-toggled.ng-hide-remove {
+        opacity: 0;
+        -webkit-transition: opacity 1s ease;
+        -moz-transition: opacity 1s ease;
+        -ms-transition: opacity 1s ease;
+        -o-transition: opacity 1s ease;
+        transition: opacity 1s ease;
+    }
+    .sub-list-toggled.ng-hide-remove-active {
+        opacity: 1;
+    }
+    .toggle-icon {
+        -webkit-transform: rotate(-180deg);
+        -moz-transform: rotate(-180deg);
+        -ms-transform: rotate(-180deg);
+        -o-transform: rotate(-180deg);
+        transform: rotate(-180deg);
+    }
+}
+
+.nav-menu-toggled {
+    max-width: 253px !important;
+    width: 253px !important;
+    min-width: 253px !important;
+    .list {
+        .item {
+            padding-#{$opposite-direction}: 0;
+        }
+    }
+    .icon {
+        width: 1.6em !important;
+    }
+    .sub-list-toggled {
+        padding: 0;
+        width: 100%;
+        .sub-item {
+            margin-#{$direction}: -3px;
+        }
+    }
+    .item-height {
+        height: auto !important;
+    }
+    .non-link {
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+    }
+    .toggled-menu {
+        width: 100%;
+    }
+    .link:focus,
+    .non-link:focus {
+        outline: none;
+        div {
+            text-decoration: underline;
+        }
+    }
+}

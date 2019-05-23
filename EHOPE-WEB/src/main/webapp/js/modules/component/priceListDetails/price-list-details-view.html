@@ -1,0 +1,18 @@
+<md-content flex class="price-list-details-wrapper">
+    <autocomplete-search dynamic-flex="100|50|50|25|25" options="testDefinitionSearchOptions"></autocomplete-search>
+    <md-toolbar class="short-toolbar">
+        <div class="md-toolbar-tools">
+            <div layout="row" flex>
+            </div>
+            <div layout="row">
+                <md-button aria-label="{{ 'refresh' | translate}}" class="md-fab md-mini" http-disable-click ng-click="refreshGrid()"
+                    type="button">
+                    <md-tooltip md-direction="top">{{'refresh' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-sync"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+    <div ng-if="masterItemGridOptions!=null" kendo-grid="masterItemGrid" id="masterItemGrid" class="k-widget k-grid"
+        options="masterItemGridOptions"></div>
+</md-content>

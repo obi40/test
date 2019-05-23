@@ -1,0 +1,24 @@
+<md-content>
+    <md-card md-whiteframe="3">
+        <md-card-title>
+            <md-card-title-text layout="column" layout-align="center center">
+                <h2 class="md-display-1">{{branch!=null?branch.name[userLocale]:''}}</h2>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content flex>
+            <branch-form options="branchFormOptions" branch="$parent.branch"></branch-form>
+        </md-card-content>
+    </md-card>
+    <div layout="row" layout-wrap flex>
+        <md-button class="md-primary md-raised" type="button" ng-click="back()">
+            <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+        </md-button>
+        <md-button class="md-primary md-raised" type="button" ng-click="clearForm()">
+            {{'clear' | translate}}
+        </md-button>
+        <md-button class="md-primary md-raised" type="button" ng-click="submitBranch()"
+            ng-disabled="branchFormOptions.form.$invalid">
+            {{'save' | translate}}
+        </md-button>
+    </div>
+</md-content>

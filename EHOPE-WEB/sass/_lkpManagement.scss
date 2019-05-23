@@ -1,0 +1,58 @@
+.lkp-management-wrapper {
+    height: calc(100vh - 124px);
+
+    .side-list-container {
+        md-input-container {
+            margin-bottom: 0px !important;
+        }
+
+        .side-list {
+            height: calc(100% - 61px);
+            overflow-y: auto;
+            padding-top: 0px;
+
+            md-list-item {
+                &.highlight {
+                    color: $primary-theme-white-color;
+                    font-weight: bold;
+                    background-color: $fab-focus-color;
+                }
+
+                .md-button {
+                    height: 100%;
+                }
+
+                .md-list-item-inner div {
+                    // the text in the list
+                    font-size: 0.85em;
+                    font-weight: bold;
+                    width: 100%;
+                    color: $black;
+                }
+            }
+        }
+    }
+
+    .k-grid {
+        .k-grid-content {
+            max-height: calc(100vh - 235px);
+
+            td {
+                .color-display-block {
+                    height: 1.5em;
+                }
+            }
+        }
+    }
+
+}
+
+
+.lkp-management-wrapper-container-image {
+    text-align: center;
+
+    svg {
+        width: 50px;
+        height: 50px;
+    }
+}

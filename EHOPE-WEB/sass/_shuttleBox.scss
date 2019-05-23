@@ -1,0 +1,53 @@
+.shuttle-box-wrapper {
+    .shuttle-container {
+        md-icon {
+            outline: none;
+            text-align: center;
+            font-size: 1em;
+            line-height: 24px;
+        }
+        .shuttle {
+            height: 280px;
+            max-height: 280px;
+            md-list {
+                padding: 0 !important;
+            }
+            md-list-item {
+                padding: 0 !important;
+            }
+            md-checkbox {
+                margin: 0 !important;
+            }
+            .md-list-item-inner {
+                padding: 0 !important;
+            }
+            .label {
+                display: inline-block;
+                width: calc(100% - 65px);
+                outline: none;
+            }
+            .box-label {
+                text-align: center;
+            }
+            .parent {
+                outline: none;
+                &:hover {
+                    background: $hover-color;
+                }
+            }
+            div.bottom-rule {
+                margin: 5px 0 5px 0;
+            }
+            .dense-shuttle {
+                md-list-item {
+                    height: 25px;
+                    min-height: 25px;
+                    div.md-button {
+                        height: 25px;
+                        min-height: 25px;
+                    }
+                }
+            }
+        }
+    }
+}

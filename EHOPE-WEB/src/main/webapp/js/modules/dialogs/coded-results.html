@@ -1,0 +1,27 @@
+<md-dialog id="codedResults" aria-label="{{'codedResults' | translate}}">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{'codedResults' | translate}} ({{result.standardCode}}{{!result.standardCode ||
+                !result.description ? '' : '
+                - '}}{{result.description}})</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content" flex>
+            <chips-wrapper options="codedResultMappingOptions" />
+            <md-toolbar class="short-toolbar">
+                <div class="md-toolbar-tools">
+                    <md-button aria-label="{{'create' | translate}}" class="md-fab md-mini" ng-click="addCodedResult()"
+                        type="button">
+                        <md-tooltip md-direction="top">{{'create' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-plus"></md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div id="codedResultsGrid" kendo-grid="codedResultsGrid" options="codedResultsGridOptions"></div>
+        </div>
+    </md-dialog-content>
+</md-dialog>

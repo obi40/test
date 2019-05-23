@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html dir="{{direction}}">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <base href="/lis/" />
+    <style rel="stylesheet" type="text/css">
+        html {
+            overflow: hidden;
+        }
+
+        #loadingWebsiteContainer {
+            background: white;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 90;
+            overflow: hidden;
+        }
+
+        .tube-wrapper {
+            width: 100px;
+            height: 130px;
+            margin: auto;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+
+        .tube {
+            fill: #828386;
+        }
+
+        .liquid {
+            width: 38px;
+            height: 64px;
+            background-color: #87d6ed;
+            position: absolute;
+            bottom: 18px;
+            left: 31px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            overflow: hidden;
+        }
+
+        .liquid::before,
+        .liquid::after {
+            content: "";
+            width: 76px;
+            height: 76px;
+            background-color: white;
+            display: block;
+            position: absolute;
+            top: -105%;
+            left: -50%;
+        }
+
+        .liquid::before {
+            border-radius: 40%;
+            animation: waves 7s linear infinite;
+        }
+
+        .liquid::after {
+            border-radius: 45%;
+            animation: waves 5s linear infinite;
+        }
+
+        @keyframes waves {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .bubble-wrapper {
+            width: 38px;
+            height: 75px;
+            position: absolute;
+            left: 31px;
+            bottom: 73px;
+        }
+
+        .bubble {
+            border-radius: 50%;
+            background-color: #87d6ed;
+            position: absolute;
+        }
+
+        .bubble:nth-child(1) {
+            width: 5px;
+            height: 5px;
+            left: 8px;
+            animation: bubble 1s ease-in infinite;
+        }
+
+        .bubble:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            left: 15px;
+            animation: bubble 2s ease-in infinite;
+        }
+
+        .bubble:nth-child(3) {
+            width: 9px;
+            height: 9px;
+            left: 6px;
+            animation: bubble 1.5s ease-in infinite;
+        }
+
+        .bubble:nth-child(4) {
+            width: 9px;
+            height: 9px;
+            left: 22px;
+            animation: bubble 3s ease-in infinite;
+        }
+
+        .bubble:nth-child(5) {
+            width: 9px;
+            height: 9px;
+            left: 3px;
+            animation: bubble 2.5s ease-in infinite;
+        }
+
+        .bubble:nth-child(6) {
+            width: 5px;
+            height: 5px;
+            left: 20px;
+            animation: bubble 0.5s ease-in infinite;
+        }
+
+        .bubble:nth-child(7) {
+            width: 5px;
+            height: 5px;
+            left: 33px;
+            animation: bubble 1.2s ease-in infinite;
+        }
+
+        .bubble:nth-child(8) {
+            width: 6px;
+            height: 6px;
+            left: 7px;
+            animation: bubble 2.2s ease-in infinite;
+        }
+
+        .bubble:nth-child(9) {
+            width: 5px;
+            height: 5px;
+            left: 17px;
+            animation: bubble 1.7s ease-in infinite;
+        }
+
+        @keyframes bubble {
+            0% {
+                transform: translateY(75px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 0.2;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" type="text/css" ng-href="./libs/kendoui/styles/kendo.common-material.min.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./libs/kendoui/styles/kendo.ehope-lis.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./libs/kendoui/styles/kendo.rtl.min.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./libs/angular-material/angular-material.min.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./assets/css/eHOpe-font/css/eHOpe-Font.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./assets/css/fontawesome-free-5.1.1-web/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" ng-href="./libs/angular-wizard/dist/angular-wizard.min.css" />
+    <link rel="stylesheet" type="text/css" ng-href="{{directionCss}}" />
+    <link rel='stylesheet' type='text/css' href='./libs/angular-loading-bar/build/loading-bar.min.css' media='all' />
+    <link rel="icon" type="image/png" href="./assets/images/tube.png" sizes="32x32" />
+</head>
+
+<body class="body md-body-1">
+    <div id="loadingWebsiteContainer">
+        <div class="tube-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 100 130" width="100" height="130">
+                <path class="tube"
+                    d="m71.1 9.2v4.8 81.8q0 18.3-21 18.4-21 0-21-18.4V9.2c0 0 0-15.1-29-6.6V6.2c0 0 13-2.2 13.2 3.1V95.9Q13.2 130 50 130 86.8 130 86.8 95.9V9.3C87 4 100 6.2 100 6.2V2.6C71-5.9 71.1 9.2 71.1 9.2Z" />
+            </svg>
+            <div class="liquid"></div>
+            <div class="bubble-wrapper">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+        </div>
+    </div>
+    <div id="loadingBarContainer"></div>
+    <lis-header></lis-header>
+    <div class="main" layout="row">
+        <lis-nav-menu></lis-nav-menu>
+        <md-content ng-cloak id="mainContent" class="content" ng-class="direction=='rtl'?'k-rtl':''" flex>
+            <ui-view name="main"></ui-view>
+        </md-content>
+    </div>
+    <lis-footer></lis-footer>
+    <!-- temp solution, to be removed later and loaded properly with the standalone package ngStomp -->
+    <script type="text/javascript" src="./libs/sockjs-client/dist/sockjs.min.js"></script>
+    <script type="text/javascript" src="./libs/requirejs/require.min.js"></script>
+    <script>
+        //DO NOT CHANGE THESE VARIABLE NAMES
+        var versionNo = "v2.8.1";
+        var lisDir = "js"; //js for dev, dist for prod
+        lisDir = lisDir === "js" ? "js" : lisDir + "-" + versionNo;
+        var script = document.createElement('script');
+        script.src = lisDir + "/boot.js";
+        document.body.appendChild(script);
+    </script>
+</body>
+
+</html>

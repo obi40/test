@@ -1,0 +1,10 @@
+<div class="breadcrumb-wrapper" md-whiteframe="1">
+	<div layout="row" flex layout-wrap>
+		<div class="crumb" ng-model-options="{trackBy: '$value.rid'}" ng-repeat="crumb in options.crumbs" layout="row">
+			<div ng-click="callback(crumb)" ng-if="$first == false" class="label anchor-txt" ng-class="{'default-cursor':crumb.isLast}">{{crumb.label}}</div>
+			<md-icon ng-click="callback(crumb)" ng-if="$first == true" class="base-crumb" ng-class="{'default-base-crumb':crumb.isLast}"
+			 md-font-icon="fas fa-2x fa-home"></md-icon>
+			<!-- <md-icon ng-if="crumb.isLast==false" class="arrow" md-font-icon="{{arrowIcon}}"></md-icon> -->
+		</div>
+	</div>
+</div>

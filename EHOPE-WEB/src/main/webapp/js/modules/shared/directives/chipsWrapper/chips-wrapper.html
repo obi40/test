@@ -1,0 +1,16 @@
+<div class="chips-wrapper-container">
+    <div ng-class="{'chips-wrapper' : exceededMaxHeight == true,'margin-fix' : marginFixToggle == true}">
+        <md-chips ng-if="options.data.length > 0" ng-model="options.data" name="options.name" readonly="options.readonly" md-removable="options.removable"
+            md-on-remove="onChipRemove($chip)" md-on-add="onChipAdd($chip)" ng-model-options="{trackBy: '$value.rid'}">
+            <md-chip-template>
+                <md-tooltip md-direction="top" ng-if="tooltip($chip)!=null">{{tooltip($chip)}}</md-tooltip>
+                <span class="bold" ng-bind-html="label($chip)"></span>
+            </md-chip-template>
+        </md-chips>
+        <md-button ng-if="showToggleBtn" ng-class="{'show-more-icon' : showMoreBtn == true,'show-less-icon' : showMoreBtn == false}"
+            class="md-fab md-mini toggle-icon" ng-click="toggle()" type="button">
+            <md-tooltip md-direction="top">{{showMoreBtn?('showMore' | translate):('showLess' | translate)}}</md-tooltip>
+            <md-icon ng-class="toggleIcon"></md-icon>
+        </md-button>
+    </div>
+</div>

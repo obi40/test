@@ -1,0 +1,55 @@
+.test-selection {
+    md-grid-list {
+        >md-grid-tile {
+            >figure {
+                right: 4px;
+                bottom: 4px;
+                left: 4px;
+
+                >md-list {
+                    top: 48px;
+                    position: absolute;
+                    width: 100%;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+    .tests-total {
+        font-weight: bold;
+        font-size: 1.3em;
+        text-align: center;
+
+        md-icon {
+            outline: none;
+        }
+    }
+
+    .elements-padding {
+        padding-bottom: 15px;
+    }
+
+    .group-checkbox {
+        margin-bottom: 0px;
+        margin-#{$direction}: 10px;
+    }
+
+    .edit-order-tests-container {
+        .cancelled {
+            text-decoration: line-through;
+        }
+    }
+
+
+    .test-counter {
+        display: inline-block;
+        margin-left: 5px;
+        margin-right: 5px;
+
+        input {
+            width: 40px;
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,58 @@
+.import-data {
+    .list {
+        .title {
+            text-align: center;
+            md-icon {
+                font-size: 5em;
+                height: 70px;
+                line-height: 1;
+                color: $grey;
+            }
+            .label {
+                font-size: 1.5em;
+                font-weight: bold;
+                margin: 10px 0;
+                color: $grey;
+            }
+        }
+        .vertical-steps {
+            .item {
+                border-#{$direction}: 3px solid $green;
+                padding: 0 0 25px 25px;
+                counter-increment: step-counter;
+                >md-icon {
+                    font-size: 2em;
+                    line-height: 1;
+                    height: 30px;
+                }
+                &:before {
+                    border-radius: 50%;
+                    background-color: $green;
+                    content: counter(step-counter);
+                    height: 25px;
+                    line-height: 25px;
+                    margin-#{$direction}: -39px;
+                    text-align: center;
+                    width: 25px;
+                    color: $primary-theme-white-color;
+                    float:#{$direction};
+                    font-weight: bold;
+                }
+                &.active {
+                    border-color: $primary-theme-color !important;
+                }
+                &.active~.item {
+                    &:before {
+                        background-color: $primary-theme-color !important;
+                        color: initial;
+                    }
+                    border-color: $primary-theme-color !important;
+                }
+                &:last-child {
+                    border-color: transparent;
+                    padding-bottom: 0;
+                }
+            }
+        }
+    }
+}

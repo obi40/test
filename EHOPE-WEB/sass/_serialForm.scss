@@ -1,0 +1,17 @@
+.serial-form {
+    .label {
+        font-weight: bold;
+        text-align: center;
+    }
+    md-card {
+        position: relative;
+        md-chips-wrap {
+            box-shadow: none !important;
+        }
+    }
+    .single-submit {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

@@ -1,0 +1,60 @@
+chips-wrapper {
+    //added this because the button goes up and down fast in the screen to reposition it self
+    position: relative;
+    display: inline-block;
+}
+
+md-chips-wrap {
+    outline: none;
+}
+
+.chips-no-shadow {
+    md-chips-wrap {
+        box-shadow: none !important;
+    }
+}
+
+.chips-wrapper-container {
+    margin-bottom: 50px;
+    md-chips-wrap {
+        box-shadow: none !important;
+    }
+    .margin-fix {
+        margin-bottom: -50px;
+    }
+    .chips-wrapper {
+        max-height: 250px;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        position: relative;
+        margin-bottom: -50px;
+    }
+    .chips-wrapper md-chips:after {
+        content: " ";
+        position: absolute;
+        bottom: 0px;
+        height: 75px;
+        width: 100%;
+        background: linear-gradient(transparent, $white);
+        pointer-events: none;
+    }
+    .toggle-icon {
+        position: absolute;
+        left: calc(50% - 20px);
+        right: calc(50% - 20px);
+        padding: 0;
+        margin: 0;
+        bottom: 10px;
+    }
+    .show-more-icon {
+        md-icon {
+            font-size: 2em;
+        }
+    }
+    .show-less-icon {
+        md-icon {
+            font-size: 2em;
+            line-height: 0.85em;
+        }
+    }
+}

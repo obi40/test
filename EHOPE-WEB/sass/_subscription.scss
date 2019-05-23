@@ -1,0 +1,54 @@
+.subscription-container {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    .plan-card {
+        max-width: 301px;
+        margin: 25px;
+        .plan-card-title {
+            color: $primary-theme-white-color;
+            background: $grey;
+            width: 100%;
+            text-align: center;
+            height: 150px;
+            md-icon {
+                color: $primary-theme-white-color;
+                height: 50px;
+                line-height: 1;
+                font-size: 50px;
+            }
+        }
+        .price {
+            margin-top: 10px;
+            font-style: italic;
+            position: relative;
+            font-size: 34px;
+            font-weight: bold;
+            span {
+                font-size: 16px;
+            }
+        }
+        .info {
+            display: inline-block;
+            text-align: center;
+            label {
+                text-align: left;
+            }
+        }
+    }
+    md-chips {
+        md-radio-group {
+            display: inline-block;
+        }
+        md-chips-wrap {
+            box-shadow: initial !important;
+        }
+    }
+    .plan-card:hover {
+        .plan-card-title {
+            background: $primary-theme-color;
+        }
+    }
+}

@@ -1,0 +1,6 @@
+<div ng-if="options != null" flex layout="row">
+	<lov flex form="form" ng-if="lkpCountryOptions.data != null" options="lkpCountryOptions" select="lkpCountryOptions.selectedValue"
+	 on-change="assignCountry"></lov>
+	<lov flex form="form" ng-if="lkpCityOptions != null" options="lkpCityOptions" select="lkpCityOptions.selectedValue" parent="lkpCountryOptions.selectedValue"
+	 on-change="assignCity"></lov>
+</div>

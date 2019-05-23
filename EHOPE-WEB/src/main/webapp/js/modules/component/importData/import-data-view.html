@@ -1,0 +1,45 @@
+<md-content class="import-data">
+    <div layout="row" layout-wrap flex>
+        <div class="list" dynamic-flex layout-padding ng-repeat="import in importDataList">
+            <md-card md-whiteframe="3" flex layout-fill>
+                <div class="title">
+                    <md-icon md-font-icon="{{import.icon}}"></md-icon>
+                    <div class="label">{{import.label | translate}}</div>
+                </div>
+                <md-card-content>
+                    <div layout="column" layout-align="center center">
+                        <div>
+                            <md-button ng-click="import.download()" class="md-primary md-raised">
+                                {{'Download Template' | translate}}
+                            </md-button>
+                        </div>
+                        <div>
+                            <upload-file file-data-wrapper="import.fileDataWrapper"></upload-file>
+                        </div>
+                        <div>
+                            <md-button ng-click="uploadTemplate($event,import)"
+                                ng-disabled="import.fileDataWrapper.fileModel == null" class="md-primary md-raised">
+                                {{'Process Data' | translate}}
+                            </md-button>
+                        </div>
+                    </div>
+                    <!-- <div class="vertical-steps">
+                        <div class="item" ng-class="{'active':false}">
+                            <md-button ng-click="import.download()" class="md-primary md-raised">
+                                {{'Download Template' | translate}}
+                            </md-button>
+                        </div>
+                        <div class="item" ng-class="{'active':false}">
+                            <upload-file file-data-wrapper="import.fileDataWrapper"></upload-file>
+                        </div>
+                        <div class="item" ng-class="{'active':import}">
+                            <md-button ng-click="import.upload()" class="md-primary md-raised">
+                                {{'Proccess Data' | translate}}
+                            </md-button>
+                        </div>
+                    </div> -->
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</md-content>

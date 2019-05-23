@@ -1,0 +1,64 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{ 'results' | translate }}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="md-dialog-content">
+        <div ng-if="visit.paidAmount < visit.totalAmount" class="bold error-color" layout="column"
+            layout-align="center center">{{'orderNotPaid' | translate}}</div>
+        <md-toolbar class="short-toolbar" flex>
+            <div class="md-toolbar-tools">
+                <div layout="row" flex layout-wrap>
+                    <md-button aria-label="{{'print' | translate}}" class="md-fab md-mini" ng-click="print()"
+                        ng-disabled="selectedTests==null || selectedTests.length === 0" type="button">
+                        <md-tooltip md-direction="top">{{'print' | translate}}</md-tooltip>
+                        <md-icon md-font-icon="fas fa-print"></md-icon>
+                    </md-button>
+                </div>
+            </div>
+        </md-toolbar>
+        <div kendo-grid="testsGrid" id="testsGrid" class="k-widget k-grid" options="testsGridOptions"></div>
+        <fieldset>
+            <legend>{{'resultDelivery' | translate}}</legend>
+            <div class="bottom-rule">
+                <div ng-repeat="obj in patDoc" layout="row" layout-wrap flex>
+                    <div class="bold" flex>
+                        <span ng-if="obj.type ==='PATIENT'">{{'patient' | translate}} :
+                            {{obj.fullName[userLocale]}}</span>
+                        <span ng-if="obj.type ==='DOCTOR'">{{'doctor' | translate}} :
+                            {{obj.name[userLocale]}}</span>
+                    </div>
+                    <div layout="row" layout-wrap flex>
+                        <span dynamic-flex="100|50|50|50|50">
+                            <md-checkbox ng-model="obj.isSMS" ng-change="isEmailSMSListener()"
+                                aria-label="{{'sms' | translate}}" ng-disabled="obj.mobileNo == null">
+                                {{'sms' | translate}}
+                            </md-checkbox>
+                        </span>
+                        <span dynamic-flex="100|50|50|50|50">
+                            <md-checkbox ng-model="obj.isEmail" ng-change="isEmailSMSListener()"
+                                aria-label="{{'email' | translate}}" ng-disabled="obj.email == null">
+                                {{'email' | translate}}
+                            </md-checkbox>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div layout="row" flex layout-wrap>
+                <autocomplete-search dynamic-flex options="tenantEmailHistoryOptions">
+                </autocomplete-search>
+            </div>
+            <div layout="column" layout-align="center center">
+                <md-button aria-label="{{'send' | translate}}" class="md-fab md-mini" ng-click="sendEmail()"
+                    type="button" ng-disabled="isSendEmailDisabled">
+                    <md-tooltip md-direction="top">{{'send' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-paper-plane"></md-icon>
+                </md-button>
+            </div>
+        </fieldset>
+    </md-dialog-content>
+</md-dialog>

@@ -1,0 +1,51 @@
+.questions-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .label {
+        font-size: 1.4em;
+    }
+    md-card {
+        padding-left: 5px;
+        padding-right: 5px;
+        .question-label {
+            font-size: 1.2em;
+            padding: 16px;
+        }
+    }
+}
+
+.payment-template-height {
+    height: 500px;
+    overflow-x: hidden;
+}
+
+.payment-table {
+    table,
+    td,
+    th {
+        border: 1px solid $table-border-color;
+        text-align: center;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th {
+        background-color: $primary-theme-color;
+        color: $primary-theme-white-color;
+    }
+    tfoot tr td {
+        font-weight: bold;
+    }
+    th,
+    td {
+        padding: 5px;
+        width: 20%;
+    }
+}
+
+.visit-insurance-container {
+    md-radio-group {
+        padding-bottom: 10px;
+    }
+}

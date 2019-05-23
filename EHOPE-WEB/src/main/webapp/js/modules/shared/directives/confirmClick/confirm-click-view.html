@@ -1,0 +1,15 @@
+<md-dialog class="confirm-click-wrapper">
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            {{message | translate}}
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" layout-align="center center">
+        <md-button ng-click="cancel()" md-autofocus class="md-raised">
+            {{'cancel' | translate}}
+        </md-button>
+        <md-button ng-click="ok()" http-disable-click class="md-raised">
+            {{'ok' | translate}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

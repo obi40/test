@@ -1,0 +1,26 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span flex>{{ 'print' | translate }}</span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-icon="fas fa-times"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div class="md-dialog-content">
+            {{ 'barcodePrintDefaultWarning' | translate}}
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row" flex>
+        <md-button class="md-primary md-raised" ng-click="appointmentCard()">
+            {{ 'appointmentCard' | translate }}
+        </md-button>
+        <md-button class="md-primary md-raised" ng-click="printSampleBarcode()">
+            {{ 'barcode' | translate }}
+        </md-button>
+        <md-button class="md-raised" ng-click="cancel()">
+            {{ 'cancel' | translate }}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

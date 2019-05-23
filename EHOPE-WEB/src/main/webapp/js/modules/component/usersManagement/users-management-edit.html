@@ -1,0 +1,84 @@
+<md-content>
+    <form name="secUserForm" novalidate ng-submit="submitForm(secUserForm.$valid)" http-disable-click layout="column">
+        <md-card md-whiteframe="3">
+            <md-card-title>
+                <md-card-title-text layout="column" layout-align="center center">
+                    <h2 class="md-display-1">{{selectedSecUser!=null?newSecUser.username:''}}</h2>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-content layout="column" flex>
+                <div layout="row" layout-wrap flex>
+                    <name form="secUserForm" name-option="newSecUser" meta-data="secUserMetaData" flex="100"></name>
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'username' | translate}}</label>
+                        <input type="text" name="username" ng-model="newSecUser.username"
+                            ng-required="secUserMetaData.username.notNull"
+                            ng-minlength="secUserMetaData.username.sized? secUserMetaData.username.min:''"
+                            ng-maxlength="secUserMetaData.username.sized? secUserMetaData.username.max:''"
+                            ng-disabled="newSecUser.rid!=null" />
+                        <input-messages input-errors="secUserForm.username.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'email' | translate}}</label>
+                        <input type="email" name="email" ng-model="newSecUser.email"
+                            ng-required="secUserMetaData.email.notNull"
+                            ng-minlength="secUserMetaData.email.sized? secUserMetaData.email.min:''"
+                            ng-maxlength="secUserMetaData.email.sized? secUserMetaData.email.max:''" />
+                        <input-messages input-errors="secUserForm.email.$error" />
+                    </md-input-container>
+                    <trans-field dynamic-flex form="secUserForm" model="newSecUser"
+                        languages="secUserTransFields.address"></trans-field>
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'mobileNumber' | translate}}</label>
+                        <input type="text" name="mobileNo" ng-model="newSecUser.mobileNo"
+                            ng-required="secUserMetaData.mobileNo.notNull"
+                            ng-minlength="secUserMetaData.mobileNo.sized? secUserMetaData.mobileNo.min:''"
+                            ng-maxlength="secUserMetaData.mobileNo.sized? secUserMetaData.mobileNo.max:''"
+                            ui-mask="{{patternMobile}}" ui-mask-placeholder-char="#" model-view-value="true" />
+                        <input-messages input-errors="secUserForm.mobileNo.$error" />
+                    </md-input-container>
+                    <lov dynamic-flex form="secUserForm" ng-repeat="lkp in secUserLKPs" options="lkp"
+                        select="lkp.selectedValue"></lov>
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'nationalNumber' | translate}}</label>
+                        <input type="number" name="nationalId" ng-model="newSecUser.nationalId"
+                            ng-required="secUserMetaData.nationalId.notNull"
+                            ng-max="secUserMetaData.nationalId.sized? secUserMetaData.nationalId.max : '' "
+                            ng-min="secUserMetaData.nationalId.sized? secUserMetaData.nationalId.max : '' "
+                            ng-pattern="patternNum" />
+                        <input-messages input-errors="secUserForm.nationalId.$error" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex
+                        ng-if="selectedSecUser!=null && selectedSecUser.lastLoginTime!=null">
+                        <label>
+                            {{'lastLoginTime' | translate}}</label>
+                        <input type="text" name="lastLoginTime"
+                            value="{{ selectedSecUser.lastLoginTime | dateTimeFormat }}" ng-disabled="true" />
+                    </md-input-container>
+                    <md-input-container dynamic-flex>
+                        <md-checkbox name="isActive" ng-model="newSecUser.isActive" ng-checked="newSecUser.isActive"
+                            aria-label="{{'active' | translate}}">{{'active'
+                            | translate}}</md-checkbox>
+                    </md-input-container>
+                </div>
+                <shuttle-box options="groupShuttleBoxOptions"></shuttle-box>
+                <shuttle-box options="roleShuttleBoxOptions"></shuttle-box>
+            </md-card-content>
+        </md-card>
+        <div layout="row" layout-wrap flex>
+            <md-button class="md-primary md-raised" type="button" ng-click="toggleView()">
+                <md-icon md-font-icon="{{direction=='ltr'?'fas fa-arrow-left':'fas fa-arrow-right'}}"></md-icon>
+            </md-button>
+            <md-button class="md-primary md-raised" type="button" ng-click="clearForm(secUserForm)">
+                {{'clear' | translate}}
+            </md-button>
+            <md-button class="md-primary md-raised" type="submit" ng-disabled="secUserForm.$invalid">
+                {{'save' | translate}}
+            </md-button>
+        </div>
+    </form>
+</md-content>

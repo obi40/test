@@ -1,0 +1,160 @@
+<md-content class="sample-separation-wrapper">
+	<patient-info ng-if="patientInfoOptions!=null" options="patientInfoOptions"></patient-info>
+	<div>
+		{{ 'orderNo' | translate }}:
+		<span class="bold">{{visit.admissionNumber}}</span>
+	</div>
+	<div layout="row" layout-wrap layout-align="space-between center">
+		<div>
+			<md-button ng-show="isWizard" class="md-raised md-primary" aria-label="{{'finish' | translate}}"
+				ng-disabled="areSamplesInvalid" ng-click="finish()">
+				{{'finish' | translate}}
+			</md-button>
+		</div>
+		<div>
+			<md-button class="md-raised md-primary" aria-label="{{'collected' | translate}}"
+				ng-disabled="areSamplesInvalid" ng-click="sendToMachine()">
+				<md-icon md-font-icon="fa-lg lis-microscope"></md-icon>
+				{{'collected' | translate}}
+			</md-button>
+			<!-- <md-button class="md-raised md-primary" aria-label="{{'resultEntry' | translate}}" ng-disabled="areSamplesInvalid"
+			 ng-click="resultEntry()">
+				<md-icon md-font-icon="fa-lg lis-patient-registration"></md-icon>
+				{{'resultEntry' | translate}}
+			</md-button> -->
+			<md-button class="md-raised md-primary" aria-label="{{'appointmentCard' | translate}}"
+				ng-disabled="areSamplesInvalid" ng-click="appointmentCardDialog()">
+				<md-icon md-font-icon="fas fa-lg fa-id-card"></md-icon>
+				{{'appointmentCard' | translate}}
+			</md-button>
+
+			<md-button ng-click="printAllSamples()" class="md-raised md-primary" aria-label="{{'printAll' | translate}}"
+				ng-disabled="areSamplesInvalid">
+				<md-icon md-font-icon="fa-lg fas fa-barcode"></md-icon>
+				{{'printAllBarcodes' | translate}}
+			</md-button>
+			<md-button class="md-raised md-primary" aria-label="{{'printAll' | translate}}"
+				ng-disabled="areSamplesInvalid" ng-click="printAllWorksheets()">
+				<md-icon md-font-icon="fa-lg fas fa-clipboard-list"></md-icon>
+				{{'printAllWorksheets' | translate}}
+			</md-button>
+		</div>
+	</div>
+	<div class="lis-chip-container">
+		<div ng-model-options="{trackBy: '$value.rid'}" ng-repeat="test in testsWithoutSamples"
+			class="lis-chip draggable-element" id="{{'test_'+test.rid}}" md-whiteframe="1">
+			<div class="bold label">{{test.testDefinition.standardCode}}</div>
+		</div>
+	</div>
+	<div flex layout="row" layout-wrap>
+		<div id="sampleContainer" class="sample-container" flex layout="row" layout-align="center center" layout-wrap>
+			<span dynamic-flex="100|100|50|33|25" ng-repeat="sample in samples">
+				<md-card id="sample_{{sample.rid}}" md-whiteframe="3" flex layout="row">
+					<div class="sample-state-container">
+						<div ng-if="sample.isDisabled" class="icon-container disabled-state invalid-state">
+							<md-icon md-font-icon="fas fa-lock">
+								<md-tooltip md-direction="top">{{'locked' | translate}}</md-tooltip>
+							</md-icon>
+						</div>
+						<div ng-if="!sample.validating">
+							<div ng-if="sample.state === validSample" class="icon-container sample-state valid-state">
+								<md-icon md-font-icon="fas fa-check">
+									<md-tooltip md-direction="top">{{'valid' | translate}}</md-tooltip>
+								</md-icon>
+							</div>
+							<div ng-if="sample.state === indefiniteSample"
+								class="icon-container sample-state warning-state">
+								<md-icon md-font-icon="fas fa-exclamation">
+									<md-tooltip md-direction="top">{{'sampleDifferentFactors' | translate}}</md-tooltip>
+								</md-icon>
+							</div>
+							<div ng-if="sample.state === invalidSample"
+								class="icon-container sample-state invalid-state">
+								<md-icon md-font-icon="fas fa-ban">
+									<md-tooltip md-direction="top">{{'notValid' | translate}}</md-tooltip>
+								</md-icon>
+							</div>
+						</div>
+						<md-progress-circular ng-if="sample.validating" md-diameter="20px" md-mode="indeterminate">
+						</md-progress-circular>
+					</div>
+					<div dynamic-flex="100|100|20|20|20" layout="column" layout-align="center center">
+						<div class="container-image" id="sample_image_{{sample.rid}}"
+							ng-bind-html="sample.lkpContainerType.containerImage.image | renderHtml">
+							<md-tooltip md-direction="top">{{sample.lkpContainerType.containerImage.name[userLocale]}}
+							</md-tooltip>
+						</div>
+					</div>
+					<md-card-content layout="column" layout-align="center center" dynamic-flex="100|100|80|80|80">
+						<div class="sample-label">{{sample.sampleNo}}</div>
+						<div layout="column" layout-align="center center">
+							<span id="{{'sampleBarcode_' + sample.barcode}}" kendo-barcode k-height="75" k-width="200"
+								k-type="'code128'" ng-model="sample.barcode">
+							</span>
+							<div class="lis-chip-container">
+								<div ng-model-options="{trackBy: '$value.rid'}"
+									ng-repeat="test in sample.labTestActualSet" class="lis-chip draggable-element"
+									id="{{'test_'+test.rid}}" md-whiteframe="1"
+									ng-class="{'disabled-chip':sample.isDisabled}">
+									<div class="bold label">{{test.testDefinition.standardCode}}</div>
+									<md-icon class="clickable-item" ng-click="removeTest(sample,test)"
+										md-font-icon="fas fa-times" ng-if="!sample.isDisabled"></md-icon>
+								</div>
+							</div>
+						</div>
+					</md-card-content>
+					<div class="card-actions" layout="column" layout-align="center center"
+						dynamic-flex="100|100|20|20|20">
+						<md-button ng-click="printSample(sample)"
+							ng-disabled="sample.state === invalidSample || sample.validating" class="md-fab md-mini"
+							aria-label="{{'barcode' | translate}}" type="button">
+							<md-icon md-font-icon="fas fa-barcode"></md-icon>
+							<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">
+								{{'barcode' | translate}}
+							</md-tooltip>
+						</md-button>
+						<md-button ng-disabled="sample.state === invalidSample || sample.validating"
+							class="md-fab md-mini" aria-label="{{'worksheet' | translate}}" type="button"
+							ng-click="printWorksheet(sample)">
+							<md-icon md-font-icon="fas fa-clipboard-list"></md-icon>
+							<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">
+								{{'worksheet' | translate}}</md-tooltip>
+						</md-button>
+						<md-button ng-if="sample.rid > 0" class="md-fab md-mini" aria-label="{{'delete' | translate}}"
+							type="button" confirm-click="deleteSample" confirm-click-arg="sample"
+							ng-disabled="sample.isDisabled || sample.validating">
+							<md-icon md-font-icon="fas fa-trash"></md-icon>
+							<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">
+								{{'delete' | translate}}
+							</md-tooltip>
+						</md-button>
+						<md-button ng-if="sample.rid < 0" class="md-fab md-mini" aria-label="{{'delete' | translate}}"
+							type="button" ng-click="deleteSample(sample)">
+							<md-icon md-font-icon="fas fa-trash"></md-icon>
+							<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">
+								{{'delete' | translate}}
+							</md-tooltip>
+						</md-button>
+					</div>
+				</md-card>
+			</span>
+		</div>
+		<div class="samples-action-buttons">
+			<div>
+				<md-button aria-label="{{'create' | translate}}" ng-click="addNewSample()" class="md-fab md-mini"
+					type="button">
+					<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">{{'add' | translate}}</md-tooltip>
+					<md-icon md-font-icon="fas fa-plus"></md-icon>
+				</md-button>
+			</div>
+			<div>
+				<md-button aria-label="{{'refresh' | translate}}" class="md-fab md-mini" http-disable-click
+					ng-click="refresh()" type="button">
+					<md-tooltip md-direction="{{direction=='ltr'?'left':'right'}}">{{'refresh' | translate}}
+					</md-tooltip>
+					<md-icon md-font-icon="fas fa-sync"></md-icon>
+				</md-button>
+			</div>
+		</div>
+	</div>
+</md-content>

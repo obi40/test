@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+
+    &.md-toast-animating {
+        overflow: initial !important;
+    }
+
+    position: relative !important;
+    top: 0 !important;
+}
+
+.md-dialog-container {
+    position: fixed !important;
+}
+
+.main {
+    padding-top: 64px; //header height
+    min-height: calc(100% - 50px); //footer is 50px
+
+    .content {
+        padding: 5px 10px;
+    }
+}
+
+.md-autocomplete-suggestions-container.md-default-theme li .highlight,
+.md-autocomplete-suggestions-container li .highlight {
+    color: $black;
+    font-weight: bold;
+}
+
+md-input-container:not(.md-input-has-value) md-select.ng-required:not(.md-no-asterisk) .md-select-value span:first-child:after,
+md-input-container:not(.md-input-has-value) md-select[required]:not(.md-no-asterisk) .md-select-value span:first-child:after,
+.md-required::after,
+md-select.ng-required.ng-invalid:not(.md-no-asterisk) .md-select-value span:first-child:after,
+md-select[required].ng-invalid:not(.md-no-asterisk) .md-select-value span:first-child:after {
+    font-size: 1.3em !important;
+    font-weight: bold !important;
+    color: red !important;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+// @mixin sideNav($direction) {
+//     @if $direction=='right' {
+//         md-sidenav {
+//             right: 0px;
+//         }
+//         .md-sidenav-left.md-closed, // when switching to rtl, open the sidenav from right
+//         md-sidenav.md-closed {
+//             -webkit-transform: translate3d(100%, 0, 0);
+//             transform: translate3d(100%, 0, 0);
+//         }
+//     }
+// }
+// @include sideNav($direction);
+div.md-errors-spacer {
+    min-height: 12px !important; // cutting it by half
+}
+
+md-radio-button.md-default-theme .md-on,
+md-radio-button .md-on {
+    background-color: $radio-default-color;
+}
+
+md-radio-button.md-default-theme.md-checked .md-off,
+md-radio-button.md-checked .md-off {
+    border-color: $radio-off-color !important;
+}
+
+.md-tooltip {
+    height: auto;
+}
+
+md-input-container {
+    margin: 12px 0 !important;
+}
+
+fieldset {
+    border-radius: 15px;
+    margin-top: 10px;
+    border-color: $field-set-border-color;
+
+    legend {
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+}
+
+#particlesWrapper {
+    position: fixed;
+    background-color: #f7f9fb;
+    width: 100%;
+    height: calc(100% - 50px);
+    overflow: hidden;
+}

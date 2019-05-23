@@ -1,0 +1,231 @@
+<div class="test-selection" ng-if="activateDirective" ng-form="testSelectionForm">
+    <div layout="row" layout-align="end center" flex>
+        <md-button ng-if="wiz" wz-next type="button" ng-click="submitSelectedTests()" class="md-raised float-end"
+            ng-disabled="selectedTestChipsOptions.data.length === 0 && editOrderTests == null"
+            aria-label="{{'next' | translate}}">
+            {{'next' | translate}}
+        </md-button>
+    </div>
+    <div layout="row" flex layout-wrap layout-align="space-between start">
+        <div dynamic-flex="100|100|50|40|33">
+            <autocomplete-search options="testSearchOptions" class="elements-padding"></autocomplete-search>
+            <md-radio-group layout="row" flex layout-wrap ng-model="wrapper.selectedRadio"
+                ng-change="radioSelectionListener()" class="elements-padding">
+                <md-radio-button value="sections">{{ 'allSections' | translate }}</md-radio-button>
+                <md-radio-button value="requestForms">{{ 'requestForms' | translate }}</md-radio-button>
+                <md-radio-button value="mostRequested">{{ 'mostFrequentlyRequested' | translate }}</md-radio-button>
+                <md-radio-button value="packages">{{ 'package' | translate }}</md-radio-button>
+                <md-radio-button value="profiles">{{ 'profile' | translate }}</md-radio-button>
+            </md-radio-group>
+        </div>
+        <div dynamic-flex="100|100|50|40|33" layout="column" class="calculate-tests-container" ng-if="wiz==false">
+            <div flex layout-wrap layout="row">
+                <lov dynamic-flex="100|50|50|50|50" form="testSelectionForm" ng-if="allProviders !== null"
+                    options="allProviders" select="allProviders.selectedValue" disable-select="wiz">
+                </lov>
+                <lov dynamic-flex="100|50|50|50|50" form="testSelectionForm" on-change="calculatePrice"
+                    ng-if="insurancePlanList != null" ng-show="allProviders.selectedValue.isSimple == false"
+                    options="insurancePlanList" select="insurancePlanList.selectedValue"
+                    parent="allProviders.selectedValue"></lov>
+            </div>
+            <div flex layout-wrap layout="row">
+                <div dynamic-flex="100|50|50|50|50" layout="row">
+                    <md-input-container>
+                        <label>{{'discountPercentage' | translate}}</label>
+                        <input type="number" name="discountPercentage" ng-pattern="patternPercent" ng-min="0"
+                            ng-max="100" ng-model="discountPercentage.value"
+                            ng-change="discountPercentDeduct(testSelectionForm.discountPercentage.$error,discountPercentage.value,true)"
+                            ng-disabled="isPercentage == false" step="0.1" />
+                        <input-messages input-errors="testSelectionForm.discountPercentage.$error" />
+                    </md-input-container>
+                    <div class="flex-center">%</div>
+                    <div hide-xs class="left-rule"></div>
+                </div>
+                <div dynamic-flex="100|50|50|50|50" layout="row">
+                    <md-input-container>
+                        <label>{{'discountAmount' | translate}}</label>
+                        <input type="number" name="discountAmount" ng-pattern="patternPercent" ng-min="0"
+                            ng-max="originalTotalPrice" ng-model="discountAmount.value"
+                            ng-change="discountPercentDeduct(testSelectionForm.discountAmount.$error,discountAmount.value,false)"
+                            ng-disabled="isAmount == false" step="0.1" />
+                        <input-messages input-errors="testSelectionForm.discountAmount.$error" />
+                    </md-input-container>
+                    <div class="flex-center">{{currency}}</div>
+                </div>
+            </div>
+            <div class="tests-total">
+                <span>{{calcualtedPriceDetails.total}} {{currency}}</span>
+                <md-icon ng-if="calcualtedPriceDetails.masterItemsNoPriceList.length > 0" class="error-color"
+                    md-font-icon="fas fa-exclamation-circle">
+                    <md-tooltip md-direction="top">{{'billPricingNotFound' | translate}}</md-tooltip>
+                </md-icon>
+                <md-icon ng-if="selectedTestChipsOptions.data.length > 0" ng-click="showPricingDetails($event)"
+                    class="clickable-item info-color" md-font-icon="fas fa-info-circle">
+                    <md-tooltip md-direction="top">{{'info' | translate}}</md-tooltip>
+                </md-icon>
+            </div>
+        </div>
+        <div flex="100" class="elements-padding" ng-if="wiz && editOrderTests != null && editOrderTests.length > 0">
+            <fieldset class="lis-chip-container edit-order-tests-container">
+                <legend>{{'testPrevious' | translate}}</legend>
+                <div ng-model-options="{trackBy: '$value.testDefRid'}" ng-repeat="parentTest in editOrderTests"
+                    class="lis-chip" md-whiteframe="1">
+                    <div class="bold label">{{parentTest.label}}</div>
+                    <div ng-if="parentTest.amount">{{('amount' | translate)+' : ' + parentTest.amount}}</div>
+                    <div ng-if="parentTest.reordered">{{('reordered' | translate)+' : ' + parentTest.reordered}}</div>
+                    <div ng-if="parentTest.cancelled">{{('cancelled' | translate)+' : ' + parentTest.cancelled}}</div>
+                </div>
+            </fieldset>
+        </div>
+        <div flex="100" class="elements-padding lis-chip-container">
+            <div ng-model-options="{trackBy: '$value.rid'}" ng-repeat="test in selectedTestChipsOptions.data"
+                class="lis-chip" md-whiteframe="1">
+                <div class="bold label">{{test.standardCode}}</div>
+                <div class="test-counter" ng-if="test.isAllowRepetitionDifferentSample">
+                    <md-tooltip md-direction="top">{{'amount' | translate}}</md-tooltip>
+                    <input type="number" name="testCounter" step="1" ng-model="test.counter" min="1"
+                        max="{{testRepetitionMaxAmount(test)}}"
+                        ng-change="onTestCounterChange(test,{{test.counter}})" />
+                </div>
+                <md-icon class="clickable-item" ng-if="isRemovable(test)" ng-click="removeChip(test)"
+                    md-font-icon="fas fa-times"></md-icon>
+            </div>
+        </div>
+        <md-content flex="100" md-whiteframe="1" ng-switch="wrapper.selectedRadio">
+            <md-tabs ng-switch-when="sections" md-border-bottom md-dynamic-height md-align-tabs="top"
+                md-selected="wrapper.selectedSection">
+                <md-tab md-on-select="onSectionTabSelect(section)" ng-repeat="section in sections"
+                    label="{{section.name[primaryLang]}}">
+                    <div layout="row" layout-wrap flex layout-padding>
+                        <span ng-repeat="test in section.testDefinitionList" dynamic-flex>
+                            <md-checkbox ng-right-click="check($event, test)" ng-disabled="!test.isSelectable"
+                                ng-change="toggleTestSelection(test,test.isChecked)" ng-model="test.isChecked">
+                                <md-tooltip md-direction="top" ng-if="!test.isSelectable">
+                                    {{test.isSelectableCause}}
+                                </md-tooltip>
+                                <span ng-class="test.isSelectable ? '' : 'line-through'">{{test.description}}
+                                    <span class="bold">({{test.standardCode}})</span>
+                                </span>
+                            </md-checkbox>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="md-padding"
+                            ng-show="showSectionPager">{{section.testDefinitionList.length}}/{{section.testDataSource.total()}}</span>
+                        <md-button class="md-primary"
+                            ng-show="section.testDefinitionList.length < section.testDataSource.total()"
+                            ng-click="loadMore(section)">{{'loadMore'| translate}}</md-button>
+                    </div>
+                    <br>
+                </md-tab>
+            </md-tabs>
+            <md-tabs ng-switch-when="requestForms" md-selected="wrapper.selectedRequestForm" md-border-bottom
+                md-dynamic-height md-align-tabs="top">
+                <md-tab ng-repeat="requestForm in requestForms" md-on-select="onRequestFormTab(requestForm)"
+                    label="{{requestForm.name[primaryLang]}}">
+                    <md-tab-body>
+                        <md-grid-list md-cols="1" md-cols-md="2" md-cols-lg="3" md-cols-xl="4" md-row-height="52px"
+                            md-gutter="0">
+                            <md-grid-tile ng-repeat="section in requestForm.sections"
+                                md-rowspan="{{section.testDefinitionList.length + 1}}" md-colspan="1">
+                                <md-grid-tile-header>
+                                    <h3>{{section.name[primaryLang]}}</h3>
+                                </md-grid-tile-header>
+                                <md-list layout="column" layout-wrap flex>
+                                    <md-list-item ng-repeat="test in section.testDefinitionList">
+                                        <md-checkbox ng-change="toggleTestSelection(test,test.isChecked)"
+                                            ng-disabled="!test.isSelectable" ng-model="test.isChecked"
+                                            aria-label="{{test.standardCode}}"></md-checkbox>
+                                        <md-tooltip md-direction="top" ng-if="!test.isSelectable">
+                                            {{test.isSelectableCause}}
+                                        </md-tooltip>
+                                        <span ng-class="test.isSelectable ? '' : 'line-through'">{{test.description}}
+                                            <span class="bold">({{test.standardCode}})</span>
+                                        </span>
+                                    </md-list-item>
+                                </md-list>
+                            </md-grid-tile>
+                        </md-grid-list>
+                    </md-tab-body>
+                </md-tab>
+            </md-tabs>
+            <div ng-switch-when="mostRequested" layout="row" layout-wrap flex layout-padding>
+                <span ng-repeat="test in mostRequestedTests" dynamic-flex>
+                    <md-checkbox ng-change="toggleTestSelection(test,test.isChecked)" ng-disabled="!test.isSelectable"
+                        ng-model="test.isChecked">
+                        <md-tooltip md-direction="top" ng-if="!test.isSelectable">
+                            {{test.isSelectableCause}}
+                        </md-tooltip>
+                        <span ng-class="test.isSelectable ? '' : 'line-through'">{{test.description}}
+                            <span class="bold">({{test.standardCode}})</span>
+                        </span>
+                    </md-checkbox>
+                </span>
+            </div>
+            <div ng-switch-when="packages">
+                <div layout="row" flex layout-wrap layout-align="center center">
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'search' | translate}}</label>
+                        <input type="text" name="packagesSearch" ng-model="packagesSearch.value" />
+                    </md-input-container>
+                </div>
+                <md-grid-list md-cols="1" md-cols-md="2" md-cols-lg="3" md-cols-xl="4" md-row-height="52px"
+                    md-gutter="0">
+                    <md-grid-tile ng-repeat="package in packages" md-rowspan="{{package.groupDefinitions.length + 1}}"
+                        md-colspan="1" ng-if="searchGroups(packagesSearch,package)">
+                        <md-grid-tile-header>
+                            <md-checkbox class="group-checkbox"
+                                ng-change="toggleTestSelection(package, package.isChecked)" ng-model="package.isChecked"
+                                ng-disabled="!package.isSelectable">
+                                <span ng-class="package.isSelectable ? '' : 'line-through'">{{package.name}}</span>
+                            </md-checkbox>
+                        </md-grid-tile-header>
+                        <md-list layout="column" layout-wrap flex>
+                            <md-list-item ng-repeat="testDefGroup in package.groupDefinitions">
+                                <span ng-class="testDefGroup.testDefinition.isSelectable ? '' : 'line-through'">
+                                    <md-tooltip md-direction="top" ng-if="!testDefGroup.testDefinition.isSelectable">
+                                        {{testDefGroup.testDefinition.isSelectableCause}}
+                                    </md-tooltip>{{testDefGroup.testDefinition.description}}
+                                    <span class="bold">({{testDefGroup.testDefinition.standardCode}})</span>
+                                </span>
+                            </md-list-item>
+                        </md-list>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+            <div ng-switch-when="profiles">
+                <div layout="row" flex layout-wrap layout-align="center center">
+                    <md-input-container dynamic-flex>
+                        <label>
+                            {{'search' | translate}}</label>
+                        <input type="text" name="profilesSearch" ng-model="profilesSearch.value" />
+                    </md-input-container>
+                </div>
+                <md-grid-list md-cols="1" md-cols-md="2" md-cols-lg="3" md-cols-xl="4" md-row-height="52px"
+                    md-gutter="0">
+                    <md-grid-tile ng-repeat="profile in profiles" md-rowspan="{{profile.groupDefinitions.length + 1}}"
+                        md-colspan="1" ng-if="searchGroups(profilesSearch,profile)">
+                        <md-grid-tile-header>
+                            <md-checkbox class="group-checkbox"
+                                ng-change="toggleTestSelection(profile, profile.isChecked)" ng-model="profile.isChecked"
+                                ng-disabled="!profile.isSelectable">
+                                <span ng-class="profile.isSelectable ? '' : 'line-through'">{{profile.name}}</span>
+                            </md-checkbox>
+                        </md-grid-tile-header>
+                        <md-list layout="column" layout-wrap flex>
+                            <md-list-item ng-repeat="testDefGroup in profile.groupDefinitions">
+                                <span ng-class="testDefGroup.testDefinition.isSelectable ? '' : 'line-through'">
+                                    <md-tooltip md-direction="top" ng-if="!testDefGroup.testDefinition.isSelectable">
+                                        {{testDefGroup.testDefinition.isSelectableCause}}
+                                    </md-tooltip>{{testDefGroup.testDefinition.description}}
+                                    <span class="bold">({{testDefGroup.testDefinition.standardCode}})</span>
+                                </span>
+                            </md-list-item>
+                        </md-list>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </md-content>
+    </div>
+</div>

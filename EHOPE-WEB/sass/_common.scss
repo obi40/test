@@ -1,0 +1,415 @@
+.custom-box {
+    overflow: auto;
+    border-width: 1px;
+    border-style: solid;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-color: $soft-grey;
+}
+
+.anchor-txt {
+    text-decoration: underline;
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+}
+
+.message-box {
+    padding: 10px !important;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.error-message {
+    color: $error-color;
+    background-color: $error-background;
+    border-color: $error-border;
+}
+
+.warning-message {
+    color: $warning-color;
+    background-color: $warning-background;
+    border-color: $warning-border;
+}
+
+.info-message {
+    color: $info-color;
+    background-color: $info-background;
+    border-color: $info-border;
+}
+
+.grid-ellipsis td {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.clickable-item {
+    cursor: pointer;
+}
+
+.disabled-cursor {
+    cursor: not-allowed !important;
+}
+
+.disable-click-event {
+    pointer-events: none;
+}
+
+.top-rule {
+    border-top: 1px solid $soft-grey;
+}
+
+.right-rule {
+    border-right: 1px solid $soft-grey;
+}
+
+.bottom-rule {
+    border-bottom: 1px solid $soft-grey;
+}
+
+.left-rule {
+    border-left: 1px solid $soft-grey;
+}
+
+.float-end {
+    float: $opposite-direction;
+}
+
+.float-start {
+    float: $direction;
+}
+
+.clear-float {
+    clear: both;
+    float: none;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+md-input-container {
+    width: 100%;
+    box-sizing: border-box;
+    .hint {
+        font-size: 0.857em;
+        opacity: 0.7;
+    }
+    .inline-icon {
+        #{$opposite-direction}: -3px;
+        top: 7px;
+        position: absolute;
+        text-align: center;
+        cursor: pointer;
+    }
+    label {
+        color: $grey;
+    }
+    md-datepicker {
+        .md-datepicker-input-container {
+            width: calc(100% - 70px);
+        }
+    }
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.line-through {
+    text-decoration: line-through;
+}
+
+div.show {
+    display: none;
+    border-radius: 25px;
+}
+
+img.k-image {
+    height: 30px;
+}
+
+.md-select-value.md-select-placeholder {
+    color: $grey !important;
+}
+
+.draggable-element {
+    cursor: move;
+}
+
+.draggable-element:active {
+    cursor: move;
+}
+
+md-tabs .md-tab {
+    text-transform: none;
+    font-weight: bold;
+    color: $black;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+//this class is needed in some cases where ng-hide might be overriden by angular behavior
+.no-display {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-capitalize {
+    text-transform: capitalize;
+}
+
+.hidden-overflow-x {
+    overflow-x: hidden;
+}
+
+.block {
+    display: block;
+}
+
+.flexible-tooltip {
+    height: auto;
+    overflow: auto;
+    white-space: initial;
+    width: 25%; //this must be relative to column width
+}
+
+md-dialog {
+    >md-toolbar {
+        //to style the header of the dialog only
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
+    }
+}
+
+.min-width-auto {
+    min-width: auto;
+}
+
+.short-toolbar {
+    height: 40px;
+    min-height: 40px;
+    max-height: 40px;
+    .md-toolbar-tools {
+        height: 40px;
+        max-height: 40px;
+        .md-button.md-fab.md-mini {
+            line-height: 30px;
+            width: 30px;
+            min-height: 30px;
+            height: 30px;
+            padding: 0;
+        }
+    }
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+table.bordered-column {
+    border-collapse: collapse;
+    th,
+    tr,
+    td {
+        border: 1px solid $soft-grey;
+        padding: 0.625em;
+    }
+}
+
+.no-padding-top {
+    padding-top: 0;
+}
+
+.pre-wrap {
+    white-space: pre-wrap;
+}
+
+md-chips.auto-height-chips {
+    md-chip {
+        height: auto;
+    }
+}
+
+.hide-chips {
+    md-chip {
+        display: none;
+    }
+}
+
+.no-border {
+    border: none;
+}
+
+.inline-trans-editor {
+    >* {
+        float: $direction;
+    }
+}
+
+//this fixed the custom font we created
+button {
+    [class*='lis-']:before {
+        line-height: inherit;
+    }
+}
+
+[class*='lis-'] {
+    vertical-align: sub;
+}
+
+.custom-input {
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+    border-bottom-color: $soft-grey;
+    border-bottom-width: 1px;
+    outline: none;
+}
+
+.custom-input:focus {
+    border-bottom-color: $primary-theme-color !important;
+    border-bottom-width: 2px !important;
+}
+
+.custom-input[disabled] {
+    // angular's styles of two rules
+    border-bottom-color: transparent;
+    color: rgba(0, 0, 0, 0.38);
+    background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.38) 0, rgba(0, 0, 0, 0.38) 33%, transparent 0);
+    background-position: bottom -1px left 0;
+    background-size: 4px 1px;
+    background-repeat: repeat-x;
+    background-color: transparent;
+}
+
+.discount-amount-container {
+    .label {
+        color: rgba(0, 0, 0, 0.54); //angular's color
+        font-size: 0.8em;
+        height: 2.55em;
+        margin-top: -0.45em;
+    }
+    input {
+        width: calc(50% - 7px);
+    }
+    .separator {
+        width: 5px;
+        display: inline-block;
+        font-weight: bold;
+    }
+}
+
+.inline-switch {
+    margin: 0;
+    display: inline-block;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    border: 2px solid $soft-grey;
+    th,
+    td {
+        padding: 5px;
+    }
+    th {
+        text-align: $direction;
+        font-weight: bold;
+    }
+    thead {
+        tr:first-child {
+            background-color: $kendo-table-header-background;
+        }
+    }
+    tbody {
+        tr:nth-child(even) {
+            background-color: $row-alt-color;
+        }
+        tr:hover {
+            background-color: $hover-color;
+        }
+    }
+    md-checkbox {
+        margin: 0 !important;
+    }
+}
+
+.hidden-field-error {
+    color: $red;
+    margin: 0 10px 0 10px;
+}
+
+.red-text {
+    color: red !important;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-text {
+    color: $green;
+}
+
+.lis-chip-container {
+    margin: 4px;
+    .lis-chip {
+        &.disabled-chip {
+            opacity: 0.5;
+            cursor: initial !important;
+            pointer-events: none !important;
+        }
+        font-size: 16px;
+        display: inline-block;
+        border-radius: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-#{$opposite-direction}: 5px;
+        padding-#{$direction}: 15px;
+        background: rgb(224, 224, 224); //chip background color
+        color: rgb(66, 66, 66); //chip text color
+        z-index: 1;
+        text-align: center;
+        margin: 4px;
+        .label {
+            display: inline-block;
+            vertical-align: middle;
+            &:only-child {
+                padding-#{$opposite-direction}: 10px; //fix padding for tests without the icon
+            }
+        }
+        md-icon {
+            font-size: 1.25em;
+            outline: none;
+        }
+    }
+}
+
+//for md-icon with custom size
+.full-icon {
+    line-height: 1 !important;
+    height: 1em !important;
+}

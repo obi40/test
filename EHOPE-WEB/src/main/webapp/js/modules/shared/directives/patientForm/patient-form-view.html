@@ -1,0 +1,205 @@
+<div ng-if="activateDirective">
+    <form name="patientProfileForm" http-disable-click novalidate ng-submit="submitPatient(patientProfileForm.$valid)">
+        <fieldset>
+            <legend>
+                {{'personalInfo' | translate}}
+                <md-button class="md-raised md-fab md-mini md-primary" ng-click="idCardDialog()"
+                    aria-label="{{'fillUsingIdCard' | translate}}" ng-show="options.formMode === 'add'">
+                    <md-tooltip md-direction="top">{{'importUsingIdCard' | translate}}</md-tooltip>
+                    <md-icon md-font-icon="fas fa-id-card"></md-icon>
+                </md-button>
+            </legend>
+            <name form="patientProfileForm" name-option="patient" meta-data="metaData"></name>
+            <md-content class="hidden-overflow-x" layout="row" flex layout-wrap>
+                <md-input-container dynamic-flex="100|100|50|25|25">
+                    <label>{{('dob' | translate) + ' ' + (patientAge.length>0?patientAge:"")}}</label>
+                    <md-datepicker date-mask md-max-date="today" name="dob" ng-required="metaData.dateOfBirth.notNull"
+                        ng-model="patient.dateOfBirth" ng-change="dateOfBirthListener()"></md-datepicker>
+                    <input-messages input-errors="patientProfileForm.dob.$error" />
+                </md-input-container>
+                <md-input-container dynamic-flex="100|100|50|25|25" class="md-input-has-value"
+                    ng-class="{ 'md-input-invalid' : patientProfileForm.gender.$invalid && patientProfileForm.$submitted }">
+                    <label class="md-required">{{ 'sex' | translate }}</label>
+                    <md-radio-group md-autofocus name="gender" ng-model="patient.gender.rid" layout="row" required>
+                        <md-radio-button ng-repeat="g in genders" ng-value="g.rid">
+                            {{g.name[userLocale]}}
+                        </md-radio-button>
+                    </md-radio-group>
+                    <input-messages input-errors="patientProfileForm.gender.$error" />
+                </md-input-container>
+                <lov form="patientProfileForm" dynamic-flex="100|100|50|25|25" options="lkpMaritalStatus"
+                    select="lkpMaritalStatus.selectedValue"></lov>
+                <lov form="patientProfileForm" dynamic-flex="100|100|50|25|25" options="lkpBloodType"
+                    select="lkpBloodType.selectedValue"></lov>
+                <md-content dynamic-flex="100|100|50|25|25">
+                    <upload-file file-data-wrapper="fileDataWrapper"></upload-file>
+                </md-content>
+                <md-content dynamic-flex="100|100|50|25|25" class="fingerprint-action-wrapper"
+                    ng-class="fingerprintReadingState" layout="column" layout-align="start center">
+                    <md-button ng-disabled="fingerprintReadingState === 'waiting'" class="md-raised"
+                        ng-click="readFingerprint()" aria-label="{{'readFingerprint' | translate}}">
+                        {{'readFingerprint' | translate}}
+                        <i class='fas fa-spinner fa-spin'></i>
+                    </md-button>
+                    <img ng-src="{{'data:image/*;base64,' + fingerprintBase64}}" />
+                </md-content>
+            </md-content>
+        </fieldset>
+        <fieldset class="min-width-auto">
+            <legend>
+                {{'files' | translate}}
+            </legend>
+            <div layout="row" flex layout-wrap>
+                <div dynamic-flex="100|100|50|50|50" ng-if="showArtifacts">
+                    <artifact parent="patient" type="'patient'"></artifact>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>{{'contactInfo' | translate}}</legend>
+            <md-content class="hidden-overflow-x" layout="row" flex layout-wrap>
+                <md-input-container dynamic-flex="100|100|50|25|25">
+                    <label>{{ 'nationalNumber' | translate }}</label>
+                    <input type="number" ng-required="metaData.nationalId.notNull" name="nationalId"
+                        ng-model="patient.nationalId" ng-min="metaData.nationalId.sized ? metaData.nationalId.min : '' "
+                        ng-max="metaData.nationalId.sized? metaData.nationalId.max : '' " ng-pattern="patternNum" />
+                    <input-messages input-errors="patientProfileForm.nationalId.$error" />
+                </md-input-container>
+                <md-input-container dynamic-flex="100|100|50|25|25">
+                    <label>{{ 'mobileNumber' | translate }}</label>
+                    <input type="text" name="mobileNo" ng-required="metaData.mobileNo.notNull"
+                        ng-model="patient.mobileNo" ui-mask="{{patternMobile}}" ui-mask-placeholder-char="#"
+                        model-view-value="true" ng-minLength="metaData.mobileNo.sized ? metaData.mobileNo.min : '' "
+                        ng-maxLength="metaData.mobileNo.sized? metaData.mobileNo.max : '' " />
+                    <input-messages input-errors="patientProfileForm.mobileNo.$error" />
+                </md-input-container>
+                <md-input-container dynamic-flex="100|100|50|25|25">
+                    <label>{{ 'secondaryMobileNumber' | translate }}</label>
+                    <input type="text" name="secondaryMobileNo" ng-required="metaData.secondaryMobileNo.notNull"
+                        ng-model="patient.secondaryMobileNo" ui-mask="{{patternMobile}}" ui-mask-placeholder-char="#"
+                        model-view-value="true"
+                        ng-minLength="metaData.secondaryMobileNo.sized ? metaData.secondaryMobileNo.min : '' "
+                        ng-maxLength="metaData.secondaryMobileNo.sized? metaData.secondaryMobileNo.max : '' " />
+                    <input-messages input-errors="patientProfileForm.secondaryMobileNo.$error" />
+                </md-input-container>
+                <md-input-container dynamic-flex="100|100|50|25|25">
+                    <label>{{'email' | translate}}</label>
+                    <input ng-required="metaData.email.notNull" type="email" name="email" ng-model="patient.email"
+                        ng-minlength="metaData.email.sized? metaData.email.min:''"
+                        ng-maxlength="metaData.email.sized? metaData.email.max:''" />
+                    <input-messages input-errors="patientProfileForm.email.$error" />
+                </md-input-container>
+                <lov form="patientProfileForm" dynamic-flex="100|100|50|25|25" options="lkpCountry"
+                    select="lkpCountry.selectedValue"></lov>
+                <trans-field dynamic-flex="100|100|50|25|25" form="patientProfileForm" model="patient"
+                    languages="transFields.address"></trans-field>
+                <trans-field dynamic-flex="100|100|50|25|25" form="patientProfileForm" model="patient"
+                    languages="transFields.remarks"></trans-field>
+            </md-content>
+        </fieldset>
+        <fieldset>
+            <legend>{{'resultDelivery' | translate}}</legend>
+            <md-content class="hidden-overflow-x" layout="row" flex layout-wrap>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isSmsNotification" aria-label="{{'isSmsNotification' | translate}}">
+                        {{'sendSmsNotification' | translate}}
+                    </md-checkbox>
+                </span>
+                <!-- <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isWhatsappNotification" aria-label="{{'isWhatsappNotification' | translate}}">
+                        {{'sendWhatsappNotification' | translate}}
+                    </md-checkbox>
+                </span> -->
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isEmailNotification"
+                        aria-label="{{'isEmailNotification' | translate}}">
+                        {{'sendEmailNotification' | translate}}
+                    </md-checkbox>
+                </span>
+            </md-content>
+        </fieldset>
+        <fieldset>
+            <legend>{{'indicators' | translate}}</legend>
+            <md-content class="hidden-overflow-x" layout="row" flex layout-wrap>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isVip" aria-label="{{'isVip' | translate}}">
+                        {{'isVip' | translate}}
+                    </md-checkbox>
+                </span>
+                <!-- <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                        <md-checkbox ng-model="patient.isBlackListed" aria-label="{{'isBlackListed' | translate}}">
+                            {{'isBlackListed' | translate}}
+                        </md-checkbox>
+                    </span> -->
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isHypertension" aria-label="{{'isHypertension' | translate}}">
+                        {{'isHypertension' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isAllergies" aria-label="{{'isAllergies' | translate}}">
+                        {{'isAllergies' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isDifficultyFindingVeins"
+                        aria-label="{{'isDifficultyFindingVeins' | translate}}">
+                        {{'isDifficultyFindingVeins' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isBloodSamplePhobia"
+                        aria-label="{{'isBloodSamplePhobia' | translate}}">
+                        {{'isBloodSamplePhobia' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isHardTemperedPatient"
+                        aria-label="{{'isHardTemperedPatient' | translate}}">
+                        {{'isHardTemperedPatient' | translate}}
+                    </md-checkbox>
+                </span>
+                <span ng-show="patient.gender.rid === femaleRid" dynamic-flex="100|100|50|25|25" layout="row"
+                    layout-align="start center">
+                    <md-checkbox ng-model="patient.isPregnancy" aria-label="{{'isPregnancy' | translate}}">
+                        {{'isPregnancy' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isDiabetes" aria-label="{{'isDiabetes' | translate}}">
+                        {{'isDiabetes' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center">
+                    <md-checkbox ng-model="patient.isHeartDisease" aria-label="{{'isHeartDisease' | translate}}">
+                        {{'isHeartDisease' | translate}}
+                    </md-checkbox>
+                </span>
+                <span dynamic-flex="100|100|50|25|25" layout="row" layout-align="start center"
+                    ng-if="options.formMode === 'add'">
+                    <md-checkbox ng-model="patient.isInsurer" aria-label="{{'isInsurer' | translate}}">
+                        {{'isInsurer' | translate}}
+                    </md-checkbox>
+                </span>
+            </md-content>
+            <md-input-container dynamic-flex="100|100|50|50|50">
+                <label>{{'medicalInformation' | translate }}</label>
+                <textarea md-detect-hidden name="medicalInformation" ng-model="patient.medicalInformation"
+                    ng-required="metaData.medicalInformation.notNull"
+                    ng-minLength="metaData.medicalInformation.sized ? metaData.medicalInformation.min : '' "
+                    ng-maxLength="metaData.medicalInformation.sized? metaData.medicalInformation.max : '' "></textarea>
+                <input-messages input-errors="patientProfileForm.medicalInformation.$error" />
+            </md-input-container>
+        </fieldset>
+        <md-input-container>
+            <md-button type="submit" class="md-raised md-primary" ng-disabled="patientProfileForm.$invalid"
+                aria-label="{{'submit' | translate}}">
+                {{'save' | translate}}
+            </md-button>
+            <md-button class="md-raised" ng-show="options.formMode === 'add'"
+                ng-click="clearPatient(patientProfileForm)" aria-label="{{'clear' | translate}}">
+                {{'clear' | translate}}
+            </md-button>
+        </md-input-container>
+    </form>
+</div>

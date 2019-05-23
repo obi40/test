@@ -1,0 +1,52 @@
+<div ng-if="activateDirective">
+    <div layout="row" layout-align="end center" flex>
+        <md-button class="md-raised float-end" type="submit" ng-click="submitTestQuestion()"
+            ng-disabled="testQuestionForm.$invalid" canexit="testQuestionForm.$valid" wz-next>{{'next' | translate}}
+        </md-button>
+    </div>
+    <form name="testQuestionForm" novalidate flex class="clear-float">
+        <span ng-show="isObjectEmpty(questionList)" class="md-title" layout="column" layout-align="center center">{{'questionEmpty'
+            | translate}}</span>
+        <div ng-repeat="(key, value) in questionList" class="questions-container bottom-rule" flex>
+            <span class="label">{{value.test.description}}</span>
+            <span class="label bold">{{'('+value.test.standardCode+')'}}</span>
+            <div layout="row" flex layout-align="center center" layout-wrap>
+                <md-card md-whiteframe="3" layout="column" ng-repeat="answer in value.answers" dynamic-flex>
+                    <div class="question-label">{{answer.testQuestion.description}}</div>
+                    <md-card-content layout="row" flex>
+                        <span ng-if="answer.testQuestion.lkpQuestionType.code === 'BOOLEAN'" flex layout="row"
+                            layout-align="start center">
+                            <md-switch ng-model="answer.answerBoolean" md-invert>
+                                {{(answer.answerBoolean ? 'yes':'no') | translate}}
+                            </md-switch>
+                        </span>
+                        <md-input-container ng-if="answer.testQuestion.lkpQuestionType.code === 'NUMBER'" flex>
+                            <label>{{'number' | translate}}</label>
+                            <input type="number" name="{{answer.questionKey}}" ng-model="answer.answerNumber"
+                                ng-required="true">
+                            <input-messages input-errors="testQuestionForm[answer.questionKey].$error" />
+                        </md-input-container>
+                        <md-input-container ng-if="answer.testQuestion.lkpQuestionType.code === 'NARRATIVE'" flex>
+                            <label>{{'narrativeValue' | translate}}</label>
+                            <input type="text" name="{{answer.questionKey}}" ng-model="answer.answerNarrative"
+                                ng-required="true">
+                            <input-messages input-errors="testQuestionForm[answer.questionKey].$error" />
+                        </md-input-container>
+                        <md-input-container
+                            ng-if="answer.testQuestion.lkpQuestionType.code === 'DATE' || answer.testQuestion.lkpQuestionType.code === 'DATE_TIME'">
+                            <label>{{'date' | translate}}</label>
+                            <md-datepicker date-mask name="{{answer.questionKey}}" ng-required="true"
+                                ng-model="answer.answerDate"></md-datepicker>
+                            <input-messages input-errors="testQuestionForm[answer.questionKey].$error" />
+                        </md-input-container>
+                        <md-input-container ng-if="answer.testQuestion.lkpQuestionType.code === 'DATE_TIME'">
+                            <label>{{'time' | translate}}</label>
+                            <kendo-timepicker k-interval="15" ng-model="answer.timeTxt">
+                            </kendo-timepicker>
+                        </md-input-container>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </form>
+</div>
